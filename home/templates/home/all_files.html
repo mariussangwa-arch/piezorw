@@ -1,0 +1,318 @@
+{% extends 'home/base.html' %}
+{% block title %}All Files - ShareHub{% endblock %}
+
+{% block content %}
+<style>
+    :root {
+        --primary: #d41208;
+        --primary-hover: #0f0353;
+        --primary-light: rgba(99,102,241,0.1);
+        --bg: #f8fafc;
+        --surface: #ffffff;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --text-muted: #64748b;
+        --border: #e2e8f0;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+        --shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+        --shadow-lg: 0 20px 40px -10px rgba(0,0,0,0.12);
+        --radius: 20px;
+        --radius-sm: 14px;
+        --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    [data-theme="dark"] {
+        --bg: #0f172a;
+        --surface: #1e293b;
+        --text-primary: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --text-muted: #94a3b8;
+        --border: #334155;
+    }
+    body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', system-ui, sans-serif; margin: 0; }
+    .container { max-width: 1320px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+    .header-banner { 
+        background: linear-gradient(135deg, var(--primary), var(--primary-hover)); 
+        color: white; 
+        padding: 3rem; 
+        border-radius: var(--radius); 
+        margin-bottom: 2.5rem; 
+        box-shadow: var(--shadow); 
+        position: relative; 
+        overflow: hidden; 
+    }
+    .header-banner::before { 
+        content: ''; 
+        position: absolute; 
+        inset: 0; 
+        background: radial-gradient(circle at top right, rgba(255,255,255,0.15), transparent); 
+    }
+    .header-content { 
+        position: relative; 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        flex-wrap: wrap; 
+        gap: 2rem; 
+    }
+    .header-content h1 { font-size: 2.5rem; font-weight: 800; margin: 0; }
+    .header-content p { font-size: 1.15rem; opacity: 0.95; margin: 0.5rem 0 0; }
+    .header-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .header-actions a { 
+        padding: 0.9rem 1.8rem; 
+        background: rgba(255,255,255,0.2); 
+        backdrop-filter: blur(10px); 
+        border: 1px solid rgba(255,255,255,0.3); 
+        color: white; 
+        border-radius: var(--radius-sm); 
+        font-weight: 600; 
+        text-decoration: none; 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 0.6rem; 
+        transition: var(--transition); 
+    }
+    .header-actions a:hover { 
+        background: rgba(255,255,255,0.3); 
+        transform: translateY(-3px); 
+    }
+
+    .filters-bar { 
+        display: flex; 
+        gap: 1.5rem; 
+        flex-wrap: wrap; 
+        margin-bottom: 2.5rem; 
+        padding: 1rem 0; 
+        border-bottom: 1px solid var(--border); 
+    }
+    .filter-group label { font-weight: 600; color: var(--text-secondary); margin-right: 0.8rem; }
+    .filter-group select { 
+        padding: 0.7rem 1.2rem; 
+        border: 1px solid var(--border); 
+        border-radius: var(--radius-sm); 
+        background: var(--surface); 
+        color: var(--text-primary); 
+        min-width: 180px; 
+    }
+
+    .files-list { display: flex; flex-direction: column; gap: 1.5rem; }
+    .file-card { 
+        background: var(--surface); 
+        border-radius: var(--radius); 
+        overflow: hidden; 
+        box-shadow: var(--shadow-sm); 
+        border: 1px solid var(--border); 
+        transition: var(--transition); 
+    }
+    .file-card:hover { 
+        transform: translateY(-8px); 
+        box-shadow: var(--shadow-lg); 
+        border-color: transparent; 
+    }
+    .file-row { display: flex; align-items: stretch; min-height: 160px; }
+    .thumbnail { 
+        width: 280px; 
+        flex-shrink: 0; 
+        position: relative; 
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+
+    .thumbnail-placeholder { 
+        width: 100%; 
+        height: 100%; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        font-size: 4.5rem; 
+        color: white;
+        background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+    }
+
+    [data-theme="dark"] .thumbnail-placeholder {
+        background: linear-gradient(135deg, #e04036, #2a0d73);
+    }
+
+    .play-overlay { 
+        position: absolute; 
+        inset: 0; 
+        background: rgba(0,0,0,0.4); 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        opacity: 0; 
+        transition: var(--transition); 
+    }
+    .file-card:hover .play-overlay { opacity: 1; }
+    .play-overlay i { font-size: 4.5rem; color: white; }
+
+    .file-content { 
+        flex: 1; 
+        padding: 1.8rem; 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: space-between; 
+    }
+    .file-header h3 { font-size: 1.3rem; font-weight: 700; margin: 0 0 0.6rem; }
+    .file-desc { font-size: 1rem; color: var(--text-secondary); margin-bottom: 1rem; }
+    .file-meta { font-size: 0.92rem; color: var(--text-muted); margin-bottom: 1.2rem; }
+    .stats { 
+        display: flex; 
+        gap: 1.5rem; 
+        font-size: 0.92rem; 
+        color: var(--text-secondary); 
+        flex-wrap: wrap;
+    }
+    .stats span { display: flex; align-items: center; gap: 0.4rem; }
+    
+    .like-section {
+        display: flex;
+        gap: 0.8rem;
+        align-items: center;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border);
+    }
+    .like-btn {
+        padding: 0.6rem 1.2rem;
+        border: 2px solid var(--border);
+        background: var(--surface);
+        color: var(--text-secondary);
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: var(--transition);
+        text-decoration: none;
+    }
+    .like-btn.active-like { background: #10b981; color: white; border-color: #10b981; }
+    .like-btn.active-dislike { background: #ef4444; color: white; border-color: #ef4444; }
+    .like-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+    
+    .actions { display: flex; gap: 0.8rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .btn { 
+        padding: 0.7rem 1.3rem; 
+        border-radius: var(--radius-sm); 
+        font-weight: 600; 
+        font-size: 0.95rem; 
+        color: white; 
+        text-decoration: none; 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 0.5rem; 
+        transition: var(--transition);
+    }
+    .btn-view { background: #8b5cf6; }
+    .btn-download { background: #3b82f6; }
+    .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+
+    .empty { text-align: center; padding: 6rem 2rem; color: var(--text-muted); }
+    .empty i { font-size: 5rem; opacity: 0.3; margin-bottom: 1.5rem; }
+</style>
+
+<div class="container">
+    <div class="header-banner">
+        <div class="header-content">
+            <div>
+                <h1>Community Files</h1>
+                <p>Explore all files shared by the ShareHub community</p>
+            </div>
+            <div class="header-actions">
+                <a href="{% url 'upload' %}"><i class="fas fa-cloud-upload-alt"></i> Upload File</a>
+                <a href="{% url 'dashboard' %}"><i class="fas fa-tachometer-alt"></i> My Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="filters-bar">
+        <form method="GET" style="display:flex; gap:2rem; flex-wrap:wrap;">
+            <div class="filter-group">
+                <label>Sort by</label>
+                <select name="sort" onchange="this.form.submit()">
+                    <option value="newest" {% if current_sort == "newest" %}selected{% endif %}>Newest First</option>
+                    <option value="oldest" {% if current_sort == "oldest" %}selected{% endif %}>Oldest First</option>
+                    <option value="likes" {% if current_sort == "likes" %}selected{% endif %}>Most Liked</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>File type</label>
+                <select name="type" onchange="this.form.submit()">
+                    <option value="all" {% if current_type == "all" %}selected{% endif %}>All Files</option>
+                    <option value="images" {% if current_type == "images" %}selected{% endif %}>Images</option>
+                    <option value="videos" {% if current_type == "videos" %}selected{% endif %}>Videos</option>
+                    <option value="audio" {% if current_type == "audio" %}selected{% endif %}>Audio</option>
+                    <option value="pdf" {% if current_type == "pdf" %}selected{% endif %}>PDF Documents</option>
+                    <option value="code" {% if current_type == "code" %}selected{% endif %}>Code Files</option>
+                </select>
+            </div>
+        </form>
+    </div>
+
+    <div class="files-list">
+        {% for file in files %}
+            <div class="file-card">
+                <div class="file-row">
+                    <div class="thumbnail">
+                        {% if file.file_type == "image" %}
+                            <img src="{{ file.file.url }}" alt="{{ file.name }}">
+                        {% else %}
+                            {% if file.file_type == "video" %}
+                                <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
+                            {% endif %}
+                            <div class="thumbnail-placeholder">
+                                {% if file.file_type == "video" %}<i class="fas fa-file-video"></i>
+                                {% elif file.file_type == "audio" %}<i class="fas fa-file-audio"></i>
+                                {% elif file.file_type == "pdf" %}<i class="fas fa-file-pdf"></i>
+                                {% elif file.file_type == "code" %}<i class="fas fa-file-code"></i>
+                                {% elif file.file_type == "archive" %}<i class="fas fa-file-archive"></i>
+                                {% elif file.file_type == "document" %}<i class="fas fa-file-word"></i>
+                                {% else %}<i class="fas fa-file-alt"></i>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="file-content">
+                        <div class="file-header">
+                            <h3>{{ file.name }}</h3>
+                            <div class="file-desc">{{ file.description|default:"No description provided"|truncatechars:120 }}</div>
+                            <div class="file-meta">
+                                Uploaded by <strong>{{ file.uploaded_by.username }}</strong> on {{ file.upload_date|date:"F d, Y \a\t g:i A" }}
+                            </div>
+                            <div class="stats">
+                                <span><i class="fas fa-thumbs-up"></i> {{ file.likes_count }} likes</span>
+                                <span><i class="fas fa-thumbs-down"></i> {{ file.dislikes_count }} dislikes</span>
+                                <span><i class="fas fa-eye"></i> {{ file.views }} views</span>
+                                <span><i class="fas fa-download"></i> {{ file.downloads }} downloads</span>
+                            </div>
+                        </div>
+                        <div class="like-section">
+                            <a href="{% url 'like_file' file.id %}" class="like-btn {% if file.user_liked %}active-like{% endif %}">
+                                <i class="fas fa-thumbs-up"></i> Like
+                            </a>
+                            <a href="{% url 'dislike_file' file.id %}" class="like-btn {% if file.user_disliked %}active-dislike{% endif %}">
+                                <i class="fas fa-thumbs-down"></i> Dislike
+                            </a>
+                        </div>
+                        <div class="actions">
+                            <a href="{% url 'view_file' file.id %}" class="btn btn-view"><i class="fas fa-eye"></i> View</a>
+                            <a href="{% url 'download_file' file.id %}" class="btn btn-download"><i class="fas fa-download"></i> Download</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="empty">
+                <i class="fas fa-inbox"></i>
+                <h3>No files available</h3>
+                <p>The community collection is empty for now. Be the first to <a href="{% url 'upload' %}">upload a file</a>!</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

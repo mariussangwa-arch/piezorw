@@ -1,0 +1,272 @@
+{% extends 'home/base.html' %}
+
+{% block title %}Login - ShareHub{% endblock %}
+
+{% block content %}
+<style>
+/* =========================
+   YOUTUBE-INSPIRED THEME
+========================= */
+:root {
+    --yt-red: #1f0bf5;
+    --yt-red-dark: #e7210c;
+    --yt-dark: #18181844;
+    --yt-dark-2: #202020;
+    --yt-gray: #31c321;
+    --yt-border: #303030;
+}
+
+/* =========================
+   CONTAINER ANIMATION
+========================= */
+.login-container {
+    min-height: calc(100vh - 160px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+/* =========================
+   CARD
+========================= */
+.login-card {
+    background: #e7e8f0;
+    border-radius: 24px;
+    box-shadow: 0 30px 80px rgba(0,0,0,.15);
+    overflow: hidden;
+    max-width: 1000px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    animation: slideFade 0.8s cubic-bezier(.4,0,.2,1);
+}
+
+/* Dark mode */
+[data-theme="dark"] .login-card {
+    background: var(--yt-dark);
+}
+
+/* Entrance animation */
+@keyframes slideFade {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* =========================
+   HERO SIDE
+========================= */
+.login-hero {
+    background: linear-gradient(135deg, var(--yt-red), var(--yt-red-dark));
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: rgb(186, 187, 204);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Animated glow */
+.login-hero::after {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgba(255,255,255,.12);
+    border-radius: 50%;
+    top: -80px;
+    right: -80px;
+    animation: floatGlow 6s ease-in-out infinite alternate;
+}
+
+@keyframes floatGlow {
+    from { transform: translateY(0); }
+    to { transform: translateY(30px); }
+}
+
+.login-hero i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+/* =========================
+   FORM SIDE
+========================= */
+.login-form-container {
+    padding: 3rem;
+}
+
+.login-form-container h3 {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: .3rem;
+}
+
+.login-form-container p {
+    text-align: center;
+    color: var(--yt-gray);
+    margin-bottom: 2rem;
+}
+
+/* =========================
+   INPUTS
+========================= */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    border: 2px solid var(--yt-border);
+    background: transparent;
+    color: inherit;
+    font-size: 1rem;
+    transition: all .25s ease;
+}
+
+/* Focus animation */
+.form-control:focus {
+    border-color: var(--yt-red);
+    box-shadow: 0 0 0 4px rgba(255,0,0,.15);
+    transform: translateY(-2px);
+    outline: none;
+}
+
+/* =========================
+   BUTTON
+========================= */
+.btn-login {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 14px;
+    background: var(--yt-red);
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: all .25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover */
+.btn-login:hover {
+    background: var(--yt-red-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(255,0,0,.35);
+}
+
+/* Click ripple */
+.btn-login:active::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,.25);
+    animation: ripple .4s ease;
+}
+
+@keyframes ripple {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* =========================
+   LINKS
+========================= */
+a {
+    color: var(--yt-red);
+    font-weight: 600;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 900px) {
+    .login-card {
+        grid-template-columns: 1fr;
+    }
+    .login-hero {
+        display: none;
+    }
+}
+</style>
+
+<div class="login-container">
+    <div class="login-card">
+
+        <div class="login-hero">
+            <div>
+                <i class="fas fa-cloud-upload-alt"></i>
+                <h2>Welcome Back</h2>
+                <p>Sign in to manage and share your files</p>
+            </div>
+        </div>
+
+        <div class="login-form-container">
+            <h3>Sign In</h3>
+            <p>Use your ShareHub credentials</p>
+
+            <form method="post" autocomplete="off">
+                {% csrf_token %}
+
+                <input type="text" name="fakeusernameremembered" style="display:none">
+                <input type="password" name="fakepasswordremembered" style="display:none">
+
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="username" class="form-control"
+                        placeholder="Enter your username"
+                        autocomplete="off"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" class="form-control"
+                        placeholder="Enter your password"
+                        autocomplete="new-password"
+                        required>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+                    <label>
+                        <input type="checkbox" name="remember"> Remember me
+                    </label>
+                    <a href="{% url 'password_reset' %}">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn-login">
+                    Sign In
+                </button>
+            </form>
+
+            <p style="text-align:center; margin-top:1.5rem;">
+                Don't have an account?
+                <a href="{% url 'register' %}">Create one</a>
+            </p>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

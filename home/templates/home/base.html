@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ShareHub{% endblock %}</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ======================================================
+   NEUTRAL + BLUE–PURPLE DESIGN TOKENS
+====================================================== */
+:root {
+    --primary: #4f46e5;            /* Indigo */
+    --primary-hover: #4338ca;
+    --secondary: #7c3aed;          /* Purple */
+    --secondary-hover: #6d28d9;
+
+    --success: #16a34a;
+    --warning: #d97706;
+    --danger: #dc2626;
+    --info: #6366f1;
+
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --text: #1f2937;
+    --text-muted: #6b7280;
+    --border: #e5e7eb;
+
+    --radius: 12px;
+    --shadow-sm: 0 6px 12px rgba(0,0,0,.06);
+    --shadow-lg: 0 24px 50px rgba(0,0,0,.15);
+}
+
+/* DARK MODE */
+[data-theme="dark"] {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --text: #e5e7eb;
+    --text-muted: #9ca3af;
+    --border: #334155;
+}
+
+/* ======================================================
+   BASE RESET (SAFE)
+====================================================== */
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    transition: background .3s ease, color .3s ease;
+}
+
+/* ======================================================
+   NAVBAR
+====================================================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 72px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: auto;
+    height: 100%;
+    padding: 0 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* LOGO */
+.logo {
+    font-size: 1.4rem;
+    font-weight: 800;
+    text-decoration: none;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+/* NAV LINKS */
+.nav-menu {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 600;
+}
+
+.nav-menu a:hover {
+    color: var(--primary);
+}
+
+/* ======================================================
+   USER MENU
+====================================================== */
+.user-menu {
+    position: relative;
+}
+
+.user-btn {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .4rem .9rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    background: var(--surface);
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-weight: 700;
+}
+
+.dropdown {
+    position: absolute;
+    top: 120%;
+    right: 0;
+    min-width: 200px;
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all .2s ease;
+}
+
+.user-menu:hover .dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown a {
+    display: flex;
+    gap: .7rem;
+    padding: .75rem 1.2rem;
+    text-decoration: none;
+    color: var(--text);
+}
+
+.dropdown a:hover {
+    background: rgba(99,102,241,.08);
+}
+
+/* ======================================================
+   BUTTONS (GENERIC)
+====================================================== */
+.btn {
+    padding: .6rem 1.3rem;
+    border-radius: var(--radius);
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: #fff;
+    border: none;
+}
+
+.btn-primary:hover {
+    filter: brightness(1.05);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+}
+
+/* ======================================================
+   MAIN LAYOUT
+====================================================== */
+.main-content {
+    margin-top: 72px;
+    padding: 2rem 1.5rem;
+    min-height: calc(100vh - 72px);
+}
+
+.container {
+    max-width: 1400px;
+    margin: auto;
+}
+
+/* ======================================================
+   ALERTS
+====================================================== */
+.alert {
+    padding: 1rem 1.3rem;
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+    display: flex;
+    gap: .7rem;
+    align-items: center;
+}
+
+.alert-success { background: #dcfce7; color: #065f46; }
+.alert-error   { background: #fee2e2; color: #991b1b; }
+.alert-warning { background: #fef3c7; color: #92400e; }
+.alert-info    { background: #eef2ff; color: #3730a3; }
+
+/* ======================================================
+   MOBILE
+====================================================== */
+.mobile-menu-btn {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+@media (max-width: 900px) {
+    .nav-menu {
+        position: fixed;
+        top: 72px;
+        left: 0;
+        right: 0;
+        background: var(--surface);
+        flex-direction: column;
+        padding: 2rem;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all .3s ease;
+    }
+
+    .nav-menu.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+}
+</style>
+
+{% block extra_css %}{% endblock %}
+</head>
+
+<body data-theme="light">
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="{% if user.is_authenticated %}{% url 'dashboard' %}{% else %}{% url 'login' %}{% endif %}" class="logo">
+            <i class="fas fa-cloud-upload-alt"></i> ShareHub
+        </a>
+
+        <ul class="nav-menu" id="navMenu">
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li><a href="{% url 'all_files' %}">Files</a></li>
+                <li><a href="{% url 'upload' %}">Upload</a></li>
+
+                <li class="user-menu">
+                    <div class="user-btn">
+                        <div class="user-avatar">{{ user.username|slice:":1"|upper }}</div>
+                        {{ user.username }}
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="dropdown">
+                        <a href="#"><i class="fas fa-user"></i> Profile</a>
+                        {% if user.is_staff %}
+                        <a href="{% url 'activate_latest' %}"><i class="fas fa-user-check"></i> Activate User</a>
+                        {% endif %}
+                        <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </li>
+            {% else %}
+                <li><a href="{% url 'login' %}" class="btn btn-outline">Login</a></li>
+                <li><a href="{% url 'register' %}" class="btn btn-primary">Sign Up</a></li>
+            {% endif %}
+
+            <li>
+                <div class="btn btn-outline" onclick="toggleTheme()">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </div>
+            </li>
+        </ul>
+
+        <div class="mobile-menu-btn" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+</nav>
+
+<main class="main-content">
+    <div class="container">
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    <i class="fas fa-info-circle"></i>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </div>
+</main>
+
+<script>
+function toggleTheme() {
+    const body = document.body;
+    const icon = document.getElementById('themeIcon');
+    const theme = body.dataset.theme === 'light' ? 'dark' : 'light';
+    body.dataset.theme = theme;
+    icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+    localStorage.setItem('theme', theme);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    const theme = localStorage.getItem('theme') || 'light';
+    document.body.dataset.theme = theme;
+    document.getElementById('themeIcon').className =
+        theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+});
+
+function toggleMobileMenu() {
+    document.getElementById('navMenu').classList.toggle('active');
+}
+</script>
+
+{% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Files - ShareHub</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    {% load static %}
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-hover: #3f37c9;
+            --text: #2d3436;
+            --text-light: #636e72;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --border: #e9ecef;
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .page-desc {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .search-bar {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 0.85rem 1rem 0.85rem 2.8rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.15);
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .sort-select {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sort-select label {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .sort-select select {
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: white;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .file-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .file-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .file-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .file-icon {
+            font-size: 2.5rem;
+            min-width: 40px;
+        }
+
+        .file-icon.pdf { color: #dc2626; }
+        .file-icon.image { color: #7c3aed; }
+        .file-icon.video { color: #10b981; }
+        .file-icon.audio { color: #f59e0b; }
+        .file-icon.doc { color: #2563eb; }
+        .file-icon.other { color: #6b7280; }
+
+        .file-info h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            word-break: break-all;
+        }
+
+        .file-meta {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        .file-actions {
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fbfdff;
+        }
+
+        .btn {
+            padding: 0.65rem 1.2rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            background: #f1f5f9;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .no-files {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            color: var(--text-light);
+        }
+
+        .no-files i {
+            font-size: 4rem;
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+        }
+
+        .pagination a, .pagination span {
+            padding: 0.6rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .pagination a:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .pagination .current {
+            background: var(--primary);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-bar, .sort-select {
+                max-width: none;
+            }
+            .file-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'home/base.html' %}
+
+    <div class="container">
+        <header>
+            <h1>All Shared Files</h1>
+            <p class="page-desc">Browse and manage all uploaded files in one place</p>
+        </header>
+
+        <div class="controls">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search files by name..." id="searchInput">
+            </div>
+            <div class="sort-select">
+                <label for="sortSelect">Sort by:</label>
+                <select id="sortSelect">
+                    <option value="name-asc">Name (A-Z)</option>
+                    <option value="name-desc">Name (Z-A)</option>
+                    <option value="date-desc">Date (Newest)</option>
+                    <option value="date-asc">Date (Oldest)</option>
+                    <option value="size-desc">Size (Largest)</option>
+                    <option value="size-asc">Size (Smallest)</option>
+                </select>
+            </div>
+            <a href="{% url 'upload' %}" class="btn btn-primary">
+                <i class="fas fa-upload"></i> Upload New File
+            </a>
+        </div>
+
+        {% if page_obj %}
+        <div class="file-grid" id="fileGrid">
+            {% for file in page_obj %}
+            <div class="file-card" 
+                 data-name="{{ file.file.name|lower }}" 
+                 data-date="{{ file.uploaded_at|date:'Y-m-d H:i' }}" 
+                 data-size="{{ file.file.size }}">
+                <div class="file-header">
+                    <i class="file-icon {{ file.file_type|default:'other' }} fas fa-
+                        {% if file.file_type == 'pdf' %}file-pdf
+                        {% elif file.file_type == 'image' %}file-image
+                        {% elif file.file_type == 'video' %}file-video
+                        {% elif file.file_type == 'audio' %}file-volume-up
+                        {% elif file.file_type == 'doc' %}file-word
+                        {% else %}file{% endif %}"></i>
+                    <div class="file-info">
+                        <h3>{{ file.file.name|cut:"uploads/" }}</h3>
+                        <div class="file-meta">
+                            Uploaded: {{ file.uploaded_at|date:"M d, Y H:i" }} • 
+                            Size: {{ file.file.size|filesizeformat }}
+                        </div>
+                    </div>
+                </div>
+                <div class="file-actions">
+                    <a href="{% url 'view_pdf' file.id %}" class="btn btn-primary">
+                        <i class="fas fa-eye"></i> View
+                    </a>
+                    <div>
+                        <a href="{{ file.file.url }}" class="btn btn-outline" download>
+                            <i class="fas fa-download"></i>
+                        </a>
+                        {% if user.is_staff %}
+                        <a href="{% url 'delete_file' file.id %}" class="btn btn-danger" 
+                           onclick="return confirm('Delete this file permanently?')">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}">« Previous</a>
+            {% endif %}
+            <span class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Next »</a>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="no-files">
+            <i class="fas fa-folder-open"></i>
+            <p>No files have been uploaded yet.</p>
+            <a href="{% url 'upload' %}" class="btn btn-primary">Upload the First File</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const sortSelect = document.getElementById('sortSelect');
+        const fileGrid = document.getElementById('fileGrid');
+        const cards = Array.from(fileGrid ? fileGrid.querySelectorAll('.file-card') : []);
+
+        function updateDisplay() {
+            if (!fileGrid) return;
+            const query = searchInput.value.toLowerCase();
+            const [sortBy, sortDir] = sortSelect.value.split('-');
+
+            let filtered = cards.filter(card => {
+                const name = card.dataset.name;
+                return name.includes(query);
+            });
+
+            filtered.sort((a, b) => {
+                let aVal, bVal;
+                if (sortBy === 'name') {
+                    aVal = a.dataset.name;
+                    bVal = b.dataset.name;
+                } else if (sortBy === 'date') {
+                    aVal = a.dataset.date;
+                    bVal = b.dataset.date;
+                } else if (sortBy === 'size') {
+                    aVal = parseInt(a.dataset.size);
+                    bVal = parseInt(b.dataset.size);
+                }
+
+                if (sortDir === 'asc') return aVal > bVal ? 1 : -1;
+                return aVal < bVal ? 1 : -1;
+            });
+
+            fileGrid.innerHTML = '';
+            filtered.forEach(card => fileGrid.appendChild(card));
+        }
+
+        searchInput.addEventListener('input', updateDisplay);
+        sortSelect.addEventListener('change', updateDisplay);
+        updateDisplay();
+    </script>
+</body>
+</html>

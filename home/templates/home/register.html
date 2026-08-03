@@ -1,0 +1,544 @@
+<!-- home/templates/home/register.html -->
+{% extends 'home/base.html' %}
+
+{% block title %}Create Account - ShareHub{% endblock %}
+
+{% block content %}
+<style>
+/* =========================
+   YOUTUBE-INSPIRED THEME
+========================= */
+:root {
+    --yt-red: #1f0bf5;
+    --yt-red-dark: #e7210c;
+    --yt-dark: #18181844;
+    --yt-dark-2: #202020;
+    --yt-gray: #31c321;
+    --yt-border: #303030;
+}
+
+/* =========================
+   CONTAINER ANIMATION
+========================= */
+.register-container {
+    min-height: calc(100vh - 160px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+/* =========================
+   CARD
+========================= */
+.register-card {
+    background: #e7e8f0;
+    border-radius: 24px;
+    box-shadow: 0 30px 80px rgba(0,0,0,.15);
+    overflow: hidden;
+    max-width: 1100px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    animation: slideFade 0.8s cubic-bezier(.4,0,.2,1);
+}
+
+/* Dark mode */
+[data-theme="dark"] .register-card {
+    background: var(--yt-dark);
+}
+
+/* Entrance animation */
+@keyframes slideFade {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* =========================
+   HERO SIDE
+========================= */
+.register-hero {
+    background: linear-gradient(135deg, #e72309 0%, #25049c 100%);
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: rgb(186, 187, 204);
+    position: relative;
+    overflow: hidden;
+    order: 2;
+}
+
+/* Animated glow circles */
+.register-hero::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    top: -100px;
+    right: -100px;
+    animation: floatGlow 6s ease-in-out infinite alternate;
+}
+
+.register-hero::after {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    bottom: -50px;
+    left: -50px;
+    animation: floatGlow 8s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes floatGlow {
+    from { transform: translateY(0); }
+    to { transform: translateY(30px); }
+}
+
+.register-hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.register-hero-content i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: pulse 2s infinite;
+    display: block;
+}
+
+@keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+.register-hero h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.register-hero p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    margin-bottom: 2rem;
+}
+
+.benefits-list {
+    margin-top: 2rem;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.benefit-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.benefit-content h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+    color: white;
+}
+
+.benefit-content p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* =========================
+   FORM SIDE
+========================= */
+.register-form-container {
+    padding: 3rem;
+    order: 1;
+}
+
+.register-form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.register-form-header h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+}
+
+.register-form-header p {
+    color: var(--yt-gray);
+}
+
+/* =========================
+   INPUTS
+========================= */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.9rem 1.1rem;
+    border: 2px solid var(--yt-border);
+    border-radius: 12px;
+    font-size: 0.95rem;
+    transition: all 0.25s ease;
+    background: transparent;
+    color: var(--text);
+}
+
+/* Focus animation */
+.form-control:focus {
+    outline: none;
+    border-color: var(--yt-red);
+    box-shadow: 0 0 0 4px rgba(31, 11, 245, 0.15);
+    transform: translateY(-2px);
+}
+
+.form-control-icon {
+    position: relative;
+}
+
+.form-control-icon i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+}
+
+.form-control-icon input {
+    padding-left: 2.8rem;
+}
+
+/* Password strength indicator */
+.password-strength {
+    margin-top: 0.5rem;
+    height: 4px;
+    background: var(--yt-border);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.password-strength-bar {
+    height: 100%;
+    width: 0%;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.strength-weak { 
+    width: 33%; 
+    background: var(--danger); 
+}
+
+.strength-medium { 
+    width: 66%; 
+    background: var(--warning); 
+}
+
+.strength-strong { 
+    width: 100%; 
+    background: var(--success); 
+}
+
+.password-hint {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-top: 0.5rem;
+}
+
+/* Terms checkbox */
+.terms-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.terms-checkbox input {
+    margin-top: 0.25rem;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.terms-checkbox label {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    cursor: pointer;
+}
+
+.terms-checkbox a {
+    color: var(--yt-red);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.terms-checkbox a:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   BUTTON
+========================= */
+.btn-register {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 14px;
+    background: var(--yt-red);
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: all .25s ease;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+/* Hover */
+.btn-register:hover {
+    background: var(--yt-red-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(31, 11, 245, 0.35);
+}
+
+/* Click ripple */
+.btn-register:active::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,.25);
+    animation: ripple .4s ease;
+}
+
+@keyframes ripple {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* Login prompt */
+.login-prompt {
+    text-align: center;
+    color: var(--text-light);
+}
+
+.login-prompt a {
+    color: var(--yt-red);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.login-prompt a:hover {
+    text-decoration: underline;
+}
+
+/* Error messages */
+.error-message {
+    color: var(--danger);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 968px) {
+    .register-card {
+        grid-template-columns: 1fr;
+    }
+
+    .register-hero {
+        display: none;
+    }
+
+    .register-form-container {
+        padding: 2rem;
+    }
+}
+</style>
+
+<div class="register-container">
+    <div class="register-card">
+        <div class="register-form-container">
+            <div class="register-form-header">
+                <h3>Create Account</h3>
+                <p>Get started with ShareHub in seconds</p>
+            </div>
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="id_username">Username</label>
+                    <div class="form-control-icon">
+                        <i class="fas fa-user"></i>
+                        {{ form.username }}
+                    </div>
+                    {% if form.username.errors %}
+                        <div class="error-message">{{ form.username.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_email">Email Address</label>
+                    <div class="form-control-icon">
+                        <i class="fas fa-envelope"></i>
+                        {{ form.email }}
+                    </div>
+                    {% if form.email.errors %}
+                        <div class="error-message">{{ form.email.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_password1">Password</label>
+                    <div class="form-control-icon">
+                        <i class="fas fa-lock"></i>
+                        {{ form.password1 }}
+                    </div>
+                    <div class="password-strength">
+                        <div class="password-strength-bar" id="strengthBar"></div>
+                    </div>
+                    <div class="password-hint">
+                        Use 8+ characters with a mix of letters, numbers & symbols
+                    </div>
+                    {% if form.password1.errors %}
+                        <div class="error-message">{{ form.password1.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_password2">Confirm Password</label>
+                    <div class="form-control-icon">
+                        <i class="fas fa-lock"></i>
+                        {{ form.password2 }}
+                    </div>
+                    {% if form.password2.errors %}
+                        <div class="error-message">{{ form.password2.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="terms-checkbox">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">
+                        I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-register">
+                    <i class="fas fa-user-plus"></i>
+                    Create Account
+                </button>
+            </form>
+
+            <div class="login-prompt">
+                Already have an account? <a href="{% url 'login' %}">Sign in here</a>
+            </div>
+        </div>
+
+        <div class="register-hero">
+            <div class="register-hero-content">
+                <i class="fas fa-rocket"></i>
+                <h2>Join ShareHub</h2>
+                <p>Start sharing files securely with your team in minutes</p>
+                
+                <div class="benefits-list">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-infinity"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h4>Unlimited Storage</h4>
+                            <p>Upload as many files as you need</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h4>Bank-Level Security</h4>
+                            <p>Your files are encrypted and protected</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h4>Team Collaboration</h4>
+                            <p>Share and collaborate with anyone</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Add form control class to Django form fields
+    document.querySelectorAll('input[type="text"], input[type="email"], input[type="password"]').forEach(input => {
+        if (!input.classList.contains('form-control')) {
+            input.classList.add('form-control');
+            input.placeholder = input.placeholder || 'Enter ' + input.name;
+        }
+    });
+
+    // Password strength meter
+    const passwordInput = document.getElementById('id_password1');
+    const strengthBar = document.getElementById('strengthBar');
+
+    if (passwordInput) {
+        passwordInput.addEventListener('input', (e) => {
+            const password = e.target.value;
+            let strength = 0;
+
+            if (password.length >= 8) strength++;
+            if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+            if (password.match(/[0-9]/)) strength++;
+            if (password.match(/[^a-zA-Z0-9]/)) strength++;
+
+            strengthBar.className = 'password-strength-bar';
+            if (strength === 1) strengthBar.classList.add('strength-weak');
+            else if (strength === 2 || strength === 3) strengthBar.classList.add('strength-medium');
+            else if (strength >= 4) strengthBar.classList.add('strength-strong');
+        });
+    }
+</script>
+{% endblock %}

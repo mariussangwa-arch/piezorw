@@ -1,0 +1,349 @@
+{% extends 'home/base.html' %}
+{% block title %}Upload File - ShareHub{% endblock %}
+
+{% block content %}
+<style>
+    :root {
+        --primary: #b71313;
+        --primary-hover: #0041e6;
+        --primary-light: rgba(255,0,0,0.08);
+        --bg: #f8fafc;
+        --surface: #ffffff;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --text-muted: #64748b;
+        --border: #e2e8f0;
+        --shadow: 0 20px 40px rgba(0,0,0,0.1);
+        --radius: 28px;
+        --radius-sm: 18px;
+        --transition: all 0.4s ease;
+        --error: #ef4444;
+        --success: #10b981;
+    }
+    [data-theme="dark"] {
+        --bg: #0f172a;
+        --surface: #1e293b;
+        --text-primary: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --text-muted: #94a3b8;
+        --border: #334155;
+        --primary-light: rgba(183,19,19,0.2);
+    }
+    body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', sans-serif; }
+    .upload-page { max-width: 960px; margin: 4rem auto; padding: 0 1.5rem; }
+    .upload-box {
+        background: var(--surface);
+        border-radius: var(--radius);
+        padding: 4rem;
+        box-shadow: var(--shadow);
+        text-align: center;
+    }
+    .upload-box h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 0.8rem; }
+    .upload-box p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 2rem; }
+
+    .drop-area {
+        border: 3px dashed var(--border);
+        border-radius: 24px;
+        padding: 5rem 3rem;
+        background: var(--bg);
+        transition: var(--transition);
+        cursor: pointer;
+        position: relative;
+    }
+    .drop-area:hover { border-color: var(--primary); background: var(--primary-light); }
+    .drop-area.drag-over {
+        border-color: var(--primary);
+        background: var(--primary-light);
+        transform: scale(1.02);
+        box-shadow: 0 0 0 6px var(--primary-light);
+    }
+    .drop-area.invalid {
+        border-color: var(--error);
+        background: rgba(239,68,68,0.08);
+    }
+    .drop-icon { font-size: 5.5rem; color: var(--primary); margin-bottom: 1.5rem; transition: var(--transition); }
+    .drop-area.drag-over .drop-icon { transform: scale(1.15); }
+    .drop-title { font-size: 1.9rem; font-weight: 700; margin: 1rem 0; }
+    .drop-hint { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 1.5rem; }
+    .supported-types {
+        font-size: 0.95rem;
+        color: var(--text-secondary);
+        margin-top: 1.5rem;
+        line-height: 1.6;
+    }
+    .supported-types strong { color: var(--text-primary); }
+
+    .browse-btn {
+        padding: 1.2rem 3rem;
+        background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+        color: white;
+        border-radius: var(--radius-sm);
+        font-size: 1.1rem;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        text-decoration: none;
+        box-shadow: 0 10px 25px rgba(255,0,0,0.2);
+        transition: var(--transition);
+    }
+    .browse-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(255,0,0,0.3); }
+
+    .error-message {
+        color: var(--error);
+        font-size: 1rem;
+        margin-top: 1rem;
+        display: none;
+    }
+    .error-message.active { display: block; }
+
+    .preview-box { margin: 3rem 0; display: none; background: var(--bg); padding: 2rem; border-radius: 20px; }
+    .preview-box.active { display: block; }
+    .preview-grid { display: flex; align-items: center; gap: 2rem; background: var(--surface); padding: 2rem; border-radius: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    .file-icon { width: 100px; height: 100px; background: var(--primary); border-radius: 18px; display: flex; align-items: center; justify-content: center; color: white; font-size: 3.5rem; }
+    .file-details { flex: 1; text-align: left; }
+    .file-name { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .file-info { color: var(--text-muted); font-size: 1rem; }
+
+    .form-group { margin: 2rem 0; text-align: left; }
+    .form-label { font-weight: 600; font-size: 1.05rem; margin-bottom: 0.8rem; display: block; }
+    .form-input {
+        width: 100%;
+        padding: 1.2rem 1.5rem;
+        border: 2px solid var(--border);
+        border-radius: var(--radius-sm);
+        background: var(--surface);
+        color: var(--text-primary);
+        font-size: 1.05rem;
+        transition: var(--transition);
+    }
+    .form-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-light); }
+
+    .actions { display: flex; gap: 1.5rem; margin-top: 3rem; justify-content: center; }
+    .btn-upload {
+        flex: 1;
+        max-width: 300px;
+        padding: 1.3rem;
+        background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+        color: white;
+        border: none;
+        border-radius: var(--radius-sm);
+        font-size: 1.15rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+    .btn-upload:hover { transform: translateY(-4px); box-shadow: 0 15px 30px rgba(255,0,0,0.25); }
+    .btn-cancel {
+        padding: 1.3rem 2.5rem;
+        background: transparent;
+        border: 2px solid var(--border);
+        color: var(--text-secondary);
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+    .btn-cancel:hover { background: var(--bg); }
+</style>
+
+<div class="upload-page">
+    <div class="upload-box">
+        <h1>Upload a New File</h1>
+        <p>Share high-quality content with the ShareHub community</p>
+
+        <form method="post" enctype="multipart/form-data" id="uploadForm">
+            {% csrf_token %}
+
+            <div class="drop-area" id="dropArea">
+                <div class="drop-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                <div class="drop-title">Drop your file here</div>
+                <div class="drop-hint">or click to browse from your device</div>
+                <label for="fileInput" class="browse-btn">
+                    <i class="fas fa-folder-open"></i> Browse Files
+                </label>
+                <input type="file" name="file" id="fileInput" required style="display:none;">
+
+                <div class="supported-types">
+                    <strong>Supported formats:</strong><br>
+                    Documents: PDF, DOC/DOCX, TXT • Images: JPG, PNG, GIF • 
+                    Videos: MP4, MOV, AVI • Audio: MP3, WAV • Archives: ZIP, RAR • 
+                    Code: PY, JS, HTML, CSS, JSON, and more
+                </div>
+            </div>
+
+            <div class="error-message" id="errorMessage"></div>
+
+            <div class="preview-box" id="previewBox">
+                <div class="preview-grid">
+                    <div class="file-icon" id="fileIcon"><i class="fas fa-file"></i></div>
+                    <div class="file-details">
+                        <div class="file-name" id="fileName">filename.ext</div>
+                        <div class="file-info">
+                            <span id="fileSize">0 MB</span> • <span id="fileType">Unknown</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">File Name <span style="color:var(--primary);">*</span></label>
+                <input type="text" name="name" class="form-input" placeholder="Enter a clear, descriptive name" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Description (optional)</label>
+                <textarea name="description" class="form-input" rows="4" placeholder="Add context or details about this file..."></textarea>
+            </div>
+
+            <div class="actions">
+                <button type="submit" class="btn-upload" id="uploadBtn">
+                    <i class="fas fa-cloud-upload-alt"></i> Upload File
+                </button>
+                <button type="button" class="btn-cancel" onclick="window.location.href='{% url 'dashboard' %}'">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    const dropArea = document.getElementById('dropArea');
+    const fileInput = document.getElementById('fileInput');
+    const previewBox = document.getElementById('previewBox');
+    const errorMessage = document.getElementById('errorMessage');
+    const fileNameEl = document.getElementById('fileName');
+    const fileSizeEl = document.getElementById('fileSize');
+    const fileTypeEl = document.getElementById('fileType');
+    const fileIcon = document.getElementById('fileIcon');
+    const uploadBtn = document.getElementById('uploadBtn');
+
+    const allowedExtensions = [
+        'pdf','doc','docx','txt','csv','log',
+        'jpg','jpeg','png','gif','webp','bmp','svg',
+        'mp4','mov','avi','mkv','webm',
+        'mp3','wav','ogg','flac','aac',
+        'zip','rar','7z','tar','gz',
+        'py','js','html','css','json','xml','java','cpp','c','php','rb','go','ts','tsx','sql','sh','yaml','yml','md'
+    ];
+
+    const iconMap = {
+        // Images
+        jpg: 'fa-file-image', jpeg: 'fa-file-image', png: 'fa-file-image', gif: 'fa-file-image',
+        webp: 'fa-file-image', bmp: 'fa-file-image', svg: 'fa-file-image',
+
+        // Video
+        mp4: 'fa-file-video', mov: 'fa-file-video', avi: 'fa-file-video', mkv: 'fa-file-video', webm: 'fa-file-video',
+
+        // Audio
+        mp3: 'fa-file-audio', wav: 'fa-file-audio', ogg: 'fa-file-audio', flac: 'fa-file-audio', aac: 'fa-file-audio',
+
+        // PDF
+        pdf: 'fa-file-pdf',
+
+        // Archives
+        zip: 'fa-file-archive', rar: 'fa-file-archive', '7z': 'fa-file-archive', tar: 'fa-file-archive', gz: 'fa-file-archive',
+
+        // Documents
+        doc: 'fa-file-word', docx: 'fa-file-word', txt: 'fa-file-alt', csv: 'fa-file-csv', log: 'fa-file-alt',
+
+        // Code
+        py: 'fa-file-code', js: 'fa-file-code', html: 'fa-file-code', css: 'fa-file-code',
+        json: 'fa-file-code', xml: 'fa-file-code', java: 'fa-file-code', cpp: 'fa-file-code',
+        c: 'fa-file-code', php: 'fa-file-code', rb: 'fa-file-code', go: 'fa-file-code',
+        ts: 'fa-file-code', tsx: 'fa-file-code', sql: 'fa-file-code', sh: 'fa-file-code',
+        yaml: 'fa-file-code', yml: 'fa-file-code', md: 'fa-file-code'
+    };
+
+    dropArea.addEventListener('click', () => fileInput.click());
+
+    ['dragenter', 'dragover'].forEach(event => {
+        dropArea.addEventListener(event, e => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropArea.classList.add('drag-over');
+        });
+    });
+
+    ['dragleave', 'dragend'].forEach(event => {
+        dropArea.addEventListener(event, e => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropArea.classList.remove('drag-over');
+        });
+    });
+
+    dropArea.addEventListener('drop', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropArea.classList.remove('drag-over');
+
+        if (e.dataTransfer.files.length > 1) {
+            showError("Please upload only one file at a time.");
+            return;
+        }
+
+        const file = e.dataTransfer.files[0];
+        if (validateFile(file)) {
+            fileInput.files = e.dataTransfer.files;
+            handleFile(file);
+        }
+    });
+
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            if (validateFile(file)) {
+                handleFile(file);
+            } else {
+                fileInput.value = '';
+            }
+        }
+    });
+
+    function validateFile(file) {
+        const ext = file.name.split('.').pop().toLowerCase();
+        if (!allowedExtensions.includes(ext)) {
+            showError(`.${ext.toUpperCase()} files are not supported.`);
+            dropArea.classList.add('invalid');
+            setTimeout(() => dropArea.classList.remove('invalid'), 2000);
+            return false;
+        }
+        return true;
+    }
+
+    function showError(msg) {
+        errorMessage.textContent = msg;
+        errorMessage.classList.add('active');
+        previewBox.classList.remove('active');
+        uploadBtn.disabled = true;
+    }
+
+    function hideError() {
+        errorMessage.classList.remove('active');
+        uploadBtn.disabled = false;
+    }
+
+    function handleFile(file) {
+        hideError();
+        previewBox.classList.add('active');
+
+        fileNameEl.textContent = file.name;
+        fileSizeEl.textContent = formatBytes(file.size);
+        fileTypeEl.textContent = file.type || 'Unknown';
+
+        const ext = file.name.split('.').pop().toLowerCase();
+        const iconClass = iconMap[ext] || 'fa-file';
+        fileIcon.innerHTML = `<i class="fas ${iconClass}"></i>`;
+    }
+
+    function formatBytes(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+</script>
+{% endblock %}

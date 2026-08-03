@@ -1,0 +1,148 @@
+<!-- home/templates/home/base.html → REPLACE ENTIRE FILE WITH THIS -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ShareHub{% endblock %}</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #0f0f0f;
+            --navbar: #1a1a2e;
+            --text: #e8e8e8;
+            --muted: #aaaaaa;
+            --card: rgba(255, 255, 255, 0.08);
+            --border: rgba(255, 255, 255, 0.12);
+            --link: #8b9eff;
+        }
+        [data-theme="light"] {
+            --bg: #f8f9fa;
+            --navbar: #ffffff;
+            --text: #212529;
+            --muted: #6c757d;
+            --card: #ffffff;
+            --border: #dee2e6;
+            --link: #5a67d8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text) !important;
+            min-height: 100vh;
+            margin: 0;
+            transition: all 0.3s ease;
+        }
+
+        /* NAVBAR — ALWAYS VISIBLE */
+        .navbar {
+            background: var(--navbar) !important;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .navbar .navbar-brand,
+        .navbar .nav-link,
+        .navbar .dropdown-item,
+        .navbar .btn {
+            color: var(--text) !important;
+        }
+
+        /* CARDS & FORMS — TEXT ALWAYS VISIBLE */
+        .card, .form-control, .form-select, .alert {
+            background: var(--card) !important;
+            color: var(--text) !important;
+            border: 1px solid var(--border) !important;
+        }
+        .form-control::placeholder { color: var(--muted) !important; }
+
+        /* BUTTONS & LINKS */
+        a { color: var(--link) !important; }
+        a:hover { opacity: 0.8; }
+
+        .text-muted { color: var(--muted) !important; }
+
+        .main-container { padding-top: 90px; }
+        .theme-toggle { cursor: pointer; font-size: 1.5rem; }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4" href="{% if user.is_authenticated %}{% url 'dashboard' %}{% else %}{% url 'login' %}{% endif %}">
+                <i class="fas fa-cloud-upload-alt text-primary me-2"></i>ShareHub
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center gap-3">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'upload' %}">Upload</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'all_files' %}">All Files</a></li>
+
+                        <li class="nav-item">
+                            <span class="theme-toggle" onclick="toggleTheme()">
+                                <i class="fas fa-moon" id="theme-icon"></i>
+                            </span>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                {{ user.username }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                {% if user.is_staff %}
+                                <li><a class="dropdown-item" href="{% url 'activate_latest' %}">Activate Latest User</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                {% endif %}
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link btn btn-outline-light px-4" href="{% url 'login' %}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link btn btn-light text-dark px-4" href="{% url 'register' %}">Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show mt-3">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            const isDark = body.getAttribute('data-theme') === 'dark';
+            body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            icon.classList.toggle('fa-moon', isDark);
+            icon.classList.toggle('fa-sun', !isDark);
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        }
+        window.onload = () => {
+            const saved = localStorage.getItem('theme') || 'dark';
+            document.body.setAttribute('data-theme', saved);
+            document.getElementById('theme-icon').classList.add(saved === 'dark' ? 'fa-moon' : 'fa-sun');
+        };
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
