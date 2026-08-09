@@ -1,10 +1,47 @@
-Welcome to ShareHub, {{ user.username }}!
-
-Please click the button below to verify your email and activate your account:
-
-http://{{ domain }}{% url 'activate' uid token %}
-
-This link will expire in 3 days.
-
-Thanks,
-The ShareHub Team
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Your Email - ShareHub</title>
+    <style>
+        body { font-family: 'Inter', Arial, sans-serif; background: #f8fafc; margin: 0; padding: 0; }
+        .container { max-width: 600px; margin: 0 auto; padding: 2rem; }
+        .header { background: linear-gradient(135deg, #3b82f6, #2563eb); padding: 3rem; text-align: center; color: white; }
+        .header h1 { margin: 0; font-size: 2rem; }
+        .body { background: white; padding: 3rem; border: 1px solid #e2e8f0; }
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            text-decoration: none;
+            border-radius: 0;
+            font-weight: 700;
+            margin: 2rem 0;
+        }
+        .footer { text-align: center; color: #64748b; padding: 2rem; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ShareHub</h1>
+        </div>
+        <div class="body">
+            <h2>Verify Your Email Address</h2>
+            <p>Hi {{ user.username }},</p>
+            <p>Thank you for signing up for ShareHub! Please verify your email address by clicking the button below:</p>
+            <p style="text-align:center;">
+                <a href="{{ protocol }}://{{ host_with_port }}/activate/{{ uid }}/{{ token }}/" class="btn">Verify Email Address</a>
+            </p>
+            <p>Or copy and paste this link into your browser:</p>
+            <p style="word-break:break-all; color:#3b82f6;">{{ protocol }}://{{ host_with_port }}/activate/{{ uid }}/{{ token }}/</p>
+            <p>This link will expire in 3 days. If you didn't create an account, please ignore this email.</p>
+        </div>
+        <div class="footer">
+            <p>ShareHub Team</p>
+        </div>
+    </div>
+</body>
+</html>

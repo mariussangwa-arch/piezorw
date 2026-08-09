@@ -9,32 +9,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-/* ======================================================
-   NEUTRAL + BLUE–PURPLE DESIGN TOKENS
-====================================================== */
 :root {
-    --primary: #4f46e5;            /* Indigo */
-    --primary-hover: #4338ca;
-    --secondary: #7c3aed;          /* Purple */
-    --secondary-hover: #6d28d9;
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --primary-light: rgba(59,130,246,0.1);
+    --secondary: #60a5fa;
 
-    --success: #16a34a;
-    --warning: #d97706;
-    --danger: #dc2626;
-    --info: #6366f1;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --info: #3b82f6;
 
     --bg: #f8fafc;
     --surface: #ffffff;
-    --text: #1f2937;
-    --text-muted: #6b7280;
-    --border: #e5e7eb;
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
 
-    --radius: 12px;
+    --radius: 0;
     --shadow-sm: 0 6px 12px rgba(0,0,0,.06);
     --shadow-lg: 0 24px 50px rgba(0,0,0,.15);
 }
 
-/* DARK MODE */
 [data-theme="dark"] {
     --bg: #0f172a;
     --surface: #1e293b;
@@ -43,9 +39,6 @@
     --border: #334155;
 }
 
-/* ======================================================
-   BASE RESET (SAFE)
-====================================================== */
 * { box-sizing: border-box; }
 
 body {
@@ -57,9 +50,6 @@ body {
     transition: background .3s ease, color .3s ease;
 }
 
-/* ======================================================
-   NAVBAR
-====================================================== */
 .navbar {
     position: fixed;
     top: 0;
@@ -81,7 +71,6 @@ body {
     justify-content: space-between;
 }
 
-/* LOGO */
 .logo {
     font-size: 1.4rem;
     font-weight: 800;
@@ -94,7 +83,6 @@ body {
     gap: .5rem;
 }
 
-/* NAV LINKS */
 .nav-menu {
     list-style: none;
     display: flex;
@@ -114,9 +102,6 @@ body {
     color: var(--primary);
 }
 
-/* ======================================================
-   USER MENU
-====================================================== */
 .user-menu {
     position: relative;
 }
@@ -126,7 +111,7 @@ body {
     align-items: center;
     gap: .6rem;
     padding: .4rem .9rem;
-    border-radius: 999px;
+    border-radius: 0;
     border: 1px solid var(--border);
     cursor: pointer;
     background: var(--surface);
@@ -135,7 +120,7 @@ body {
 .user-avatar {
     width: 32px;
     height: 32px;
-    border-radius: 50%;
+    border-radius: 0;
     background: linear-gradient(135deg, var(--primary), var(--secondary));
     display: grid;
     place-items: center;
@@ -149,7 +134,7 @@ body {
     right: 0;
     min-width: 200px;
     background: var(--surface);
-    border-radius: var(--radius);
+    border-radius: 0;
     box-shadow: var(--shadow-lg);
     opacity: 0;
     visibility: hidden;
@@ -172,15 +157,12 @@ body {
 }
 
 .dropdown a:hover {
-    background: rgba(99,102,241,.08);
+    background: var(--primary-light);
 }
 
-/* ======================================================
-   BUTTONS (GENERIC)
-====================================================== */
 .btn {
     padding: .6rem 1.3rem;
-    border-radius: var(--radius);
+    border-radius: 0;
     font-weight: 600;
     text-decoration: none;
     display: inline-flex;
@@ -190,24 +172,24 @@ body {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
     color: #fff;
-    border: none;
 }
 
 .btn-primary:hover {
-    filter: brightness(1.05);
+    filter: brightness(1.1);
 }
 
 .btn-outline {
     background: transparent;
-    border: 1px solid var(--primary);
+    border: 2px solid var(--primary);
     color: var(--primary);
 }
 
-/* ======================================================
-   MAIN LAYOUT
-====================================================== */
+.btn-outline:hover {
+    background: var(--primary-light);
+}
+
 .main-content {
     margin-top: 72px;
     padding: 2rem 1.5rem;
@@ -219,26 +201,20 @@ body {
     margin: auto;
 }
 
-/* ======================================================
-   ALERTS
-====================================================== */
 .alert {
     padding: 1rem 1.3rem;
-    border-radius: var(--radius);
+    border-radius: 0;
     margin-bottom: 1rem;
     display: flex;
     gap: .7rem;
     align-items: center;
 }
 
-.alert-success { background: #dcfce7; color: #065f46; }
+.alert-success { background: #d1fae5; color: #065f46; }
 .alert-error   { background: #fee2e2; color: #991b1b; }
 .alert-warning { background: #fef3c7; color: #92400e; }
-.alert-info    { background: #eef2ff; color: #3730a3; }
+.alert-info    { background: #dbeafe; color: #1e40af; }
 
-/* ======================================================
-   MOBILE
-====================================================== */
 .mobile-menu-btn {
     display: none;
     font-size: 1.5rem;
@@ -270,6 +246,36 @@ body {
         display: block;
     }
 }
+
+.search-form {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+}
+
+.search-input {
+    padding: .6rem 1rem;
+    border: 2px solid var(--border);
+    border-radius: 0;
+    background: var(--surface);
+    color: var(--text);
+    font-size: .95rem;
+    min-width: 220px;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.search-btn {
+    padding: .6rem 1rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+}
 </style>
 
 {% block extra_css %}{% endblock %}
@@ -296,7 +302,7 @@ body {
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="dropdown">
-                        <a href="#"><i class="fas fa-user"></i> Profile</a>
+                        <a href="{% url 'profile' %}"><i class="fas fa-user"></i> Profile</a>
                         {% if user.is_staff %}
                         <a href="{% url 'activate_latest' %}"><i class="fas fa-user-check"></i> Activate User</a>
                         {% endif %}

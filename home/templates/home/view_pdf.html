@@ -1,20 +1,92 @@
-<!-- home/templates/home/view_pdf.html → REPLACE ENTIRE FILE -->
-{% extends 'home/base.html' %}
-{% block title %}PDF Viewer{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ file.name }} - PDF Viewer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 20px 40px rgba(0,0,0,0.08);
+            --radius: 0;
+        }
+        [data-theme="dark"] {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
 
-{% block content %}
-<div class="container py-5">
-    <div class="text-center mb-4">
-        <h3><i class="fas fa-file-pdf text-danger"></i> PDF Viewer</h3>
-        <a href="{% url 'all_files' %}" class="btn btn-outline-secondary">Back</a>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text-primary); }
+
+        .toolbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 72px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 100;
+        }
+
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .toolbar-left a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .toolbar-left a:hover { color: var(--primary); }
+
+        .pdf-viewer {
+            margin-top: 72px;
+            height: calc(100vh - 72px);
+            background: #525659;
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .pdf-viewer iframe {
+            width: 100%;
+            max-width: 1000px;
+            height: 100%;
+            background: white;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="toolbar">
+        <div class="toolbar-left">
+            <a href="{% url 'view_file' file.id %}"><i class="fas fa-arrow-left"></i> Back</a>
+            <span style="font-weight:600;">{{ file.name }}</span>
+        </div>
     </div>
 
-    <iframe 
-        src="{{ pdf_url }}#toolbar=1&navpanes=1&scrollbar=1"
-        width="100%" 
-        height="1000px"
-        style="border:none; border-radius:12px; box-shadow:0 0 30px rgba(0,0,0,0.3);"
-        allowfullscreen>
-    </iframe>
-</div>
-{% endblock %}
+    <div class="pdf-viewer">
+        <iframe src="{{ file.file.url }}" title="{{ file.name }}"></iframe>
+    </div>
+</body>
+</html>

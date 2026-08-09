@@ -1,24 +1,28 @@
 {% extends 'home/base.html' %}
-
 {% block title %}Login - ShareHub{% endblock %}
 
 {% block content %}
 <style>
-/* =========================
-   YOUTUBE-INSPIRED THEME
-========================= */
 :root {
-    --yt-red: #1f0bf5;
-    --yt-red-dark: #e7210c;
-    --yt-dark: #18181844;
-    --yt-dark-2: #202020;
-    --yt-gray: #31c321;
-    --yt-border: #303030;
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --primary-light: rgba(59,130,246,0.1);
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --shadow: 0 20px 40px rgba(0,0,0,0.08);
+    --radius: 0;
+}
+[data-theme="dark"] {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --text: #e5e7eb;
+    --text-muted: #9ca3af;
+    --border: #334155;
 }
 
-/* =========================
-   CONTAINER ANIMATION
-========================= */
 .login-container {
     min-height: calc(100vh - 160px);
     display: flex;
@@ -27,60 +31,34 @@
     padding: 2rem 1rem;
 }
 
-/* =========================
-   CARD
-========================= */
 .login-card {
-    background: #e7e8f0;
-    border-radius: 24px;
-    box-shadow: 0 30px 80px rgba(0,0,0,.15);
+    background: var(--surface);
+    border: 1px solid var(--border);
     overflow: hidden;
     max-width: 1000px;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    animation: slideFade 0.8s cubic-bezier(.4,0,.2,1);
+    box-shadow: var(--shadow);
 }
 
-/* Dark mode */
-[data-theme="dark"] .login-card {
-    background: var(--yt-dark);
-}
-
-/* Entrance animation */
-@keyframes slideFade {
-    from {
-        opacity: 0;
-        transform: translateY(40px) scale(0.98);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* =========================
-   HERO SIDE
-========================= */
 .login-hero {
-    background: linear-gradient(135deg, var(--yt-red), var(--yt-red-dark));
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
     padding: 3rem;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
-    text-align: center;
-    color: rgb(186, 187, 204);
+    color: white;
     position: relative;
     overflow: hidden;
 }
 
-/* Animated glow */
 .login-hero::after {
     content: "";
     position: absolute;
     width: 300px;
     height: 300px;
-    background: rgba(255,255,255,.12);
+    background: rgba(255,255,255,0.12);
     border-radius: 50%;
     top: -80px;
     right: -80px;
@@ -92,9 +70,15 @@
     to { transform: translateY(30px); }
 }
 
-.login-hero i {
-    font-size: 4rem;
-    margin-bottom: 1rem;
+.login-hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.login-hero-content i {
+    font-size: 3.5rem;
+    margin-bottom: 1.2rem;
+    display: block;
     animation: pulse 2s infinite;
 }
 
@@ -103,105 +87,159 @@
     50% { transform: scale(1.08); }
 }
 
-/* =========================
-   FORM SIDE
-========================= */
+.login-hero-content h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0 0 1rem;
+    color: white;
+}
+
+.login-hero-content p {
+    font-size: 1.05rem;
+    opacity: 0.95;
+    line-height: 1.7;
+    margin: 0;
+}
+
 .login-form-container {
     padding: 3rem;
 }
 
-.login-form-container h3 {
-    text-align: center;
-    font-size: 1.8rem;
-    margin-bottom: .3rem;
-}
-
-.login-form-container p {
-    text-align: center;
-    color: var(--yt-gray);
+.login-form-header {
     margin-bottom: 2rem;
 }
 
-/* =========================
-   INPUTS
-========================= */
+.login-form-header h3 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 0 0 0.6rem;
+    color: var(--text);
+}
+
+.login-form-header p {
+    color: var(--text-muted);
+    margin: 0;
+}
+
 .form-group {
     margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
 }
 
 .form-control {
     width: 100%;
     padding: 1rem 1.25rem;
-    border-radius: 12px;
-    border: 2px solid var(--yt-border);
-    background: transparent;
-    color: inherit;
+    border: 2px solid var(--border);
+    border-radius: 0;
+    background: var(--surface);
+    color: var(--text);
     font-size: 1rem;
-    transition: all .25s ease;
+    transition: all 0.25s ease;
 }
 
-/* Focus animation */
 .form-control:focus {
-    border-color: var(--yt-red);
-    box-shadow: 0 0 0 4px rgba(255,0,0,.15);
-    transform: translateY(-2px);
     outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-light);
+    transform: translateY(-2px);
 }
 
-/* =========================
-   BUTTON
-========================= */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper .form-control {
+    padding-right: 3rem;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 0.8rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+    z-index: 2;
+}
+
+.toggle-password:hover {
+    color: var(--primary);
+}
+
 .btn-login {
     width: 100%;
     padding: 1rem;
     font-size: 1.1rem;
     font-weight: 700;
-    border-radius: 14px;
-    background: var(--yt-red);
+    border-radius: 0;
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
     border: none;
     color: white;
     cursor: pointer;
-    transition: all .25s ease;
-    position: relative;
-    overflow: hidden;
+    transition: all 0.25s ease;
+    margin-top: 0.5rem;
 }
 
-/* Hover */
 .btn-login:hover {
-    background: var(--yt-red-dark);
+    filter: brightness(1.1);
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(255,0,0,.35);
+    box-shadow: 0 10px 30px rgba(59,130,246,0.35);
 }
 
-/* Click ripple */
-.btn-login:active::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(255,255,255,.25);
-    animation: ripple .4s ease;
+.login-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: var(--text-muted);
 }
 
-@keyframes ripple {
-    from { opacity: 1; }
-    to { opacity: 0; }
-}
-
-/* =========================
-   LINKS
-========================= */
-a {
-    color: var(--yt-red);
+.login-footer a {
+    color: var(--primary);
     font-weight: 600;
+    text-decoration: none;
 }
 
-a:hover {
+.login-footer a:hover {
     text-decoration: underline;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+.alert {
+    padding: 1rem 1.3rem;
+    border-radius: 0;
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 0.7rem;
+    align-items: center;
+    border-left: 4px solid var(--primary);
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.alert-success {
+    border-left-color: #10b981;
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.alert-error {
+    border-left-color: #ef4444;
+    background: #fee2e2;
+    color: #991b1b;
+}
+
 @media (max-width: 900px) {
     .login-card {
         grid-template-columns: 1fr;
@@ -209,23 +247,36 @@ a:hover {
     .login-hero {
         display: none;
     }
+    .login-form-container {
+        padding: 2rem;
+    }
 }
 </style>
 
 <div class="login-container">
     <div class="login-card">
-
         <div class="login-hero">
-            <div>
+            <div class="login-hero-content">
                 <i class="fas fa-cloud-upload-alt"></i>
                 <h2>Welcome Back</h2>
-                <p>Sign in to manage and share your files</p>
+                <p>Sign in to manage and share your files with the ShareHub community.</p>
             </div>
         </div>
 
         <div class="login-form-container">
-            <h3>Sign In</h3>
-            <p>Use your ShareHub credentials</p>
+            <div class="login-form-header">
+                <h3>Sign In</h3>
+                <p>Use your ShareHub credentials</p>
+            </div>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        <i class="fas fa-exclamation-circle"></i>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
 
             <form method="post" autocomplete="off">
                 {% csrf_token %}
@@ -243,14 +294,19 @@ a:hover {
 
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" name="password" class="form-control"
-                        placeholder="Enter your password"
-                        autocomplete="new-password"
-                        required>
+                    <div class="password-wrapper">
+                        <input type="password" name="password" class="form-control password-input"
+                            placeholder="Enter your password"
+                            autocomplete="new-password"
+                            required>
+                        <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
                 </div>
 
-                <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
-                    <label>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                    <label style="display:flex; align-items:center; gap:.5rem; color:var(--text-muted); cursor:pointer;">
                         <input type="checkbox" name="remember"> Remember me
                     </label>
                     <a href="{% url 'password_reset' %}">Forgot Password?</a>
@@ -261,12 +317,41 @@ a:hover {
                 </button>
             </form>
 
-            <p style="text-align:center; margin-top:1.5rem;">
-                Don't have an account?
-                <a href="{% url 'register' %}">Create one</a>
-            </p>
+            <div class="login-footer">
+                <p>Don't have an account? <a href="{% url 'register' %}">Create one</a></p>
+            </div>
         </div>
-
     </div>
 </div>
+
+<script>
+    document.querySelectorAll('.toggle-password').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const input = btn.parentElement.querySelector('.password-input');
+            const icon = btn.querySelector('i');
+            if (input && icon) {
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            }
+        });
+    });
+
+    document.querySelectorAll('.alert-error').forEach(alert => {
+        const usernameInput = document.querySelector('input[name="username"]');
+        const passwordInput = document.querySelector('input[name="password"]');
+        if (usernameInput && passwordInput) {
+            usernameInput.style.borderColor = '#ef4444';
+            passwordInput.style.borderColor = '#ef4444';
+            usernameInput.style.boxShadow = '0 0 0 4px rgba(239,68,68,0.15)';
+            passwordInput.style.boxShadow = '0 0 0 4px rgba(239,68,68,0.15)';
+        }
+    });
+</script>
 {% endblock %}

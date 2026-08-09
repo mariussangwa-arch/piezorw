@@ -1,1063 +1,338 @@
 {% extends 'home/base.html' %}
-{% load file_extras %}  <!-- Important: Load the custom filters -->
-
 {% block title %}{{ file.name }} - ShareHub{% endblock %}
 
-{% block content %}
+{% block extra_css %}
 <style>
-    :root {
-        --primary: #ff0000;
-        --primary-dark: #003acc;
-        --bg: #f8fafc;
-        --surface: #ffffff;
-        --text-primary: #0f172a;
-        --text-secondary: #475569;
-        --text-muted: #64748b;
-        --border: #e2e8f0;
-        --shadow: 0 15px 35px rgba(0,0,0,0.1);
-        --shadow-lg: 0 25px 50px rgba(0,0,0,0.15);
-        --radius: 28px;
-        --radius-sm: 18px;
-        --transition: all 0.4s ease;
-    }
-    [data-theme="dark"] {
-        --bg: #0f172a;
-        --surface: #1e293b;
-        --text-primary: #f8fafc;
-        --text-secondary: #cbd5e1;
-        --text-muted: #94a3b8;
-        --border: #334155;
-    }
-    body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', sans-serif; margin: 0; }
-
-    .viewer-container {
-        max-width: 1600px;
-        margin: 4rem auto;
-        padding: 0 2rem;
-        display: flex;
-        gap: 3rem;
-        flex-wrap: wrap;
-        align-items: flex-start;
-    }
-
-    .preview-card {
-        flex: 3;
-        min-width: 500px;
-        background: var(--surface);
-        border-radius: var(--radius);
-        overflow: hidden;
-        box-shadow: var(--shadow);
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 600px;
-        max-height: 88vh;
-        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    }
-
-    /* ============ IMAGE VIEWER ============ */
-    .image-viewer {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #000;
-    }
-
-    .image-viewer img {
-        max-width: 100%;
-        max-height: 88vh;
-        object-fit: contain;
-        transition: transform 0.3s ease;
-        cursor: zoom-in;
-    }
-
-    .image-viewer img.zoomed {
-        cursor: zoom-out;
-        transform: scale(1.5);
-    }
-
-    .image-controls {
-        position: absolute;
-        bottom: 2rem;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(0,0,0,0.7);
-        backdrop-filter: blur(10px);
-        padding: 1rem 2rem;
-        border-radius: 50px;
-        display: flex;
-        gap: 1rem;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .image-viewer:hover .image-controls {
-        opacity: 1;
-    }
-
-    .img-control-btn {
-        background: rgba(255,255,255,0.2);
-        border: none;
-        color: white;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-    }
-
-    .img-control-btn:hover {
-        background: var(--primary);
-        transform: scale(1.1);
-    }
-
-    /* ============ VIDEO VIEWER ============ */
-    .video-viewer {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        background: #000;
-    }
-
-    .video-viewer video {
-        width: 100%;
-        height: 100%;
-        max-height: 88vh;
-        object-fit: contain;
-    }
-
-    .video-viewer video::-webkit-media-controls-panel {
-        background: linear-gradient(transparent, rgba(0,0,0,0.8));
-    }
-
-    /* ============ PDF VIEWER ============ */
-    .pdf-viewer {
-        width: 100%;
-        height: 88vh;
-        position: relative;
-        background: var(--surface);
-    }
-
-    .pdf-viewer iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-        border-radius: var(--radius);
-    }
-
-    .pdf-toolbar {
-        position: absolute;
-        top: 1.5rem;
-        right: 1.5rem;
-        background: rgba(0,0,0,0.7);
-        backdrop-filter: blur(10px);
-        padding: 0.75rem 1.5rem;
-        border-radius: 50px;
-        display: flex;
-        gap: 0.75rem;
-        z-index: 10;
-    }
-
-    .pdf-btn {
-        background: rgba(255,255,255,0.2);
-        border: none;
-        color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        cursor: pointer;
-        font-size: 0.9rem;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .pdf-btn:hover {
-        background: var(--primary);
-        transform: translateY(-2px);
-    }
-
-    /* ============ CODE VIEWER ============ */
-    .code-viewer {
-        width: 100%;
-        height: 88vh;
-        position: relative;
-        background: #1e1e1e;
-        border-radius: var(--radius);
-        overflow: hidden;
-    }
-
-    .code-header {
-        background: linear-gradient(135deg, #2d2d2d, #1e1e1e);
-        padding: 1.5rem 2rem;
-        border-bottom: 1px solid #333;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .code-title {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .code-dots {
-        display: flex;
-        gap: 0.5rem;
-    }
-
-    .code-dot {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-    }
-
-    .code-dot.red { background: #ff5f56; }
-    .code-dot.yellow { background: #ffbd2e; }
-    .code-dot.green { background: #27c93f; }
-
-    .code-filename {
-        color: #fff;
-        font-weight: 600;
-        font-size: 1rem;
-    }
-
-    .copy-code-btn {
-        background: rgba(255,255,255,0.1);
-        border: none;
-        color: #fff;
-        padding: 0.6rem 1.2rem;
-        border-radius: 8px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        transition: all 0.3s ease;
-        font-size: 0.9rem;
-    }
-
-    .copy-code-btn:hover {
-        background: var(--primary);
-        transform: translateY(-2px);
-    }
-
-    .copy-code-btn.copied {
-        background: #27c93f;
-    }
-
-    .code-content {
-        height: calc(88vh - 70px);
-        overflow: auto;
-        padding: 2rem;
-        font-family: 'Fira Code', 'Courier New', monospace;
-        font-size: 0.95rem;
-        line-height: 1.7;
-    }
-
-    .code-content::-webkit-scrollbar {
-        width: 12px;
-    }
-
-    .code-content::-webkit-scrollbar-track {
-        background: #1e1e1e;
-    }
-
-    .code-content::-webkit-scrollbar-thumb {
-        background: #444;
-        border-radius: 6px;
-    }
-
-    .code-content::-webkit-scrollbar-thumb:hover {
-        background: #666;
-    }
-
-    pre {
-        margin: 0;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        color: #f8f8f2;
-    }
-
-    /* Line numbers */
-    .code-content pre {
-        counter-reset: line;
-    }
-
-    .code-content pre code {
-        display: block;
-    }
-
-    /* ============ OFFICE VIEWER ============ */
-    .office-viewer {
-        width: 100%;
-        height: 88vh;
-        position: relative;
-        background: var(--surface);
-        border-radius: var(--radius);
-        overflow: hidden;
-    }
-
-    .office-viewer iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-    }
-
-    .office-loading {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        color: var(--text-muted);
-    }
-
-    .office-loading i {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        animation: spin 2s linear infinite;
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-    /* ============ AUDIO PLAYER ============ */
-    .audio-player-wrapper {
-        width: 90%;
-        max-width: 700px;
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-        border-radius: var(--radius);
-        padding: 3rem;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .audio-player-wrapper::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, var(--primary), #ff6b6b, var(--primary));
-        background-size: 200% 100%;
-        animation: shimmer 3s linear infinite;
-    }
-
-    @keyframes shimmer {
-        0% { background-position: -200% 0; }
-        100% { background-position: 200% 0; }
-    }
-
-    .audio-visualizer {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 4px;
-        height: 80px;
-        margin-bottom: 2rem;
-    }
-
-    .audio-visualizer span {
-        width: 4px;
-        height: 20px;
-        background: linear-gradient(180deg, var(--primary), #ff6b6b);
-        border-radius: 4px;
-        animation: wave 1s ease-in-out infinite;
-        opacity: 0.6;
-    }
-
-    .audio-visualizer span:nth-child(1) { animation-delay: 0s; }
-    .audio-visualizer span:nth-child(2) { animation-delay: 0.1s; }
-    .audio-visualizer span:nth-child(3) { animation-delay: 0.2s; }
-    .audio-visualizer span:nth-child(4) { animation-delay: 0.3s; }
-    .audio-visualizer span:nth-child(5) { animation-delay: 0.4s; }
-    .audio-visualizer span:nth-child(6) { animation-delay: 0.3s; }
-    .audio-visualizer span:nth-child(7) { animation-delay: 0.2s; }
-    .audio-visualizer span:nth-child(8) { animation-delay: 0.1s; }
-
-    @keyframes wave {
-        0%, 100% { height: 20px; }
-        50% { height: 60px; }
-    }
-
-    .audio-player-wrapper.playing .audio-visualizer span {
-        opacity: 1;
-    }
-
-    .audio-player-wrapper.paused .audio-visualizer span {
-        animation: none;
-        height: 20px;
-        opacity: 0.3;
-    }
-
-    .audio-info {
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-
-    .audio-info h3 {
-        color: #fff;
-        font-size: 1.5rem;
-        margin: 0 0 0.5rem 0;
-        font-weight: 600;
-    }
-
-    .audio-info p {
-        color: #94a3b8;
-        margin: 0;
-        font-size: 0.95rem;
-    }
-
-    .audio-controls {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-
-    .progress-container {
-        width: 100%;
-    }
-
-    .progress-bar {
-        width: 100%;
-        height: 8px;
-        background: rgba(255,255,255,0.1);
-        border-radius: 10px;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-        margin-bottom: 0.75rem;
-    }
-
-    .progress-bar::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 0%;
-        background: linear-gradient(90deg, var(--primary), #ff6b6b);
-        border-radius: 10px;
-        transition: width 0.1s linear;
-    }
-
-    .progress-bar:hover::before {
-        box-shadow: 0 0 10px rgba(255,0,0,0.5);
-    }
-
-    .time-display {
-        display: flex;
-        justify-content: space-between;
-        color: #94a3b8;
-        font-size: 0.85rem;
-        font-weight: 500;
-    }
-
-    .control-buttons {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 1.5rem;
-    }
-
-    .control-btn {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        border: none;
-        background: rgba(255,255,255,0.1);
-        color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-size: 1.2rem;
-    }
-
-    .control-btn:hover {
-        background: rgba(255,255,255,0.2);
-        transform: scale(1.1);
-    }
-
-    .control-btn:active {
-        transform: scale(0.95);
-    }
-
-    .control-btn.play-pause {
-        width: 70px;
-        height: 70px;
-        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-        font-size: 1.8rem;
-        box-shadow: 0 8px 20px rgba(255,0,0,0.3);
-    }
-
-    .control-btn.play-pause:hover {
-        box-shadow: 0 12px 30px rgba(255,0,0,0.5);
-        transform: scale(1.15);
-    }
-
-    .volume-control {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        justify-content: center;
-        margin-top: 0.5rem;
-    }
-
-    .volume-icon {
-        color: #94a3b8;
-        font-size: 1.1rem;
-        cursor: pointer;
-        transition: color 0.3s ease;
-    }
-
-    .volume-icon:hover {
-        color: var(--primary);
-    }
-
-    .volume-slider {
-        width: 120px;
-        height: 6px;
-        background: rgba(255,255,255,0.1);
-        border-radius: 10px;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .volume-slider::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        background: linear-gradient(90deg, var(--primary), #ff6b6b);
-        border-radius: 10px;
-    }
-
-    audio {
-        display: none;
-    }
-
-    /* ============ FALLBACK VIEWER ============ */
-    .preview-fallback {
-        text-align: center;
-        padding: 6rem 3rem;
-        color: #fff;
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .fallback-icon-wrapper {
-        width: 180px;
-        height: 180px;
-        background: linear-gradient(135deg, rgba(255,0,0,0.2), rgba(255,107,107,0.2));
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 2rem;
-        animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,0,0,0.4); }
-        50% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(255,0,0,0); }
-    }
-
-    .fallback-icon-wrapper i {
-        font-size: 5rem;
-        color: var(--primary);
-    }
-
-    .preview-fallback h3 {
-        font-size: 2rem;
-        margin: 1rem 0;
-        font-weight: 700;
-    }
-
-    .preview-fallback p {
-        color: #94a3b8;
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
-    }
-
-    .fallback-download-btn {
-        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-        color: white;
-        padding: 1.2rem 2.5rem;
-        border-radius: 50px;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 1rem;
-        font-weight: 600;
-        font-size: 1.1rem;
-        transition: all 0.3s ease;
-        box-shadow: 0 10px 30px rgba(255,0,0,0.3);
-    }
-
-    .fallback-download-btn:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 15px 40px rgba(255,0,0,0.5);
-    }
-
-    /* ============ INFO CARD ============ */
-    .info-card {
-        flex: 1;
-        min-width: 360px;
-        background: var(--surface);
-        border-radius: var(--radius);
-        padding: 3rem;
-        box-shadow: var(--shadow);
-        display: flex;
-        flex-direction: column;
-        gap: 2.5rem;
-        height: fit-content;
-        position: sticky;
-        top: 2rem;
-    }
-    .info-card h1 {
-        font-size: 2.4rem;
-        font-weight: 800;
-        margin: 0;
-        line-height: 1.2;
-        word-break: break-word;
-        background: linear-gradient(135deg, var(--text-primary), var(--primary));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    .meta-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 1.2rem;
-        font-size: 1rem;
-    }
-    .meta-item {
-        display: flex;
-        align-items: center;
-        gap: 0.7rem;
-        background: var(--bg);
-        padding: 0.9rem 1.1rem;
-        border-radius: var(--radius-sm);
-        transition: all 0.3s ease;
-        color: var(--text-muted);
-    }
-
-    .meta-item:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        color: var(--text-primary);
-    }
-
-    .meta-item i {
-        color: var(--primary);
-        font-size: 1.1rem;
-    }
-
-    .description-box {
-        background: linear-gradient(135deg, var(--bg), var(--surface));
-        padding: 2rem;
-        border-radius: var(--radius-sm);
-        line-height: 1.7;
-        font-size: 1.05rem;
-        border-left: 4px solid var(--primary);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-
-    .description-box strong {
-        display: block;
-        color: var(--primary);
-        margin-bottom: 0.75rem;
-        font-size: 1.1rem;
-    }
-
-    .download-action {
-        margin-top: auto;
-        padding-top: 1.5rem;
-    }
-    .btn-download {
-        width: 100%;
-        padding: 1.4rem;
-        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-        color: white;
-        text-align: center;
-        border-radius: var(--radius-sm);
-        font-size: 1.2rem;
-        font-weight: 700;
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
-        box-shadow: var(--shadow);
-        transition: var(--transition);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .btn-download::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-        transition: left 0.5s ease;
-    }
-
-    .btn-download:hover::before {
-        left: 100%;
-    }
-
-    .btn-download:hover {
-        transform: translateY(-6px);
-        box-shadow: var(--shadow-lg);
-    }
-
-    @media (max-width: 1024px) {
-        .viewer-container { gap: 2rem; }
-        .preview-card { min-height: 500px; }
-    }
-    @media (max-width: 768px) {
-        .viewer-container { flex-direction: column; padding: 0 1rem; }
-        .preview-card, .info-card { min-width: 100%; }
-        .info-card { position: static; }
-        .audio-player-wrapper { width: 95%; padding: 2rem; }
-        .image-controls { padding: 0.75rem 1.5rem; }
-    }
+:root {
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --primary-light: rgba(59,130,246,0.1);
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --shadow: 0 20px 40px rgba(0,0,0,0.08);
+    --radius: 0;
+}
+[data-theme="dark"] {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --border: #334155;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+.viewer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.file-title-section { flex: 1; }
+
+.file-title-section h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0 0 0.8rem;
+    color: var(--text-primary);
+}
+
+.file-description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.file-meta-bar {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+.file-meta-bar span { display: flex; align-items: center; gap: 0.4rem; }
+
+.file-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+.btn {
+    padding: 0.9rem 1.5rem;
+    border-radius: 0;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: all 0.25s ease;
+    border: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+    color: white;
+}
+
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(59,130,246,0.3); }
+
+.btn-secondary {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    color: var(--text-primary);
+}
+
+.btn-secondary:hover { background: var(--bg); }
+
+.viewer-content {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+}
+
+.viewer-placeholder {
+    padding: 8rem 4rem;
+    text-align: center;
+    background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+}
+
+[data-theme="dark"] .viewer-placeholder {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+}
+
+.viewer-placeholder i { font-size: 8rem; color: var(--primary); margin-bottom: 2rem; display: block; }
+.viewer-placeholder h3 { font-size: 2rem; font-weight: 700; margin: 0 0 1rem; }
+.viewer-placeholder p { color: var(--text-muted); font-size: 1.2rem; }
+
+.image-viewer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #0f172a;
+    padding: 2rem;
+}
+
+.image-viewer img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+}
+
+.video-viewer {
+    display: flex;
+    justify-content: center;
+    background: #000;
+}
+
+.video-viewer video {
+    max-width: 100%;
+    max-height: 80vh;
+}
+
+.audio-viewer {
+    padding: 5rem 3rem;
+    text-align: center;
+    background: linear-gradient(135deg, #1e3a8a, #172554);
+}
+
+.audio-viewer i { font-size: 5rem; color: white; margin-bottom: 2rem; display: block; }
+
+.audio-viewer audio {
+    width: 100%;
+    max-width: 700px;
+    margin-top: 2rem;
+}
+
+.pdf-viewer {
+    display: flex;
+       justify-content: center;
+    padding: 2rem;
+    background: #525659;
+}
+
+.pdf-viewer iframe {
+    width: 100%;
+    height: 80vh;
+    border: none;
+}
+
+.code-viewer {
+    padding: 2rem;
+    background: #0f172a;
+    overflow-x: auto;
+}
+
+.code-viewer pre {
+    margin: 0;
+    color: #e5e7eb;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.like-section {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1.5rem;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+}
+
+.like-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--border);
+    background: var(--surface);
+    color: var(--text-secondary);
+    border-radius: 0;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.25s ease;
+    text-decoration: none;
+}
+
+.like-btn.active-like { background: #10b981; color: white; border-color: #10b981; }
+.like-btn.active-dislike { background: #ef4444; color: white; border-color: #ef4444; }
+.like-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+
+.share-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.share-btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.25s ease;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+}
+
+.share-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(99,102,241,0.3); }
+
+.avi-notice {
+    padding: 2rem;
+    background: #fef3c7;
+    text-align: center;
+}
+
+.avi-notice i { font-size: 3rem; color: #f59e0b; margin-bottom: 1rem; display: block; }
+.avi-notice p { color: #92400e; margin-bottom: 1.5rem; font-size: 1.1rem; }
 </style>
 
-<!-- Load Highlight.js only for code files -->
-{% if file.file_type == 'code' %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-<script>hljs.highlightAll();</script>
-{% endif %}
+<div class="container">
+    <div class="viewer-header">
+        <div class="file-title-section">
+            <h1>{{ file.name }}</h1>
+            {% if file.description %}
+                <p class="file-description">{{ file.description }}</p>
+            {% endif %}
+            <div class="file-meta-bar">
+                <span><i class="fas fa-user"></i> {{ file.uploaded_by.username }}</span>
+                <span><i class="fas fa-calendar"></i> {{ file.upload_date|date:"M d, Y" }}</span>
+                <span><i class="fas fa-weight-hanging"></i> {{ file.format_file_size }}</span>
+                <span><i class="fas fa-eye"></i> {{ file.views }} views</span>
+                <span><i class="fas fa-download"></i> {{ file.downloads }} downloads</span>
+            </div>
+        </div>
+        <div class="file-actions">
+            <a href="{% url 'download_file' file.id %}" class="btn btn-primary">
+                <i class="fas fa-download"></i> Download
+            </a>
+            <a href="{% url 'share_file' file.id %}" class="btn btn-secondary">
+                <i class="fas fa-share-alt"></i> Share
+            </a>
+        </div>
+    </div>
 
-<div class="viewer-container">
-    <div class="preview-card">
-        {% if file.file_type == 'image' %}
+    <div class="viewer-content">
+        {% if file.file_type == "image" %}
             <div class="image-viewer">
-                <img src="{{ file.file.url }}" alt="{{ file.name }}" id="imageElement">
-                <div class="image-controls">
-                    <button class="img-control-btn" id="zoomBtn" title="Zoom">
-                        <i class="fas fa-search-plus"></i>
-                    </button>
-                    <button class="img-control-btn" id="downloadImgBtn" title="Download">
-                        <i class="fas fa-download"></i>
-                    </button>
-                    <button class="img-control-btn" id="fullscreenBtn" title="Fullscreen">
-                        <i class="fas fa-expand"></i>
-                    </button>
-                </div>
+                <img src="{{ file.file.url }}" alt="{{ file.name }}">
             </div>
 
-            <script>
-                const img = document.getElementById('imageElement');
-                const zoomBtn = document.getElementById('zoomBtn');
-                const fullscreenBtn = document.getElementById('fullscreenBtn');
-                const downloadImgBtn = document.getElementById('downloadImgBtn');
-                const imageViewer = document.querySelector('.image-viewer');
-
-                zoomBtn.addEventListener('click', () => {
-                    img.classList.toggle('zoomed');
-                    zoomBtn.querySelector('i').classList.toggle('fa-search-plus');
-                    zoomBtn.querySelector('i').classList.toggle('fa-search-minus');
-                });
-
-                img.addEventListener('click', () => {
-                    img.classList.toggle('zoomed');
-                });
-
-                fullscreenBtn.addEventListener('click', () => {
-                    if (imageViewer.requestFullscreen) {
-                        imageViewer.requestFullscreen();
-                    }
-                });
-
-                downloadImgBtn.addEventListener('click', () => {
-                    window.location.href = '{% url "download_file" file.id %}';
-                });
-            </script>
-
-        {% elif file.file_type == 'video' %}
+        {% elif file.file_type == "video" %}
             <div class="video-viewer">
-                <video controls preload="metadata">
-                    <source src="{{ file.file.url }}" type="video/mp4">
-                    Your browser does not support video playback.
-                </video>
+                {% if file.name|lower|slice:"-4:" == ".avi" %}
+                    <div class="avi-notice">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>AVI Format Not Supported for Browser Playback</h3>
+                        <p>Your browser cannot play AVI files directly. Please download the file to watch it.</p>
+                        <a href="{% url 'download_file' file.id %}" class="btn btn-primary">
+                            <i class="fas fa-download"></i> Download File
+                        </a>
+                    </div>
+                {% else %}
+                    <video controls preload="metadata">
+                        <source src="{{ file.file.url }}" type="{{ file.file.content_type }}">
+                        Your browser does not support the video tag.
+                    </video>
+                {% endif %}
             </div>
 
-        {% elif file.file_type == 'audio' %}
-            <div class="audio-player-wrapper paused">
-                <div class="audio-visualizer">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                
-                <div class="audio-info">
-                    <h3>{{ file.name }}</h3>
-                    <p>{{ file.uploaded_by.username }}</p>
-                </div>
-
-                <audio id="audioPlayer">
-                    <source src="{{ file.file.url }}">
-                    Your browser does not support audio playback.
+        {% elif file.file_type == "audio" %}
+            <div class="audio-viewer">
+                <i class="fas fa-music"></i>
+                <h2 style="color:white; margin-bottom:1rem;">{{ file.name }}</h2>
+                <audio controls>
+                    <source src="{{ file.file.url }}" type="{{ file.file.content_type }}">
+                    Your browser does not support the audio element.
                 </audio>
-
-                <div class="audio-controls">
-                    <div class="progress-container">
-                        <div class="progress-bar" id="progressBar"></div>
-                        <div class="time-display">
-                            <span id="currentTime">0:00</span>
-                            <span id="duration">0:00</span>
-                        </div>
-                    </div>
-
-                    <div class="control-buttons">
-                        <button class="control-btn" id="rewindBtn">
-                            <i class="fas fa-backward"></i>
-                        </button>
-                        <button class="control-btn play-pause" id="playPauseBtn">
-                            <i class="fas fa-play"></i>
-                        </button>
-                        <button class="control-btn" id="forwardBtn">
-                            <i class="fas fa-forward"></i>
-                        </button>
-                    </div>
-
-                    <div class="volume-control">
-                        <i class="fas fa-volume-up volume-icon" id="volumeIcon"></i>
-                        <div class="volume-slider" id="volumeSlider"></div>
-                    </div>
-                </div>
             </div>
 
-            <script>
-                const audio = document.getElementById('audioPlayer');
-                const playPauseBtn = document.getElementById('playPauseBtn');
-                const rewindBtn = document.getElementById('rewindBtn');
-                const forwardBtn = document.getElementById('forwardBtn');
-                const progressBar = document.getElementById('progressBar');
-                const currentTimeEl = document.getElementById('currentTime');
-                const durationEl = document.getElementById('duration');
-                const volumeSlider = document.getElementById('volumeSlider');
-                const volumeIcon = document.getElementById('volumeIcon');
-                const playerWrapper = document.querySelector('.audio-player-wrapper');
-
-                function formatTime(seconds) {
-                    const mins = Math.floor(seconds / 60);
-                    const secs = Math.floor(seconds % 60);
-                    return `${mins}:${secs.toString().padStart(2, '0')}`;
-                }
-
-                playPauseBtn.addEventListener('click', () => {
-                    if (audio.paused) {
-                        audio.play();
-                        playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                        playerWrapper.classList.remove('paused');
-                        playerWrapper.classList.add('playing');
-                    } else {
-                        audio.pause();
-                        playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-                        playerWrapper.classList.remove('playing');
-                        playerWrapper.classList.add('paused');
-                    }
-                });
-
-                rewindBtn.addEventListener('click', () => {
-                    audio.currentTime = Math.max(0, audio.currentTime - 10);
-                });
-
-                forwardBtn.addEventListener('click', () => {
-                    audio.currentTime = Math.min(audio.duration, audio.currentTime + 10);
-                });
-
-                audio.addEventListener('timeupdate', () => {
-                    const progress = (audio.currentTime / audio.duration) * 100;
-                    progressBar.style.background = `linear-gradient(90deg, var(--primary) ${progress}%, rgba(255,255,255,0.1) ${progress}%)`;
-                    currentTimeEl.textContent = formatTime(audio.currentTime);
-                });
-
-                audio.addEventListener('loadedmetadata', () => {
-                    durationEl.textContent = formatTime(audio.duration);
-                });
-
-                progressBar.addEventListener('click', (e) => {
-                    const rect = progressBar.getBoundingClientRect();
-                    const percent = (e.clientX - rect.left) / rect.width;
-                    audio.currentTime = percent * audio.duration;
-                });
-
-                let currentVolume = 1;
-                volumeSlider.addEventListener('click', (e) => {
-                    const rect = volumeSlider.getBoundingClientRect();
-                    const percent = (e.clientX - rect.left) / rect.width;
-                    audio.volume = percent;
-                    currentVolume = percent;
-                    updateVolumeIcon(percent);
-                });
-
-                volumeIcon.addEventListener('click', () => {
-                    if (audio.volume > 0) {
-                        audio.volume = 0;
-                        updateVolumeIcon(0);
-                    } else {
-                        audio.volume = currentVolume;
-                        updateVolumeIcon(currentVolume);
-                    }
-                });
-
-                function updateVolumeIcon(volume) {
-                    if (volume === 0) {
-                        volumeIcon.className = 'fas fa-volume-mute volume-icon';
-                    } else if (volume < 0.5) {
-                        volumeIcon.className = 'fas fa-volume-down volume-icon';
-                    } else {
-                        volumeIcon.className = 'fas fa-volume-up volume-icon';
-                    }
-                }
-
-                audio.addEventListener('ended', () => {
-                    playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-                    playerWrapper.classList.remove('playing');
-                    playerWrapper.classList.add('paused');
-                });
-            </script>
-
-        {% elif file.file_type == 'pdf' %}
+        {% elif file.file_type == "pdf" %}
             <div class="pdf-viewer">
-                <div class="pdf-toolbar">
-                    <button class="pdf-btn" onclick="window.open('{{ file.file.url }}', '_blank')">
-                        <i class="fas fa-external-link-alt"></i> Open
-                    </button>
-                    <button class="pdf-btn" onclick="window.print()">
-                        <i class="fas fa-print"></i> Print
-                    </button>
-                    <button class="pdf-btn" onclick="window.location.href='{% url "download_file" file.id %}'">
-                        <i class="fas fa-download"></i> Download
-                    </button>
-                </div>
-                <iframe src="{{ file.file.url }}#toolbar=1&navpanes=0&scrollbar=1&view=FitH" allowfullscreen></iframe>
+                <iframe src="{{ file.file.url }}" title="{{ file.name }}"></iframe>
             </div>
 
-        {% elif file.file_type|in_list:"document" and file.get_file_extension|in_list:".doc,.docx,.xls,.xlsx,.ppt,.pptx" %}
-            <div class="office-viewer">
-                <div class="office-loading">
-                    <i class="fas fa-spinner"></i>
-                    <p>Loading document...</p>
-                </div>
-                <iframe 
-                    src="https://view.officeapps.live.com/op/embed.aspx?src={{ file.file.url|urlencode }}"
-                    frameborder="0"
-                    onload="document.querySelector('.office-loading').style.display='none'">
-                </iframe>
-            </div>
-
-        {% elif file.file_type == 'code' %}
+        {% elif file.file_type == "code" %}
             <div class="code-viewer">
-                <div class="code-header">
-                    <div class="code-title">
-                        <div class="code-dots">
-                            <span class="code-dot red"></span>
-                            <span class="code-dot yellow"></span>
-                            <span class="code-dot green"></span>
-                        </div>
-                        <span class="code-filename">{{ file.name }}</span>
-                    </div>
-                    <button class="copy-code-btn" id="copyCodeBtn">
-                        <i class="fas fa-copy"></i>
-                        <span>Copy Code</span>
-                    </button>
-                </div>
-                <div class="code-content">
-                    <pre><code id="codeContent">{{ code_content|default:"# Unable to display file content" }}</code></pre>
-                </div>
+                <pre>{{ file.file_content|default:"Unable to load file content" }}</pre>
             </div>
-
-            <script>
-                const copyCodeBtn = document.getElementById('copyCodeBtn');
-                const codeContent = document.getElementById('codeContent');
-
-                copyCodeBtn.addEventListener('click', () => {
-                    navigator.clipboard.writeText(codeContent.textContent).then(() => {
-                        copyCodeBtn.classList.add('copied');
-                        copyCodeBtn.innerHTML = '<i class="fas fa-check"></i><span>Copied!</span>';
-                        
-                        setTimeout(() => {
-                            copyCodeBtn.classList.remove('copied');
-                            copyCodeBtn.innerHTML = '<i class="fas fa-copy"></i><span>Copy Code</span>';
-                        }, 2000);
-                    });
-                });
-            </script>
 
         {% else %}
-            <div class="preview-fallback">
-                <div class="fallback-icon-wrapper">
-                    <i class="fas {{ file.get_file_icon }}"></i>
-                </div>
+            <div class="viewer-placeholder">
+                <i class="fas {{ file.get_file_icon }}"></i>
                 <h3>Preview Not Available</h3>
-                <p>This file type cannot be displayed directly in the browser.</p>
-                <a href="{% url 'download_file' file.id %}" class="fallback-download-btn">
+                <p>This file type ({{ file.file_type }}) cannot be previewed in the browser.</p>
+                <a href="{% url 'download_file' file.id %}" class="btn btn-primary" style="margin-top:1.5rem;">
                     <i class="fas fa-download"></i> Download to View
                 </a>
             </div>
         {% endif %}
     </div>
 
-    <div class="info-card">
-        <div>
-            <h1>{{ file.name }}</h1>
-        </div>
-
-        <div class="meta-grid">
-            <div class="meta-item"><i class="fas fa-calendar-day"></i> {{ file.upload_date|date:"F d, Y" }}</div>
-            <div class="meta-item"><i class="fas fa-clock"></i> {{ file.upload_date|date:"g:i A" }}</div>
-            <div class="meta-item"><i class="fas fa-hdd"></i> {{ file.format_file_size }}</div>
-            <div class="meta-item"><i class="fas fa-eye"></i> {{ file.views }} views</div>
-            <div class="meta-item"><i class="fas fa-user"></i> {{ file.uploaded_by.username }}</div>
-            <div class="meta-item"><i class="fas fa-tag"></i> {{ file.file_type|title }}</div>
-        </div>
-
-        {% if file.description %}
-            <div class="description-box">
-                <strong>Description</strong>
-                <p>{{ file.description }}</p>
-            </div>
-        {% endif %}
-
-        <div class="download-action">
-            <a href="{% url 'download_file' file.id %}" class="btn-download">
-                <i class="fas fa-download"></i> Download File
+    <div class="like-section">
+        <a href="{% url 'like_file' file.id %}" class="like-btn {% if user_liked %}active-like{% endif %}">
+            <i class="fas fa-thumbs-up"></i> {{ likes_count }} Likes
+        </a>
+        <a href="{% url 'dislike_file' file.id %}" class="like-btn {% if user_disliked %}active-dislike{% endif %}">
+            <i class="fas fa-thumbs-down"></i> {{ dislikes_count }} Dislikes
+        </a>
+        <div class="share-section">
+            <a href="{% url 'share_file' file.id %}" class="share-btn">
+                <i class="fas fa-share-alt"></i> Share
             </a>
         </div>
     </div>

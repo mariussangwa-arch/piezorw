@@ -1,11 +1,104 @@
 {% extends 'home/base.html' %}
-{% block title %}Check Your Email{% endblock %}
+{% block title %}Activation Email Sent - ShareHub{% endblock %}
+
 {% block content %}
-<div class="text-center py-5">
-    <i class="fas fa-envelope-open-text fa-4x mb-4 text-primary"></i>
-    <h2>Email Sent!</h2>
-    <p class="lead">We've sent a verification link to your email.</p>
-    <p>Click the link to activate your account. Check spam if not in inbox.</p>
-    <a href="{% url 'login' %}" class="btn btn-outline-light mt-3">Back to Login</a>
+<style>
+:root {
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --primary-light: rgba(59,130,246,0.1);
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --shadow: 0 20px 40px rgba(0,0,0,0.08);
+    --radius: 0;
+}
+[data-theme="dark"] {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --border: #334155;
+}
+
+.container { max-width: 700px; margin: 0 auto; padding: 4rem 1.5rem; }
+
+.activation-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 4rem;
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.activation-card i {
+    font-size: 5rem;
+    color: var(--primary);
+    margin-bottom: 2rem;
+    display: block;
+}
+
+.activation-card h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0 0 1rem;
+    color: var(--text-primary);
+}
+
+.activation-card p {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.7;
+}
+
+.activation-card .alert {
+    padding: 1rem 1.5rem;
+    border-radius: 0;
+    background: #fef3c7;
+    color: #92400e;
+    margin-bottom: 2rem;
+    display: inline-block;
+}
+
+.btn {
+    padding: 1rem 2rem;
+    border-radius: 0;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: all 0.25s ease;
+    border: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+    color: white;
+}
+
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(59,130,246,0.3); }
+</style>
+
+<div class="container">
+    <div class="activation-card">
+        <i class="fas fa-envelope-open-text"></i>
+        <h1>Check Your Email</h1>
+        <p>We've sent a verification link to your email address.<br>Click the link in the email to activate your account.</p>
+        <div class="alert">
+            <i class="fas fa-info-circle"></i>
+            Didn't receive the email? Check your spam folder.
+        </div>
+        <div>
+            <a href="{% url 'login' %}" class="btn btn-primary">
+                <i class="fas fa-arrow-left"></i> Back to Login
+            </a>
+        </div>
+    </div>
 </div>
 {% endblock %}

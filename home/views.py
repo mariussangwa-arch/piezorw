@@ -9,17 +9,19 @@ from django.http import HttpResponse
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
-from django.db.models import Sum
+from django.db.models import Sum, Q
 from django.core.paginator import Paginator
+from django.contrib.auth.views import PasswordResetView
 
 from .forms import RegisterForm, UploadForm
 from .models import File, Like
+from .utils import detect_file_type
 
 
 # ------------------- AUTH -------------------
@@ -33,20 +35,28 @@ def register(request):
             user.save()
 
             current_site = get_current_site(request)
+            if current_site.domain == 'example.com':
+                current_site.domain = 'localhost'
             subject = 'Activate Your ShareHub Account'
-            message = render_to_string('home/email_verification.html', {
+            host_with_port = request.get_host()
+            html_message = render_to_string('home/email_verification.html', {
                 'user': user,
                 'domain': current_site.domain,
+                'host_with_port': host_with_port,
+                'protocol': 'https' if request.is_secure() else 'http',
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': default_token_generator.make_token(user),
             })
-            send_mail(
+            text_message = f"Hi {user.username},\n\nPlease verify your email by clicking the link below:\n{'https' if request.is_secure() else 'http'}://{host_with_port}/activate/{urlsafe_base64_encode(force_bytes(user.pk))}/{default_token_generator.make_token(user)}/\n\nThis link expires in 3 days.\n\nThanks,\nShareHub Team"
+
+            email = EmailMultiAlternatives(
                 subject,
-                message,
+                text_message,
                 settings.DEFAULT_FROM_EMAIL or 'noreply@sharehub.local',
-                [user.email],
-                fail_silently=False
+                [user.email]
             )
+            email.attach_alternative(html_message, "text/html")
+            email.send(fail_silently=False)
             return render(request, 'home/activation_sent.html')
     else:
         form = RegisterForm()
@@ -81,9 +91,16 @@ def login_view(request):
                 login(request, user)
                 return redirect('dashboard')
             else:
-                messages.error(request, 'Please verify your email first.')
+                messages.error(request, 'Please verify your email before logging in.')
         else:
-            messages.error(request, 'Invalid username or password.')
+            try:
+                user_obj = User.objects.get(username=username)
+                if not user_obj.is_active:
+                    messages.error(request, 'Please verify your email before logging in.')
+                else:
+                    messages.error(request, 'Incorrect password. Please try again.')
+            except User.DoesNotExist:
+                messages.error(request, 'No account found with that username.')
     return render(request, 'home/login.html')
 
 
@@ -98,6 +115,13 @@ def logout_view(request):
 @login_required
 def dashboard(request):
     user_files_list = File.objects.filter(uploaded_by=request.user).order_by('-upload_date')
+
+    search_query = request.GET.get('q', '')
+    if search_query:
+        user_files_list = user_files_list.filter(
+            Q(name__icontains=search_query) |
+            Q(description__icontains=search_query)
+        )
     
     for f in user_files_list:
         f.likes_count = Like.objects.filter(file=f, is_like=True).count()
@@ -126,7 +150,8 @@ def dashboard(request):
         'files': user_files,
         'all_users': all_users,
         'inactive_users': inactive_users,
-        'stats': stats
+        'stats': stats,
+        'search_query': search_query,
     })
 
 
@@ -144,36 +169,7 @@ def upload_file(request):
             filename = uploaded_file.name
             ext = os.path.splitext(filename)[1].lower()
 
-            # Robust file type detection — extension first (most reliable)
-            if ext in {'.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.svg', '.tiff'}:
-                file_instance.file_type = 'image'
-            elif ext in {'.mp4', '.mov', '.avi', '.mkv', '.webm', '.flv', '.wmv', '.mpg', '.mpeg'}:
-                file_instance.file_type = 'video'
-            elif ext in {'.mp3', '.wav', '.ogg', '.flac', '.aac', '.m4a', '.wma'}:
-                file_instance.file_type = 'audio'
-            elif ext == '.pdf':
-                file_instance.file_type = 'pdf'
-            elif ext in {'.zip', '.rar', '.7z', '.tar', '.gz', '.bz2'}:
-                file_instance.file_type = 'archive'
-            elif ext in {'.doc', '.docx', '.odt', '.rtf', '.pages'}:
-                file_instance.file_type = 'document'
-            elif ext in {'.py', '.js', '.html', '.css', '.json', '.xml', '.java', '.cpp', '.c', '.php', '.rb', '.go', '.ts', '.tsx', '.sql', '.sh', '.yaml', '.yml', '.md'}:
-                file_instance.file_type = 'code'
-            elif ext in {'.txt', '.log', '.csv'}:
-                file_instance.file_type = 'document'
-            else:
-                # Fallback to MIME type
-                ct = uploaded_file.content_type
-                if ct.startswith('image/'):
-                    file_instance.file_type = 'image'
-                elif ct.startswith('video/'):
-                    file_instance.file_type = 'video'
-                elif ct.startswith('audio/'):
-                    file_instance.file_type = 'audio'
-                elif ct == 'application/pdf':
-                    file_instance.file_type = 'pdf'
-                else:
-                    file_instance.file_type = 'document'
+            file_instance.file_type = detect_file_type(ext)
 
             file_instance.save()
             messages.success(request, f'File "{file_instance.name}" uploaded successfully!')
@@ -196,6 +192,14 @@ def all_files(request):
     if file_type != 'all':
         files = files.filter(file_type=file_type)
 
+    search_query = request.GET.get('q', '')
+    if search_query:
+        files = files.filter(
+            Q(name__icontains=search_query) |
+            Q(description__icontains=search_query) |
+            Q(uploaded_by__username__icontains=search_query)
+        )
+
     for f in files:
         f.likes_count = Like.objects.filter(file=f, is_like=True).count()
         f.dislikes_count = Like.objects.filter(file=f, is_like=False).count()
@@ -217,6 +221,7 @@ def all_files(request):
         'files': page_files,
         'current_sort': sort,
         'current_type': file_type,
+        'search_query': search_query,
     })
 
 
@@ -303,6 +308,57 @@ def unlike_file(request, file_id):
     return redirect(request.META.get('HTTP_REFERER', 'all_files'))
 
 
+@login_required
+def profile(request):
+    user = request.user
+    user_files = File.objects.filter(uploaded_by=user).order_by('-upload_date')[:6]
+    total_files = File.objects.filter(uploaded_by=user).count()
+    total_views = sum(f.views for f in File.objects.filter(uploaded_by=user))
+    total_downloads = sum(f.downloads for f in File.objects.filter(uploaded_by=user))
+    total_shares = sum(f.shares for f in File.objects.filter(uploaded_by=user))
+
+    return render(request, 'home/profile.html', {
+        'user': user,
+        'user_files': user_files,
+        'total_files': total_files,
+        'total_views': total_views,
+        'total_downloads': total_downloads,
+        'total_shares': total_shares,
+    })
+
+
+def is_admin(user):
+    return user.is_staff or user.is_superuser
+
+
+@login_required
+@user_passes_test(is_admin)
+def user_list(request):
+    users = User.objects.all().order_by('-date_joined')
+    return render(request, 'users/user_list.html', {'users': users})
+
+
+@login_required
+def share_file(request, file_id):
+    file = get_object_or_404(File, id=file_id)
+    file.shares += 1
+    file.save(update_fields=['shares'])
+    share_url = request.build_absolute_uri(f'/view/{file.id}/')
+    return render(request, 'home/share.html', {
+        'file': file,
+        'share_url': share_url,
+    })
+
+
+class ShareHubPasswordResetView(PasswordResetView):
+    def form_valid(self, form):
+        current_site = get_current_site(self.request)
+        if current_site.domain == 'example.com':
+            current_site.domain = 'localhost'
+        self.extra_email_context = {"host_with_port": self.request.get_host()}
+        return super().form_valid(form)
+
+
 # ------------------- ADMIN ONLY -------------------
 
 @login_required
@@ -359,14 +415,3 @@ def make_staff(request, user_id):
         status = "granted" if user.is_staff else "revoked"
         messages.success(request, f'Staff privileges {status} for {user.username}!')
     return redirect('dashboard')
-
-
-def is_admin(user):
-    return user.is_staff or user.is_superuser
-
-
-@login_required
-@user_passes_test(is_admin)
-def user_list(request):
-    users = User.objects.all().order_by('-date_joined')
-    return render(request, 'users/user_list.html', {'users': users})

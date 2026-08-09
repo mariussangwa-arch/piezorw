@@ -2,6 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import os
+from .utils import detect_file_type, format_file_size, get_file_extension
 
 class File(models.Model):
     name = models.CharField(max_length=255)
@@ -20,8 +21,8 @@ class File(models.Model):
     def save(self, *args, **kwargs):
         # Detect file type and size before saving
         if self.file:
-            file_extension = os.path.splitext(self.file.name)[1].lower()
-            self.file_type = self.get_file_type(file_extension)
+            ext = os.path.splitext(self.file.name)[1].lower()
+            self.file_type = detect_file_type(ext)
             try:
                 self.file_size = self.file.size
             except:
@@ -29,31 +30,7 @@ class File(models.Model):
         super().save(*args, **kwargs)
     
     def get_file_type(self, extension):
-        """Determine file type based on extension"""
-        ext = extension.replace('.', '').lower()
-        video_formats = ['mp4', 'avi', 'mkv', 'mov', 'webm', 'flv', 'wmv', 'm4v', 'mpg', 'mpeg']
-        audio_formats = ['mp3', 'wav', 'ogg', 'm4a', 'flac', 'aac', 'wma', 'aiff']
-        image_formats = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp', 'ico', 'tiff']
-        document_formats = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'rtf', 'odt']
-        archive_formats = ['zip', 'rar', '7z', 'tar', 'gz', 'bz2']
-        code_formats = ['py', 'js', 'html', 'css', 'java', 'cpp', 'c', 'php', 'rb', 'go', 'rs']
-
-        if ext in video_formats:
-            return 'video'
-        elif ext in audio_formats:
-            return 'audio'
-        elif ext in image_formats:
-            return 'image'
-        elif ext == 'pdf':
-            return 'pdf'
-        elif ext in document_formats:
-            return 'document'
-        elif ext in archive_formats:
-            return 'archive'
-        elif ext in code_formats:
-            return 'code'
-        else:
-            return 'other'
+        return detect_file_type(extension)
     
     def get_file_extension(self):
         return os.path.splitext(self.file.name)[1].lower()
@@ -72,12 +49,7 @@ class File(models.Model):
         return icons.get(self.file_type, 'fa-file')
     
     def format_file_size(self):
-        size = self.file_size
-        for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
-            if size < 1024.0:
-                return f"{size:.1f} {unit}"
-            size /= 1024.0
-        return f"{size:.1f} PB"
+        return format_file_size(self.file_size)
 
     def __str__(self):
         return self.name
