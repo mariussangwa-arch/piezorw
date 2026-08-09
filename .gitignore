@@ -1,0 +1,18 @@
+# Django media uploads
+media/uploads/
+
+# Django
+db.sqlite3
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Environment variables
+.env
