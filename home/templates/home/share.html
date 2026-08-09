@@ -1,0 +1,182 @@
+{% extends 'home/base.html' %}
+{% block title %}Share File - ShareHub{% endblock %}
+
+{% block content %}
+<style>
+:root {
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --primary-light: rgba(59,130,246,0.1);
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --shadow: 0 15px 35px rgba(0,0,0,0.1);
+    --radius: 0;
+}
+[data-theme="dark"] {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --border: #334155;
+}
+body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', system-ui, sans-serif; margin: 0; }
+
+.share-container {
+    max-width: 600px;
+    margin: 4rem auto;
+    padding: 0 1.5rem;
+    text-align: center;
+}
+
+.share-card {
+    background: var(--surface);
+    border-radius: 0;
+    padding: 3rem;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.share-icon {
+    font-size: 4rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+.share-card h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.share-card p {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+}
+
+.share-url-box {
+    display: flex;
+    gap: .5rem;
+    margin-bottom: 2rem;
+}
+
+.share-url {
+    flex: 1;
+    padding: 1rem 1.2rem;
+    border: 2px solid var(--border);
+    border-radius: 0;
+    background: var(--bg);
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    word-break: break-all;
+}
+
+.copy-btn {
+    padding: 1rem 1.5rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 0;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.copy-btn:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+.copy-btn.copied {
+    background: var(--success);
+}
+
+.social-share {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.social-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 0;
+    border: none;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.social-btn:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-3px);
+}
+</style>
+
+<div class="share-container">
+    <div class="share-card">
+        <div class="share-icon"><i class="fas fa-share-alt"></i></div>
+        <h2>Share File</h2>
+        <p>Share "{{ file.name }}" with others using the link below</p>
+
+        <div class="share-url-box">
+            <div class="share-url">{{ share_url }}</div>
+            <button class="copy-btn" id="copyBtn" onclick="copyShareUrl()">
+                <i class="fas fa-copy"></i> Copy
+            </button>
+        </div>
+
+        <div class="social-share">
+            <a href="https://twitter.com/intent/tweet?url={{ share_url|urlencode }}&text={{ file.name|urlencode }}" target="_blank" class="social-btn" title="Share on Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url|urlencode }}" target="_blank" class="social-btn" title="Share on Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ share_url|urlencode }}&title={{ file.name|urlencode }}" target="_blank" class="social-btn" title="Share on LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="mailto:?subject=Check out this file&body=Here is a file I want to share: {{ share_url|urlencode }}" class="social-btn" title="Share via Email">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+
+        <a href="{% url 'view_file' file.id %}" class="btn btn-outline" style="margin-top: 2rem; display: inline-flex; align-items: center; gap: .5rem; padding: .8rem 1.5rem;     border-radius: 0; font-weight: 600; text-decoration: none; border: 2px solid var(--primary); color: var(--primary);">
+            <i class="fas fa-arrow-left"></i> Back to File
+        </a>
+    </div>
+</div>
+
+<script>
+function copyShareUrl() {
+    const url = {{ share_url|json_script:"shareUrl" }};
+    navigator.clipboard.writeText(url).then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.classList.add('copied');
+        btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        setTimeout(() => {
+            btn.classList.remove('copied');
+            btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+        }, 2000);
+    });
+}
+
+const shareUrlElement = document.querySelector('.share-url');
+if (shareUrlElement) {
+    window.shareUrl = shareUrlElement.textContent.trim();
+}
+</script>
+{% endblock %}

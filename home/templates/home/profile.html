@@ -1,0 +1,311 @@
+{% extends 'home/base.html' %}
+{% block title %}Profile - ShareHub{% endblock %}
+
+{% block content %}
+<style>
+:root {
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --primary-light: rgba(59,130,246,0.1);
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --shadow: 0 15px 35px rgba(0,0,0,0.1);
+    --shadow-lg: 0 25px 50px rgba(0,0,0,0.15);
+    --radius: 0;
+    --radius-sm: 16px;
+    --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+[data-theme="dark"] {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --border: #334155;
+}
+body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', system-ui, sans-serif; margin: 0; line-height: 1.6; }
+
+.profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+.profile-header {
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+    color: white;
+    padding: 3rem;
+    border-radius: 0;
+    margin-bottom: 2.5rem;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(255,255,255,0.15), transparent 70%);
+    pointer-events: none;
+}
+
+.profile-header-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 0;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: 800;
+    border: 4px solid rgba(255,255,255,0.3);
+}
+
+.profile-info h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+.profile-info p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    margin: 0.5rem 0 0;
+}
+
+.profile-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.stat-card {
+    background: var(--surface);
+    border-radius: 0;
+    padding: 1.8rem;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.stat-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 0;
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.stat-info h3 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+.stat-info p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.recent-section {
+    background: var(--surface);
+    border-radius: 0;
+    padding: 2rem;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.view-all {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+}
+
+.view-all:hover {
+    text-decoration: underline;
+}
+
+.file-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1rem;
+    border-radius: 0;
+    background: var(--bg);
+    transition: var(--transition);
+    text-decoration: none;
+    color: var(--text);
+}
+
+.file-item:hover {
+    background: var(--primary-light);
+    transform: translateX(4px);
+}
+
+.file-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 0;
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.file-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.file-details h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 .2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-details p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.file-meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+</style>
+
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-header-content">
+            <div class="profile-avatar">{{ user.username|slice:":1"|upper }}</div>
+            <div class="profile-info">
+                <h1>{{ user.username }}</h1>
+                <p>{{ user.email }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-stats">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-file"></i></div>
+            <div class="stat-info">
+                <h3>{{ total_files }}</h3>
+                <p>Files Uploaded</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-eye"></i></div>
+            <div class="stat-info">
+                <h3>{{ total_views }}</h3>
+                <p>Total Views</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-download"></i></div>
+            <div class="stat-info">
+                <h3>{{ total_downloads }}</h3>
+                <p>Total Downloads</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-share-alt"></i></div>
+            <div class="stat-info">
+                <h3>{{ total_shares }}</h3>
+                <p>Total Shares</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="recent-section">
+        <div class="section-header">
+            <h2>Recent Files</h2>
+            <a href="{% url 'dashboard' %}" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="file-list">
+            {% for file in user_files %}
+            <a href="{% url 'view_file' file.id %}" class="file-item">
+                <div class="file-icon">
+                    {% if file.file_type == "image" %}<i class="fas fa-file-image"></i>
+                    {% elif file.file_type == "video" %}<i class="fas fa-file-video"></i>
+                    {% elif file.file_type == "audio" %}<i class="fas fa-file-audio"></i>
+                    {% elif file.file_type == "pdf" %}<i class="fas fa-file-pdf"></i>
+                    {% elif file.file_type == "code" %}<i class="fas fa-file-code"></i>
+                    {% elif file.file_type == "archive" %}<i class="fas fa-file-archive"></i>
+                    {% elif file.file_type == "document" %}<i class="fas fa-file-word"></i>
+                    {% else %}<i class="fas fa-file"></i>
+                    {% endif %}
+                </div>
+                <div class="file-details">
+                    <h4>{{ file.name }}</h4>
+                    <p>{{ file.description|default:"No description"|truncatechars:80 }}</p>
+                </div>
+                <div class="file-meta">{{ file.upload_date|date:"M d, Y" }}</div>
+            </a>
+            {% empty %}
+            <div class="empty" style="padding: 3rem 0;">
+                <i class="fas fa-folder-open"></i>
+                <h3>No files yet</h3>
+                <p>Upload your first file to see it here.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -5,9 +5,10 @@ media/uploads/
 db.sqlite3
 
 # Python
-__pycache__/
+home/__pycache__/
 *.py[cod]
 *.pyo
+migrations
 
 # Virtual environment
 venv/
