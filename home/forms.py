@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, PasswordResetForm
 from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from django.utils.translation import gettext_lazy as _
 from .models import File
 
 class RegisterForm(UserCreationForm):
@@ -11,7 +12,7 @@ class RegisterForm(UserCreationForm):
         required=True,
         widget=forms.EmailInput(attrs={
             'class': 'form-control',
-            'placeholder': 'you@example.com',
+            'placeholder': _('you@example.com'),
             'autocomplete': 'off',
         })
     )
@@ -20,16 +21,16 @@ class RegisterForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         self.fields['username'].widget.attrs.update({
             'class': 'form-control',
-            'placeholder': 'Choose a username',
+            'placeholder': _('Choose a username'),
             'autocomplete': 'off',
         })
         self.fields['password1'].widget.attrs.update({
             'class': 'form-control',
-            'placeholder': 'Create a strong password',
+            'placeholder': _('Create a strong password'),
         })
         self.fields['password2'].widget.attrs.update({
             'class': 'form-control',
-            'placeholder': 'Repeat your password',
+            'placeholder': _('Repeat your password'),
         })
 
     class Meta:
