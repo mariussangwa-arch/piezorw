@@ -1,4 +1,5 @@
 {% extends 'home/base.html' %}
+{% load i18n %}
 {% block title %}Create Account - ShareHub{% endblock %}
 
 {% block content %}
@@ -316,8 +317,8 @@
         <div class="register-hero">
             <div class="register-hero-content">
                 <i class="fas fa-rocket"></i>
-                <h2>Join ShareHub</h2>
-                <p>Start sharing files securely with your team in minutes</p>
+                <h2>{% trans "Join ShareHub" %}</h2>
+                <p>{% trans "Start sharing files securely with your team in minutes" %}</p>
                 
                 <div class="benefits-list">
                     <div class="benefit-item">
@@ -325,8 +326,8 @@
                             <i class="fas fa-infinity"></i>
                         </div>
                         <div class="benefit-content">
-                            <h4>Unlimited Storage</h4>
-                            <p>Upload as many files as you need</p>
+                            <h4>{% trans "Unlimited Storage" %}</h4>
+                            <p>{% trans "Upload as many files as you need" %}</p>
                         </div>
                     </div>
                     <div class="benefit-item">
@@ -334,8 +335,8 @@
                             <i class="fas fa-lock"></i>
                         </div>
                         <div class="benefit-content">
-                            <h4>Bank-Level Security</h4>
-                            <p>Your files are encrypted and protected</p>
+                            <h4>{% trans "Bank-Level Security" %}</h4>
+                            <p>{% trans "Your files are encrypted and protected" %}</p>
                         </div>
                     </div>
                     <div class="benefit-item">
@@ -343,8 +344,8 @@
                             <i class="fas fa-users"></i>
                         </div>
                         <div class="benefit-content">
-                            <h4>Team Collaboration</h4>
-                            <p>Share and collaborate with anyone</p>
+                            <h4>{% trans "Team Collaboration" %}</h4>
+                            <p>{% trans "Share and collaborate with anyone" %}</p>
                         </div>
                     </div>
                 </div>
@@ -353,15 +354,15 @@
 
         <div class="register-form-container">
             <div class="register-form-header">
-                <h3>Create Account</h3>
-                <p>Get started with ShareHub in seconds</p>
+                <h3>{% trans "Create Account" %}</h3>
+                <p>{% trans "Get started with ShareHub in seconds" %}</p>
             </div>
 
             <form method="post" novalidate>
                 {% csrf_token %}
                 
                 <div class="form-group">
-                    <label for="id_username">Username</label>
+                    <label for="id_username">{% trans "Username" %}</label>
                     <div class="form-control-icon">
                         {{ form.username }}
                     </div>
@@ -371,7 +372,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="id_email">Email Address</label>
+                    <label for="id_email">{% trans "Email Address" %}</label>
                     <div class="form-control-icon">
                         {{ form.email }}
                     </div>
@@ -381,7 +382,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="id_password1">Password</label>
+                    <label for="id_password1">{% trans "Password" %}</label>
                     <div class="form-control-icon">
                         {{ form.password1 }}
                         <button type="button" class="toggle-password" data-target="id_password1" aria-label="Toggle password visibility">
@@ -392,7 +393,7 @@
                         <div class="password-strength-bar" id="strengthBar"></div>
                     </div>
                     <div class="password-hint">
-                        Use 8+ characters with a mix of letters, numbers & symbols
+                        {% trans "Use 8+ characters with a mix of letters, numbers & symbols" %}
                     </div>
                     {% if form.password1.errors %}
                         <div class="error-message">{{ form.password1.errors.0 }}</div>
@@ -400,7 +401,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="id_password2">Confirm Password</label>
+                    <label for="id_password2">{% trans "Confirm Password" %}</label>
                     <div class="form-control-icon">
                         {{ form.password2 }}
                         <button type="button" class="toggle-password" data-target="id_password2" aria-label="Toggle password visibility">
@@ -414,12 +415,12 @@
 
                 <button type="submit" class="btn-register">
                     <i class="fas fa-user-plus"></i>
-                    Create Account
+                    {% trans "Create Account" %}
                 </button>
             </form>
 
             <div class="login-prompt">
-                Already have an account? <a href="{% url 'login' %}">Sign in here</a>
+                {% trans "Already have an account?" %} <a href="{% url 'login' %}">{% trans "Sign in here" %}</a>
             </div>
         </div>
     </div>

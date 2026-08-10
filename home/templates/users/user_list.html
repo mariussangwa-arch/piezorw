@@ -1,4 +1,5 @@
 {% extends 'home/base.html' %}
+{% load i18n %}
 {% block title %}User Management - ShareHub{% endblock %}
 
 {% block content %}
@@ -114,7 +115,7 @@
 
 <div class="container">
     <div class="page-header">
-        <h1><i class="fas fa-users"></i> User Management</h1>
+        <h1><i class="fas fa-users"></i> {% trans "User Management" %}</h1>
     </div>
 
     <div class="users-table">

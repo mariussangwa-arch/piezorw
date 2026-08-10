@@ -1,4 +1,5 @@
 {% extends 'home/base.html' %}
+{% load i18n %}
 {% block title %}Dashboard - ShareHub{% endblock %}
 
 {% block content %}
@@ -352,19 +353,19 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
     <div class="header-banner">
         <div class="header-content">
             <div>
-                <h1>Welcome back, {{ user.username }}!</h1>
-                <p>Manage and explore your uploaded files</p>
+                <h1>{% trans "Welcome back" %}, {{ user.username }}!</h1>
+                <p>{% trans "Manage and explore your uploaded files" %}</p>
             </div>
             <div class="header-actions">
-                <a href="{% url 'upload' %}" class="btn-primary"><i class="fas fa-cloud-upload-alt"></i> Upload New File</a>
-                <a href="{% url 'all_files' %}" class="btn-primary"><i class="fas fa-globe"></i> Browse Community</a>
+                <a href="{% url 'upload' %}" class="btn-primary"><i class="fas fa-cloud-upload-alt"></i> {% trans "Upload New File" %}</a>
+                <a href="{% url 'all_files' %}" class="btn-primary"><i class="fas fa-globe"></i> {% trans "Browse Community" %}</a>
             </div>
         </div>
     </div>
 
     <form method="get" class="search-bar">
-        <input type="text" name="q" class="search-input" placeholder="Search your files..." value="{{ search_query|default:'' }}">
-        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+        <input type="text" name="q" class="search-input" placeholder="{% trans 'Search your files...' %}" value="{{ search_query|default:'' }}">
+        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> {% trans "Search" %}</button>
     </form>
 
     <div class="stats-grid">
@@ -372,28 +373,28 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
             <div class="stat-icon"><i class="fas fa-file"></i></div>
             <div class="stat-info">
                 <h3>{{ stats.total_files }}</h3>
-                <p>Total Files</p>
+                <p>{% trans "Total Files" %}</p>
             </div>
         </div>
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-eye"></i></div>
             <div class="stat-info">
                 <h3>{{ stats.total_views }}</h3>
-                <p>Total Views</p>
+                <p>{% trans "Total Views" %}</p>
             </div>
         </div>
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-download"></i></div>
             <div class="stat-info">
                 <h3>{{ stats.total_downloads }}</h3>
-                <p>Total Downloads</p>
+                <p>{% trans "Total Downloads" %}</p>
             </div>
         </div>
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-share-alt"></i></div>
             <div class="stat-info">
                 <h3>{{ stats.total_shares }}</h3>
-                <p>Total Shares</p>
+                <p>{% trans "Total Shares" %}</p>
             </div>
         </div>
     </div>
@@ -426,11 +427,11 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
                         <span><i class="fas fa-thumbs-up"></i> {{ file.likes_count }}</span>
                     </div>
                     <div class="actions">
-                        <a href="{% url 'view_file' file.id %}" class="btn btn-view"><i class="fas fa-eye"></i> View</a>
-                        <a href="{% url 'download_file' file.id %}" class="btn btn-download"><i class="fas fa-download"></i> Download</a>
+                        <a href="{% url 'view_file' file.id %}" class="btn btn-view"><i class="fas fa-eye"></i> {% trans "View" %}</a>
+                        <a href="{% url 'download_file' file.id %}" class="btn btn-download"><i class="fas fa-download"></i> {% trans "Download" %}</a>
                         {% if file.uploaded_by == user or user.is_staff %}
                             <a href="{% url 'delete_file' file.id %}" class="btn btn-delete"
-                               onclick="return confirm('Permanently delete this file?')">Delete</a>
+                               onclick="return confirm('{% trans "Permanently delete this file?" %}')">{% trans "Delete" %}</a>
                         {% endif %}
                     </div>
                 </div>
@@ -438,8 +439,8 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
         {% empty %}
             <div class="empty">
                 <i class="fas fa-folder-open"></i>
-                <h3>No files uploaded yet</h3>
-                <p>Start sharing by <a href="{% url 'upload' %}">uploading your first file</a>.</p>
+                <h3>{% trans "No files uploaded yet" %}</h3>
+                <p>{% trans "Start sharing by" %} <a href="{% url 'upload' %}">{% trans "uploading your first file" %}</a>.</p>
             </div>
         {% endfor %}
     </div>

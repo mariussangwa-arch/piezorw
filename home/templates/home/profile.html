@@ -1,4 +1,5 @@
 {% extends 'home/base.html' %}
+{% load i18n %}
 {% block title %}My Profile - ShareHub{% endblock %}
 
 {% block content %}
@@ -223,7 +224,7 @@
             <div class="profile-avatar">{{ user.username|slice:":1"|upper }}</div>
             <div class="profile-info">
                 <h1>{{ user.username }}</h1>
-                <p>Member since {{ user.date_joined|date:"F Y" }}</p>
+                <p>{% trans "Member since" %} {{ user.date_joined|date:"F Y" }}</p>
             </div>
         </div>
     </div>
@@ -233,33 +234,33 @@
             <div class="stat-icon"><i class="fas fa-file"></i></div>
             <div class="stat-info">
                 <h3>{{ total_files }}</h3>
-                <p>Files Uploaded</p>
+                <p>{% trans "Files Uploaded" %}</p>
             </div>
         </div>
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-eye"></i></div>
             <div class="stat-info">
                 <h3>{{ total_views }}</h3>
-                <p>Total Views</p>
+                <p>{% trans "Total Views" %}</p>
             </div>
         </div>
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-download"></i></div>
             <div class="stat-info">
                 <h3>{{ total_downloads }}</h3>
-                <p>Total Downloads</p>
+                <p>{% trans "Total Downloads" %}</p>
             </div>
         </div>
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-share-alt"></i></div>
             <div class="stat-info">
                 <h3>{{ total_shares }}</h3>
-                <p>Total Shares</p>
+                <p>{% trans "Total Shares" %}</p>
             </div>
         </div>
     </div>
 
-    <h2 class="section-title"><i class="fas fa-clock"></i> Recent Files</h2>
+    <h2 class="section-title"><i class="fas fa-clock"></i> {% trans "Recent Files" %}</h2>
 
     {% if user_files %}
         <div class="files-grid">
@@ -285,8 +286,8 @@
     {% else %}
         <div class="empty">
             <i class="fas fa-folder-open"></i>
-            <h3>No files yet</h3>
-            <p>Upload your first file to see it here.</p>
+            <h3>{% trans "No files yet" %}</h3>
+            <p>{% trans "Upload your first file to see it here." %}</p>
         </div>
     {% endif %}
 </div>

@@ -1,4 +1,5 @@
 {% extends 'home/base.html' %}
+{% load i18n %}
 {% block title %}All Files - ShareHub{% endblock %}
 
 {% block content %}
@@ -312,30 +313,30 @@
 
 <div class="container">
     <div class="page-header">
-        <h1><i class="fas fa-globe"></i> Community Files</h1>
+        <h1><i class="fas fa-globe"></i> {% trans "Community Files" %}</h1>
     </div>
 
     <form method="get" class="filters-bar">
         <div class="search-box">
-            <input type="text" name="q" placeholder="Search files, descriptions, users..." value="{{ search_query|default:'' }}">
+            <input type="text" name="q" placeholder="{% trans 'Search files, descriptions, users...' %}" value="{{ search_query|default:'' }}">
         </div>
 
         <select name="type" class="filter-select" onchange="this.form.submit()">
-            <option value="all" {% if current_type == 'all' %}selected{% endif %}>All Types</option>
-            <option value="image" {% if current_type == 'image' %}selected{% endif %}>Images</option>
-            <option value="video" {% if current_type == 'video' %}selected{% endif %}>Videos</option>
-            <option value="audio" {% if current_type == 'audio' %}selected{% endif %}>Audio</option>
-            <option value="pdf" {% if current_type == 'pdf' %}selected{% endif %}>PDFs</option>
-            <option value="code" {% if current_type == 'code' %}selected{% endif %}>Code</option>
+            <option value="all" {% if current_type == 'all' %}selected{% endif %}>{% trans "All Types" %}</option>
+            <option value="image" {% if current_type == 'image' %}selected{% endif %}>{% trans "Images" %}</option>
+            <option value="video" {% if current_type == 'video' %}selected{% endif %}>{% trans "Videos" %}</option>
+            <option value="audio" {% if current_type == 'audio' %}selected{% endif %}>{% trans "Audio" %}</option>
+            <option value="pdf" {% if current_type == 'pdf' %}selected{% endif %}>{% trans "PDFs" %}</option>
+            <option value="code" {% if current_type == 'code' %}selected{% endif %}>{% trans "Code" %}</option>
         </select>
 
         <select name="sort" class="filter-select" onchange="this.form.submit()">
-            <option value="newest" {% if current_sort == 'newest' %}selected{% endif %}>Newest First</option>
-            <option value="oldest" {% if current_sort == 'oldest' %}selected{% endif %}>Oldest First</option>
-            <option value="likes" {% if current_sort == 'likes' %}selected{% endif %}>Most Liked</option>
+            <option value="newest" {% if current_sort == 'newest' %}selected{% endif %}>{% trans "Newest First" %}</option>
+            <option value="oldest" {% if current_sort == 'oldest' %}selected{% endif %}>{% trans "Oldest First" %}</option>
+            <option value="likes" {% if current_sort == 'likes' %}selected{% endif %}>{% trans "Most Liked" %}</option>
         </select>
 
-        <button type="submit" class="btn btn-view"><i class="fas fa-search"></i> Search</button>
+        <button type="submit" class="btn btn-view"><i class="fas fa-search"></i> {% trans "Search" %}</button>
     </form>
 
     <div class="files-grid">
@@ -378,8 +379,8 @@
         {% empty %}
             <div class="empty">
                 <i class="fas fa-folder-open"></i>
-                <h3>No files found</h3>
-                <p>Try adjusting your filters or search query.</p>
+                <h3>{% trans "No files found" %}</h3>
+                <p>{% trans "Try adjusting your filters or search query." %}</p>
             </div>
         {% endfor %}
     </div>

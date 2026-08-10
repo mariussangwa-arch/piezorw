@@ -1,4 +1,5 @@
 {% extends 'home/base.html' %}
+{% load i18n %}
 {% block title %}Upload File - ShareHub{% endblock %}
 
 {% block content %}
@@ -148,18 +149,18 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
 
 <div class="upload-page">
     <div class="upload-box">
-        <h1>Upload a New File</h1>
-        <p>Share high-quality content with the ShareHub community</p>
+        <h1>{% trans "Upload a New File" %}</h1>
+        <p>{% trans "Share high-quality content with the ShareHub community" %}</p>
 
         <form method="post" enctype="multipart/form-data" id="uploadForm">
             {% csrf_token %}
 
             <div class="drop-area" id="dropArea">
                 <div class="drop-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-                <div class="drop-title">Drop your file here</div>
-                <div class="drop-hint">or click to browse from your device</div>
+                <div class="drop-title">{% trans "Drop your file here" %}</div>
+                <div class="drop-hint">{% trans "or click to browse from your device" %}</div>
                 <label for="fileInput" class="browse-btn">
-                    <i class="fas fa-folder-open"></i> Browse Files
+                    <i class="fas fa-folder-open"></i> {% trans "Browse Files" %}
                 </label>
                 <input type="file" name="file" id="fileInput" required style="display:none;">
 
@@ -198,10 +199,10 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
 
             <div class="actions">
                 <button type="submit" class="btn-upload" id="uploadBtn">
-                    <i class="fas fa-cloud-upload-alt"></i> Upload File
+                    <i class="fas fa-cloud-upload-alt"></i> {% trans "Upload File" %}
                 </button>
                 <button type="button" class="btn-cancel" onclick="window.location.href='{% url 'dashboard' %}'">
-                    Cancel
+                    {% trans "Cancel" %}
                 </button>
             </div>
         </form>

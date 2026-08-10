@@ -1,4 +1,5 @@
 {% extends 'home/base.html' %}
+{% load i18n %}
 {% block title %}Login - ShareHub{% endblock %}
 
 {% block content %}
@@ -258,15 +259,15 @@
         <div class="login-hero">
             <div class="login-hero-content">
                 <i class="fas fa-cloud-upload-alt"></i>
-                <h2>Welcome Back</h2>
-                <p>Sign in to manage and share your files with the ShareHub community.</p>
+                <h2>{% trans "Welcome Back" %}</h2>
+                <p>{% trans "Sign in to manage and share your files with the ShareHub community." %}</p>
             </div>
         </div>
 
         <div class="login-form-container">
             <div class="login-form-header">
-                <h3>Sign In</h3>
-                <p>Use your ShareHub credentials</p>
+                <h3>{% trans "Sign In" %}</h3>
+                <p>{% trans "Use your ShareHub credentials" %}</p>
             </div>
 
             {% if messages %}
@@ -285,18 +286,18 @@
                 <input type="password" name="fakepasswordremembered" style="display:none">
 
                 <div class="form-group">
-                    <label>Username</label>
+                    <label>{% trans "Username" %}</label>
                     <input type="text" name="username" class="form-control"
-                        placeholder="Enter your username"
+                        placeholder="{% trans 'Enter your username' %}"
                         autocomplete="off"
                         required>
                 </div>
 
                 <div class="form-group">
-                    <label>Password</label>
+                    <label>{% trans "Password" %}</label>
                     <div class="password-wrapper">
                         <input type="password" name="password" class="form-control password-input"
-                            placeholder="Enter your password"
+                            placeholder="{% trans 'Enter your password' %}"
                             autocomplete="new-password"
                             required>
                         <button type="button" class="toggle-password" aria-label="Toggle password visibility">
@@ -309,16 +310,16 @@
                     <label style="display:flex; align-items:center; gap:.5rem; color:var(--text-muted); cursor:pointer;">
                         <input type="checkbox" name="remember"> Remember me
                     </label>
-                    <a href="{% url 'password_reset' %}">Forgot Password?</a>
+                    <a href="{% url 'password_reset' %}">{% trans "Forgot Password?" %}</a>
                 </div>
 
                 <button type="submit" class="btn-login">
-                    Sign In
+                    {% trans "Sign In" %}
                 </button>
             </form>
 
             <div class="login-footer">
-                <p>Don't have an account? <a href="{% url 'register' %}">Create one</a></p>
+                <p>{% trans "Don't have an account?" %} <a href="{% url 'register' %}">{% trans "Create one" %}</a></p>
             </div>
         </div>
     </div>

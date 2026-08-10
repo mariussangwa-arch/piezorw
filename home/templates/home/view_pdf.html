@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -80,7 +81,7 @@
 <body>
     <div class="toolbar">
         <div class="toolbar-left">
-            <a href="{% url 'view_file' file.id %}"><i class="fas fa-arrow-left"></i> Back</a>
+            <a href="{% url 'view_file' file.id %}"><i class="fas fa-arrow-left"></i> {% trans "Back" %}</a>
             <span style="font-weight:600;">{{ file.name }}</span>
         </div>
     </div>

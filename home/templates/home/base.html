@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -291,9 +292,9 @@ body {
 
         <ul class="nav-menu" id="navMenu">
             {% if user.is_authenticated %}
-                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-                <li><a href="{% url 'all_files' %}">Files</a></li>
-                <li><a href="{% url 'upload' %}">Upload</a></li>
+            <li><a href="{% url 'dashboard' %}">{% trans "Dashboard" %}</a></li>
+            <li><a href="{% url 'all_files' %}">{% trans "Files" %}</a></li>
+            <li><a href="{% url 'upload' %}">{% trans "Upload" %}</a></li>
 
                 <li class="user-menu">
                     <div class="user-btn">
@@ -302,22 +303,39 @@ body {
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="dropdown">
-                        <a href="{% url 'profile' %}"><i class="fas fa-user"></i> Profile</a>
+                        <a href="{% url 'profile' %}"><i class="fas fa-user"></i> {% trans "Profile" %}</a>
                         {% if user.is_staff %}
-                        <a href="{% url 'activate_latest' %}"><i class="fas fa-user-check"></i> Activate User</a>
+                        <a href="{% url 'activate_latest' %}"><i class="fas fa-user-check"></i> {% trans "Activate User" %}</a>
                         {% endif %}
-                        <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> {% trans "Logout" %}</a>
                     </div>
                 </li>
             {% else %}
-                <li><a href="{% url 'login' %}" class="btn btn-outline">Login</a></li>
-                <li><a href="{% url 'register' %}" class="btn btn-primary">Sign Up</a></li>
+                <li><a href="{% url 'login' %}" class="btn btn-outline">{% trans "Login" %}</a></li>
+                <li><a href="{% url 'register' %}" class="btn btn-primary">{% trans "Sign Up" %}</a></li>
             {% endif %}
 
             <li>
                 <div class="btn btn-outline" onclick="toggleTheme()">
                     <i class="fas fa-moon" id="themeIcon"></i>
                 </div>
+            </li>
+
+            <li>
+                <form action="{% url 'set_language' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <select name="language" onchange="this.form.submit()" style="padding:.4rem .6rem;border:2px solid var(--border);background:var(--surface);color:var(--text);font-weight:600;cursor:pointer;">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                            <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
+                                {{ language.name_local }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                </form>
             </li>
         </ul>
 
