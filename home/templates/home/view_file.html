@@ -278,16 +278,16 @@
                 {% if file.name|lower|slice:"-4:" == ".avi" %}
                     <div class="avi-notice">
                         <i class="fas fa-exclamation-triangle"></i>
-                        <h3>AVI Format Not Supported for Browser Playback</h3>
-                        <p>Your browser cannot play AVI files directly. Please download the file to watch it.</p>
+                        <h3>{% trans "AVI Format Not Supported for Browser Playback" %}</h3>
+                        <p>{% trans "Your browser cannot play AVI files directly. Please download the file to watch it." %}</p>
                         <a href="{% url 'download_file' file.id %}" class="btn btn-primary">
-                            <i class="fas fa-download"></i> Download File
+                            <i class="fas fa-download"></i> {% trans "Download File" %}
                         </a>
                     </div>
                 {% else %}
                     <video controls preload="metadata">
                         <source src="{{ file.file.url }}" type="{{ file.file.content_type }}">
-                        Your browser does not support the video tag.
+                        {% trans "Your browser does not support the video tag." %}
                     </video>
                 {% endif %}
             </div>
@@ -298,7 +298,7 @@
                 <h2 style="color:white; margin-bottom:1rem;">{{ file.name }}</h2>
                 <audio controls>
                     <source src="{{ file.file.url }}" type="{{ file.file.content_type }}">
-                    Your browser does not support the audio element.
+                    {% trans "Your browser does not support the audio element." %}
                 </audio>
             </div>
 
@@ -309,7 +309,7 @@
 
         {% elif file.file_type == "code" %}
             <div class="code-viewer">
-                <pre>{{ file.file_content|default:"Unable to load file content" }}</pre>
+                <pre>{{ file.file_content|default:_("Unable to load file content") }}</pre>
             </div>
 
         {% else %}

@@ -145,24 +145,24 @@
             <button class="btn btn-primary" onclick="copyLink()">
                 <i class="fas fa-copy"></i> {% trans "Copy" %}
             </button>
-            <span class="copy-confirmed" id="copyConfirmed"><i class="fas fa-check"></i> Copied!</span>
+            <span class="copy-confirmed" id="copyConfirmed"><i class="fas fa-check"></i> {% trans "Copied!" %}</span>
         </div>
 
         <div class="social-share">
             <a href="https://twitter.com/intent/tweet?url={{ share_url|urlencode }}&text=Check+out+this+file+on+ShareHub"
-               target="_blank" class="social-btn social-twitter" title="Share on Twitter">
+               target="_blank" class="social-btn social-twitter" title="{% trans 'Share on Twitter' %}">
                 <i class="fab fa-twitter"></i>
             </a>
             <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url|urlencode }}"
-               target="_blank" class="social-btn social-facebook" title="Share on Facebook">
+               target="_blank" class="social-btn social-facebook" title="{% trans 'Share on Facebook' %}">
                 <i class="fab fa-facebook-f"></i>
             </a>
             <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url|urlencode }}"
-               target="_blank" class="social-btn social-linkedin" title="Share on LinkedIn">
+               target="_blank" class="social-btn social-linkedin" title="{% trans 'Share on LinkedIn' %}">
                 <i class="fab fa-linkedin-in"></i>
             </a>
             <a href="mailto:?subject=Check out this file on ShareHub&body={{ share_url|urlencode }}"
-               class="social-btn social-email" title="Share via Email">
+               class="social-btn social-email" title="{% trans 'Share via Email' %}">
                 <i class="fas fa-envelope"></i>
             </a>
         </div>

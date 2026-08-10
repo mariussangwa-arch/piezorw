@@ -357,7 +357,8 @@
                 </a>
                 <div class="file-info">
                     <h3>{{ file.name }}</h3>
-                    <p>{{ file.description|default:"No description"|truncatechars:100 }}</p>
+                    {% trans "No description" as no_desc %}
+                    <p>{{ file.description|default:no_desc|truncatechars:100 }}</p>
                     <div class="file-meta">
                         {{ file.upload_date|date:"M d, Y" }} • {{ file.format_file_size }}
                     </div>

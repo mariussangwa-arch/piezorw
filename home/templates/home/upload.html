@@ -165,11 +165,11 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
                 <input type="file" name="file" id="fileInput" required style="display:none;">
 
                 <div class="supported-types">
-                    <strong>Supported formats:</strong><br>
-                    Documents: PDF, DOC/DOCX, TXT • Images: JPG, PNG, GIF • 
-                    Videos: MP4, MOV, WebM (AVI supported but may not play in browser) • 
-                    Audio: MP3, WAV • Archives: ZIP, RAR • 
-                    Code: PY, JS, HTML, CSS, JSON, and more
+                    <strong>{% trans "Supported formats:" %}</strong><br>
+                    {% trans "Documents" %}: PDF, DOC/DOCX, TXT • {% trans "Images" %}: JPG, PNG, GIF • 
+                    {% trans "Videos" %}: MP4, MOV, WebM (AVI {% trans "supported but may not play in browser" %}) • 
+                    {% trans "Audio" %}: MP3, WAV • {% trans "Archives" %}: ZIP, RAR • 
+                    {% trans "Code" %}: PY, JS, HTML, CSS, JSON, {% trans "and more" %}
                 </div>
             </div>
 
@@ -188,13 +188,13 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
             </div>
 
             <div class="form-group">
-                <label class="form-label">File Name <span style="color:var(--primary);">*</span></label>
-                <input type="text" name="name" class="form-input" placeholder="Enter a clear, descriptive name" required>
+                <label class="form-label">{% trans "File Name" %} <span style="color:var(--primary);">*</span></label>
+                <input type="text" name="name" class="form-input" placeholder="{% trans 'Enter a clear, descriptive name' %}" required>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Description (optional)</label>
-                <textarea name="description" class="form-input" rows="4" placeholder="Add context or details about this file..."></textarea>
+                <label class="form-label">{% trans "Description (optional)" %}</label>
+                <textarea name="description" class="form-input" rows="4" placeholder="{% trans 'Add context or details about this file...' %}"></textarea>
             </div>
 
             <div class="actions">
@@ -268,7 +268,7 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
         dropArea.classList.remove('drag-over');
 
         if (e.dataTransfer.files.length > 1) {
-            showError("Please upload only one file at a time.");
+            showError("{% trans 'Please upload only one file at a time.' %}");
             return;
         }
 
@@ -293,7 +293,7 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
     function validateFile(file) {
         const ext = file.name.split('.').pop().toLowerCase();
         if (!allowedExtensions.includes(ext)) {
-            showError(`.${ext.toUpperCase()} files are not supported.`);
+            showError("." + ext.toUpperCase() + "{% trans ' files are not supported.' %}");
             dropArea.classList.add('invalid');
             setTimeout(() => dropArea.classList.remove('invalid'), 2000);
             return false;
