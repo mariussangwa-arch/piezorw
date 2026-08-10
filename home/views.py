@@ -19,6 +19,7 @@ from django.db.models import Sum, Q
 from django.core.paginator import Paginator
 from django.contrib.auth.views import PasswordResetView
 
+from django.utils.translation import gettext as _
 from .forms import RegisterForm, UploadForm, ShareHubPasswordResetForm
 from .models import File, Like
 from .utils import detect_file_type
@@ -37,8 +38,9 @@ def register(request):
             current_site = get_current_site(request)
             if current_site.domain == 'example.com':
                 current_site.domain = 'localhost'
-            subject = 'Activate Your ShareHub Account'
+            subject = _('Activate Your ShareHub Account')
             host_with_port = request.get_host()
+            verify_url = f"{'https' if request.is_secure() else 'http'}://{host_with_port}/activate/{urlsafe_base64_encode(force_bytes(user.pk))}/{default_token_generator.make_token(user)}/"
             html_message = render_to_string('home/email_verification.html', {
                 'user': user,
                 'domain': current_site.domain,
@@ -47,7 +49,10 @@ def register(request):
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': default_token_generator.make_token(user),
             })
-            text_message = f"Hi {user.username},\n\nPlease verify your email by clicking the link below:\n{'https' if request.is_secure() else 'http'}://{host_with_port}/activate/{urlsafe_base64_encode(force_bytes(user.pk))}/{default_token_generator.make_token(user)}/\n\nThis link expires in 3 days.\n\nThanks,\nShareHub Team"
+            text_message = _("Hi {username},\n\nPlease verify your email by clicking the link below:\n{url}\n\nThis link expires in 3 days.\n\nThanks,\nShareHub Team").format(
+                username=user.username,
+                url=verify_url,
+            )
 
             email = EmailMultiAlternatives(
                 subject,
@@ -74,10 +79,10 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        messages.success(request, 'Email verified! Welcome to ShareHub!')
+        messages.success(request, _('Email verified! Welcome to ShareHub!'))
         return redirect('dashboard')
     else:
-        messages.error(request, 'Invalid or expired link.')
+        messages.error(request, _('Invalid or expired link.'))
         return redirect('login')
 
 
@@ -91,22 +96,22 @@ def login_view(request):
                 login(request, user)
                 return redirect('dashboard')
             else:
-                messages.error(request, 'Please verify your email before logging in.')
+                messages.error(request, _('Please verify your email before logging in.'))
         else:
             try:
                 user_obj = User.objects.get(username=username)
                 if not user_obj.is_active:
-                    messages.error(request, 'Please verify your email before logging in.')
+                    messages.error(request, _('Please verify your email before logging in.'))
                 else:
-                    messages.error(request, 'Incorrect password. Please try again.')
+                    messages.error(request, _('Incorrect password. Please try again.'))
             except User.DoesNotExist:
-                messages.error(request, 'No account found with that username.')
+                messages.error(request, _('No account found with that username.'))
     return render(request, 'home/login.html')
 
 
 def logout_view(request):
     logout(request)
-    messages.success(request, 'You have been logged out successfully.')
+    messages.success(request, _('You have been logged out successfully.'))
     return redirect('login')
 
 
@@ -172,10 +177,10 @@ def upload_file(request):
             file_instance.file_type = detect_file_type(ext)
 
             file_instance.save()
-            messages.success(request, f'File "{file_instance.name}" uploaded successfully!')
+            messages.success(request, _(f'File "{file_instance.name}" uploaded successfully!'))
             return redirect('dashboard')
         else:
-            messages.error(request, 'Upload failed. Please check the file and form.')
+            messages.error(request, _('Upload failed. Please check the file and form.'))
     else:
         form = UploadForm()
 
@@ -269,10 +274,10 @@ def download_file(request, file_id):
 def delete_file(request, file_id):
     file = get_object_or_404(File, id=file_id)
     if file.uploaded_by != request.user and not request.user.is_staff:
-        messages.error(request, "You are not allowed to delete this file.")
+        messages.error(request, _("You are not allowed to delete this file."))
         return redirect('dashboard')
     file.delete()
-    messages.success(request, "File deleted successfully.")
+    messages.success(request, _("File deleted successfully."))
     return redirect('dashboard')
 
 
@@ -366,13 +371,13 @@ def instant_activate(request, user_id=None):
         if user:
             user.is_active = True
             user.save()
-            messages.success(request, f'User {user.username} activated!')
+            messages.success(request, _(f'User {user.username} activated!'))
     else:
         latest = User.objects.filter(is_active=False).order_by('-date_joined').first()
         if latest:
             latest.is_active = True
             latest.save()
-            messages.success(request, f'User {latest.username} activated!')
+            messages.success(request, _(f'User {latest.username} activated!'))
     return redirect('dashboard')
 
 
@@ -384,7 +389,7 @@ def deactivate_user(request, user_id):
     if user and not user.is_superuser:
         user.is_active = False
         user.save()
-        messages.success(request, f'User {user.username} deactivated!')
+        messages.success(request, _(f'User {user.username} deactivated!'))
     return redirect('dashboard')
 
 
@@ -396,7 +401,7 @@ def delete_user(request, user_id):
     if user and not user.is_superuser and user != request.user:
         username = user.username
         user.delete()
-        messages.success(request, f'User {username} deleted!')
+        messages.success(request, _(f'User {username} deleted!'))
     return redirect('dashboard')
 
 
@@ -408,6 +413,6 @@ def make_staff(request, user_id):
     if user:
         user.is_staff = not user.is_staff
         user.save()
-        status = "granted" if user.is_staff else "revoked"
-        messages.success(request, f'Staff privileges {status} for {user.username}!')
+        status = _("granted") if user.is_staff else _("revoked")
+        messages.success(request, _(f'Staff privileges {status} for {user.username}!'))
     return redirect('dashboard')
