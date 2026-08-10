@@ -1,6 +1,7 @@
 from django.urls import path
 from django.shortcuts import redirect
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.views.i18n import set_language
 from .views import (
     register, login_view, logout_view, dashboard, profile, upload_file,
     all_files, download_file, view_file, like_file, dislike_file,
@@ -13,6 +14,8 @@ def root_redirect(request):
 
 urlpatterns = [
     path('', root_redirect),
+
+    path('i18n/setlang/', set_language, name='set_language'),
 
     path('register/', register, name='register'),
     path('login/', login_view, name='login'),

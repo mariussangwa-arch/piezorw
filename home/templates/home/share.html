@@ -1,4 +1,5 @@
 {% extends 'home/base.html' %}
+{% load i18n %}
 {% block title %}Share - ShareHub{% endblock %}
 
 {% block content %}
@@ -128,8 +129,8 @@
 
 <div class="container">
     <div class="share-card">
-        <h1><i class="fas fa-share-alt"></i> Share File</h1>
-        <p>Share "{{ file.name }}" with others using the link below</p>
+        <h1><i class="fas fa-share-alt"></i> {% trans "Share File" %}</h1>
+        <p>{% trans "Share" %} "{{ file.name }}" {% trans "with others using the link below" %}</p>
 
         <div class="file-preview">
             <i class="fas {{ file.get_file_icon }}"></i>
@@ -142,7 +143,7 @@
         <div class="share-link-box">
             <input type="text" value="{{ share_url }}" readonly id="shareUrl">
             <button class="btn btn-primary" onclick="copyLink()">
-                <i class="fas fa-copy"></i> Copy
+                <i class="fas fa-copy"></i> {% trans "Copy" %}
             </button>
             <span class="copy-confirmed" id="copyConfirmed"><i class="fas fa-check"></i> Copied!</span>
         </div>
@@ -168,7 +169,7 @@
 
         <div style="margin-top:2rem;">
             <a href="{% url 'view_file' file.id %}" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Back to File
+                <i class="fas fa-arrow-left"></i> {% trans "Back to File" %}
             </a>
         </div>
     </div>

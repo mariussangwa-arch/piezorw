@@ -1,4 +1,5 @@
 {% extends 'home/base.html' %}
+{% load i18n %}
 {% block title %}{{ file.name }} - ShareHub{% endblock %}
 
 {% block extra_css %}
@@ -258,10 +259,10 @@
         </div>
         <div class="file-actions">
             <a href="{% url 'download_file' file.id %}" class="btn btn-primary">
-                <i class="fas fa-download"></i> Download
+                <i class="fas fa-download"></i> {% trans "Download" %}
             </a>
             <a href="{% url 'share_file' file.id %}" class="btn btn-secondary">
-                <i class="fas fa-share-alt"></i> Share
+                <i class="fas fa-share-alt"></i> {% trans "Share" %}
             </a>
         </div>
     </div>
@@ -314,10 +315,10 @@
         {% else %}
             <div class="viewer-placeholder">
                 <i class="fas {{ file.get_file_icon }}"></i>
-                <h3>Preview Not Available</h3>
-                <p>This file type ({{ file.file_type }}) cannot be previewed in the browser.</p>
+                <h3>{% trans "Preview Not Available" %}</h3>
+                <p>{% trans "This file type" %} ({{ file.file_type }}) {% trans "cannot be previewed in the browser." %}</p>
                 <a href="{% url 'download_file' file.id %}" class="btn btn-primary" style="margin-top:1.5rem;">
-                    <i class="fas fa-download"></i> Download to View
+                    <i class="fas fa-download"></i> {% trans "Download to View" %}
                 </a>
             </div>
         {% endif %}
@@ -325,14 +326,14 @@
 
     <div class="like-section">
         <a href="{% url 'like_file' file.id %}" class="like-btn {% if user_liked %}active-like{% endif %}">
-            <i class="fas fa-thumbs-up"></i> {{ likes_count }} Likes
+            <i class="fas fa-thumbs-up"></i> {{ likes_count }} {% trans "Likes" %}
         </a>
         <a href="{% url 'dislike_file' file.id %}" class="like-btn {% if user_disliked %}active-dislike{% endif %}">
-            <i class="fas fa-thumbs-down"></i> {{ dislikes_count }} Dislikes
+            <i class="fas fa-thumbs-down"></i> {{ dislikes_count }} {% trans "Dislikes" %}
         </a>
         <div class="share-section">
             <a href="{% url 'share_file' file.id %}" class="share-btn">
-                <i class="fas fa-share-alt"></i> Share
+                <i class="fas fa-share-alt"></i> {% trans "Share" %}
             </a>
         </div>
     </div>

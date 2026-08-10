@@ -19,7 +19,7 @@ from django.db.models import Sum, Q
 from django.core.paginator import Paginator
 from django.contrib.auth.views import PasswordResetView
 
-from .forms import RegisterForm, UploadForm
+from .forms import RegisterForm, UploadForm, ShareHubPasswordResetForm
 from .models import File, Like
 from .utils import detect_file_type
 
@@ -351,12 +351,8 @@ def share_file(request, file_id):
 
 
 class ShareHubPasswordResetView(PasswordResetView):
-    def form_valid(self, form):
-        current_site = get_current_site(self.request)
-        if current_site.domain == 'example.com':
-            current_site.domain = 'localhost'
-        self.extra_email_context = {"host_with_port": self.request.get_host()}
-        return super().form_valid(form)
+    form_class = ShareHubPasswordResetForm
+    extra_email_context = {}
 
 
 # ------------------- ADMIN ONLY -------------------
