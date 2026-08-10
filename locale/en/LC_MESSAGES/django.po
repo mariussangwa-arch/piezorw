@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ShareHub 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-10 22:15+0000\n"
+"POT-Creation-Date: 2026-08-10 22:48+0000\n"
 "PO-Revision-Date: 2024-01-01 00:00+0000\n"
 "Last-Translator: ShareHub\n"
 "Language-Team: English\n"
@@ -200,7 +200,7 @@ msgid "View"
 msgstr "View"
 
 #: home/templates/home/dashboard.html:432
-#: home/templates/home/view_file.html:262
+#: home/templates/home/view_file.html:306
 msgid "Download"
 msgstr "Download"
 
@@ -327,7 +327,7 @@ msgid "Remember me"
 msgstr "Member since"
 
 #: home/templates/home/login.html:313
-#: home/templates/home/password_reset.html:218
+#: home/templates/home/password_reset.html:310
 msgid "Forgot Password?"
 msgstr "Forgot Password?"
 
@@ -343,41 +343,65 @@ msgstr "Already have an account?"
 msgid "Create one"
 msgstr "Create Account"
 
-#: home/templates/home/password_reset.html:212
+#: home/templates/home/password_reset.html:279
 #: home/templates/home/password_reset_email.html:38
 msgid "Reset Password"
 msgstr "Reset Password"
 
-#: home/templates/home/password_reset.html:213
+#: home/templates/home/password_reset.html:280
 msgid ""
 "Enter your email address and we'll send you a link to reset your password."
 msgstr ""
 "Enter your email address and we'll send you a link to reset your password."
 
-#: home/templates/home/password_reset.html:219
+#: home/templates/home/password_reset.html:286
+msgid "Secure Reset"
+msgstr "Secure Reset"
+
+#: home/templates/home/password_reset.html:287
+msgid "Your account stays protected with encrypted links"
+msgstr "Your account stays protected with encrypted links"
+
+#: home/templates/home/password_reset.html:293
+msgid "Instant Delivery"
+msgstr "Instant Delivery"
+
+#: home/templates/home/password_reset.html:294
+msgid "Receive your reset link within seconds"
+msgstr "Receive your reset link within seconds"
+
+#: home/templates/home/password_reset.html:300
+msgid "Time-Limited"
+msgstr "Time-Limited"
+
+#: home/templates/home/password_reset.html:301
+msgid "Links expire after 3 days for your safety"
+msgstr "Links expire after 3 days for your safety"
+
+#: home/templates/home/password_reset.html:311
 #, fuzzy
 #| msgid "No worries, we'll send you reset instructions"
 msgid "No worries, we'll send you reset instructions."
 msgstr "No worries, we'll send you reset instructions"
 
-#: home/templates/home/password_reset.html:234
+#: home/templates/home/password_reset.html:327
 #: home/templates/home/register.html:375
 msgid "Email Address"
 msgstr "Email Address"
 
-#: home/templates/home/password_reset.html:236
+#: home/templates/home/password_reset.html:329
 msgid "Enter your registered email"
 msgstr "Enter your registered email"
 
-#: home/templates/home/password_reset.html:241
+#: home/templates/home/password_reset.html:334
 msgid "Send Reset Link"
 msgstr "Send Reset Link"
 
-#: home/templates/home/password_reset.html:246
+#: home/templates/home/password_reset.html:339
 msgid "Remember your password?"
 msgstr "Remember your password?"
 
-#: home/templates/home/password_reset.html:246
+#: home/templates/home/password_reset.html:339
 msgid "Sign in"
 msgstr "Sign in"
 
@@ -401,40 +425,67 @@ msgstr "You can now log in with your new password"
 msgid "Login Now"
 msgstr "Login Now"
 
-#: home/templates/home/password_reset_confirm.html:213
-#: home/templates/home/password_reset_confirm.html:235
-msgid "New Password"
-msgstr "New Password"
-
-#: home/templates/home/password_reset_confirm.html:214
-msgid "Enter a strong, unique password for your account."
-msgstr "Enter a strong, unique password for your account."
-
-#: home/templates/home/password_reset_confirm.html:219
+#: home/templates/home/password_reset_confirm.html:3
+#: home/templates/home/password_reset_confirm.html:337
 msgid "Set New Password"
 msgstr "Set New Password"
 
-#: home/templates/home/password_reset_confirm.html:220
+#: home/templates/home/password_reset_confirm.html:306
+#: home/templates/home/password_reset_confirm.html:354
+msgid "New Password"
+msgstr "New Password"
+
+#: home/templates/home/password_reset_confirm.html:307
+msgid "Enter a strong, unique password for your account."
+msgstr "Enter a strong, unique password for your account."
+
+#: home/templates/home/password_reset_confirm.html:313
+msgid "Minimum 8 Characters"
+msgstr "Minimum 8 Characters"
+
+#: home/templates/home/password_reset_confirm.html:314
+#, fuzzy
+#| msgid "Use 8+ characters with a mix of letters, numbers & symbols"
+msgid "Use a mix of letters, numbers, and symbols"
+msgstr "Use 8+ characters with a mix of letters, numbers & symbols"
+
+#: home/templates/home/password_reset_confirm.html:320
+msgid "Keep It Unique"
+msgstr "Keep It Unique"
+
+#: home/templates/home/password_reset_confirm.html:321
+msgid "Avoid reusing passwords from other sites"
+msgstr "Avoid reusing passwords from other sites"
+
+#: home/templates/home/password_reset_confirm.html:327
+msgid "Stay Safe"
+msgstr "Stay Safe"
+
+#: home/templates/home/password_reset_confirm.html:328
+msgid "Your new password will be encrypted securely"
+msgstr "Your new password will be encrypted securely"
+
+#: home/templates/home/password_reset_confirm.html:338
 #, fuzzy
 #| msgid "Make sure your new password is secure and easy to remember"
 msgid "Make sure your new password is secure and easy to remember."
 msgstr "Make sure your new password is secure and easy to remember"
 
-#: home/templates/home/password_reset_confirm.html:238
+#: home/templates/home/password_reset_confirm.html:357
 #, fuzzy
 #| msgid "Enter your new password"
 msgid "Enter new password"
 msgstr "Enter your new password"
 
-#: home/templates/home/password_reset_confirm.html:247
+#: home/templates/home/password_reset_confirm.html:366
 msgid "Confirm New Password"
 msgstr "Confirm New Password"
 
-#: home/templates/home/password_reset_confirm.html:250
+#: home/templates/home/password_reset_confirm.html:369
 msgid "Confirm new password"
 msgstr "Confirm new password"
 
-#: home/templates/home/password_reset_confirm.html:259
+#: home/templates/home/password_reset_confirm.html:378
 msgid "Change Password"
 msgstr "Change Password"
 
@@ -579,8 +630,8 @@ msgstr "Sign in here"
 msgid "Share File"
 msgstr "Share File"
 
-#: home/templates/home/share.html:133 home/templates/home/view_file.html:265
-#: home/templates/home/view_file.html:336
+#: home/templates/home/share.html:133 home/templates/home/view_file.html:309
+#: home/templates/home/view_file.html:380
 msgid "Share"
 msgstr "Share"
 
@@ -696,15 +747,21 @@ msgstr "Please upload only one file at a time."
 msgid " files are not supported."
 msgstr "Your files are encrypted and protected"
 
-#: home/templates/home/user_table.html:5 home/templates/home/user_table.html:8
-msgid "User Table"
-msgstr "User Table"
+#: home/templates/home/view_file.html:300
+msgid "views"
+msgstr "views"
 
-#: home/templates/home/view_file.html:281
+#: home/templates/home/view_file.html:301
+#, fuzzy
+#| msgid "Download"
+msgid "downloads"
+msgstr "Download"
+
+#: home/templates/home/view_file.html:325
 msgid "AVI Format Not Supported for Browser Playback"
 msgstr "AVI Format Not Supported for Browser Playback"
 
-#: home/templates/home/view_file.html:282
+#: home/templates/home/view_file.html:326
 msgid ""
 "Your browser cannot play AVI files directly. Please download the file to "
 "watch it."
@@ -712,49 +769,49 @@ msgstr ""
 "Your browser cannot play AVI files directly. Please download the file to "
 "watch it."
 
-#: home/templates/home/view_file.html:284
+#: home/templates/home/view_file.html:328
 #, fuzzy
 #| msgid "Download"
 msgid "Download File"
 msgstr "Download"
 
-#: home/templates/home/view_file.html:290
+#: home/templates/home/view_file.html:334
 msgid "Your browser does not support the video tag."
 msgstr "Your browser does not support the video tag."
 
-#: home/templates/home/view_file.html:301
+#: home/templates/home/view_file.html:345
 msgid "Your browser does not support the audio element."
 msgstr "Your browser does not support the audio element."
 
-#: home/templates/home/view_file.html:312
+#: home/templates/home/view_file.html:356
 msgid "Unable to load file content"
 msgstr "Unable to load file content"
 
-#: home/templates/home/view_file.html:318
+#: home/templates/home/view_file.html:362
 msgid "Preview Not Available"
 msgstr "Preview Not Available"
 
-#: home/templates/home/view_file.html:319
+#: home/templates/home/view_file.html:363
 #, fuzzy
 #| msgid "No files yet"
 msgid "This file type"
 msgstr "No files yet"
 
-#: home/templates/home/view_file.html:319
+#: home/templates/home/view_file.html:363
 msgid "cannot be previewed in the browser."
 msgstr "cannot be previewed in the browser."
 
-#: home/templates/home/view_file.html:321
+#: home/templates/home/view_file.html:365
 #, fuzzy
 #| msgid "Download"
 msgid "Download to View"
 msgstr "Download"
 
-#: home/templates/home/view_file.html:329
+#: home/templates/home/view_file.html:373
 msgid "Likes"
 msgstr "Likes"
 
-#: home/templates/home/view_file.html:332
+#: home/templates/home/view_file.html:376
 msgid "Dislikes"
 msgstr "Dislikes"
 
@@ -886,6 +943,9 @@ msgstr "granted"
 #: home/views.py:416
 msgid "revoked"
 msgstr "revoked"
+
+#~ msgid "User Table"
+#~ msgstr "User Table"
 
 #~ msgid "Save"
 #~ msgstr "Save"
