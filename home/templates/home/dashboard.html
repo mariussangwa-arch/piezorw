@@ -29,15 +29,15 @@
     --text-muted: #94a3b8;
     --border: #334155;
 }
-body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', system-ui, sans-serif; margin: 0; line-height: 1.6; }
-.container { max-width: 1320px; margin: 0 auto; padding: 2rem 1.5rem; }
+body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', system-ui, sans-serif; margin: 0; line-height: 1.5; }
+.container { max-width: 1320px; margin: 0 auto; padding: 1.5rem 1rem; }
 
 .header-banner {
     background: linear-gradient(135deg, var(--primary), var(--primary-hover));
     color: white;
-    padding: 3rem;
+    padding: 2rem;
     border-radius: 0;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
     position: relative;
     overflow: hidden;
     box-shadow: var(--shadow);
@@ -47,9 +47,9 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
     background: radial-gradient(circle at top right, rgba(255,255,255,0.15), transparent 70%);
     pointer-events: none;
 }
-.header-content { position: relative; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem; }
-.header-content h1 { font-size: 2.5rem; font-weight: 800; margin: 0; }
-.header-content p { font-size: 1.15rem; opacity: 0.95; margin: 0.5rem 0 0; }
+.header-content { position: relative; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+.header-content h1 { font-size: 2rem; font-weight: 800; margin: 0; }
+.header-content p { font-size: 1rem; opacity: 0.95; margin: 0.3rem 0 0; }
 .header-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
 .btn-primary {
     padding: 0.9rem 1.8rem;
@@ -70,72 +70,61 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
 .search-bar {
     display: flex;
     gap: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     flex-wrap: wrap;
 }
 
 .search-input {
     flex: 1;
     min-width: 250px;
-    padding: 1rem 1.5rem;
+    padding: 0.8rem 1.2rem;
     border: 2px solid var(--border);
     border-radius: 0;
     background: var(--surface);
     color: var(--text-primary);
-    font-size: 1rem;
+    font-size: 0.95rem;
     transition: var(--transition);
-}
-
-.search-input:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 4px var(--primary-light);
 }
 
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 .stat-card {
     background: var(--surface);
     border-radius: 0;
-    padding: 1.8rem;
+    padding: 1.4rem;
     border: 1px solid var(--border);
     display: flex;
     align-items: center;
-    gap: 1.2rem;
+    gap: 1rem;
     transition: var(--transition);
 }
 
-.stat-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-}
-
 .stat-icon {
-    width: 56px;
-    height: 56px;
+    width: 48px;
+    height: 48px;
     border-radius: 0;
     background: linear-gradient(135deg, var(--primary), var(--primary-hover));
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
 }
 
 .stat-info h3 {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: 800;
     margin: 0;
     color: var(--text-primary);
 }
 
 .stat-info p {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
     margin: 0;
 }
@@ -162,7 +151,7 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
     display: block;
     position: relative;
     width: 100%;
-    height: 220px;
+    height: 180px;
     overflow: hidden;
     background: #0f172a;
 }
@@ -211,7 +200,7 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
 }
 
 .cover-icon {
-    font-size: 4rem;
+    font-size: 3.5rem;
     color: white;
     opacity: 0.9;
 }
@@ -232,7 +221,7 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
 }
 
 .play-overlay i {
-    font-size: 4rem;
+    font-size: 3.5rem;
     color: white;
 }
 
@@ -249,13 +238,13 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
 }
 
 .file-info {
-    padding: 1.5rem;
+    padding: 1.2rem;
 }
 
 .file-info h3 {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 700;
-    margin: 0 0 0.5rem;
+    margin: 0 0 0.4rem;
     color: var(--text-primary);
     white-space: nowrap;
     overflow: hidden;
@@ -263,9 +252,9 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
 }
 
 .file-info p {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
-    margin: 0 0 0.8rem;
+    margin: 0 0 0.7rem;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -273,17 +262,17 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
 }
 
 .file-meta {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--text-muted);
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
 }
 
 .stats {
     display: flex;
-    gap: 1rem;
-    font-size: 0.85rem;
+    gap: 0.8rem;
+    font-size: 0.8rem;
     color: var(--text-secondary);
-    margin-bottom: 1.2rem;
+    margin-bottom: 1rem;
     flex-wrap: wrap;
 }
 
@@ -295,13 +284,13 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
 
 .actions {
     display: flex;
-    gap: 0.6rem;
+    gap: 0.5rem;
     flex-wrap: wrap;
 }
 
 .btn {
-    padding: 0.6rem 1rem;
-    font-size: 0.85rem;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.8rem;
     border-radius: 0;
     font-weight: 600;
     text-decoration: none;
@@ -317,8 +306,8 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
 .btn-delete { background: #ef4444; color: white; }
 .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
 
-.empty { text-align: center; padding: 6rem 2rem; color: var(--text-muted); grid-column: 1 / -1; }
-.empty i { font-size: 5rem; opacity: 0.3; margin-bottom: 1.5rem; display: block; }
+.empty { text-align: center; padding: 4rem 2rem; color: var(--text-muted); grid-column: 1 / -1; }
+.empty i { font-size: 4rem; opacity: 0.3; margin-bottom: 1.2rem; display: block; }
 
 .like-section {
     display: flex;
@@ -329,13 +318,13 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
 }
 
 .like-btn {
-    padding: 0.5rem 1rem;
+    padding: 0.45rem 0.9rem;
     border: 2px solid var(--border);
     background: var(--surface);
     color: var(--text-secondary);
     border-radius: 0;
     font-weight: 600;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -417,7 +406,8 @@ body { background: var(--bg); color: var(--text-primary); font-family: 'Inter', 
                 </a>
                 <div class="file-info">
                     <h3>{{ file.name }}</h3>
-                    <p>{{ file.description|default:"No description"|truncatechars:100 }}</p>
+                    {% trans "No description" as no_desc %}
+                    <p>{{ file.description|default:no_desc|truncatechars:100 }}</p>
                     <div class="file-meta">
                         {{ file.upload_date|date:"M d, Y" }} • {{ file.format_file_size }}
                     </div>

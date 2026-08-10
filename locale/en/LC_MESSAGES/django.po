@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ShareHub 1.0\n"
-"Report-Msgid-Bugs-To: support@sharehub.local\n"
-"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-10 22:48+0000\n"
 "PO-Revision-Date: 2024-01-01 00:00+0000\n"
 "Last-Translator: ShareHub\n"
 "Language-Team: English\n"
@@ -12,376 +12,958 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "Dashboard"
-msgstr "Dashboard"
-
-msgid "Files"
-msgstr "Files"
-
-msgid "Upload"
-msgstr "Upload"
-
-msgid "Profile"
-msgstr "Profile"
-
-msgid "Login"
-msgstr "Login"
-
-msgid "Sign Up"
-msgstr "Sign Up"
-
-msgid "Logout"
-msgstr "Logout"
-
-msgid "Search"
-msgstr "Search"
-
-msgid "Cancel"
-msgstr "Cancel"
-
-msgid "Save"
-msgstr "Save"
-
-msgid "Delete"
-msgstr "Delete"
-
-msgid "Edit"
-msgstr "Edit"
-
-msgid "Back"
-msgstr "Back"
-
-msgid "Submit"
-msgstr "Submit"
-
-msgid "Welcome back"
-msgstr "Welcome back"
-
-msgid "Manage and explore your uploaded files"
-msgstr "Manage and explore your uploaded files"
-
-msgid "Upload New File"
-msgstr "Upload New File"
-
-msgid "Browse Community"
-msgstr "Browse Community"
-
-msgid "Search your files..."
-msgstr "Search your files..."
-
-msgid "Total Files"
-msgstr "Total Files"
-
-msgid "Total Views"
-msgstr "Total Views"
-
-msgid "Total Downloads"
-msgstr "Total Downloads"
-
-msgid "Total Shares"
-msgstr "Total Shares"
-
-msgid "No files uploaded yet"
-msgstr "No files uploaded yet"
-
-msgid "Start sharing by uploading your first file"
-msgstr "Start sharing by uploading your first file"
-
-msgid "View"
-msgstr "View"
-
-msgid "Download"
-msgstr "Download"
-
-msgid "Share"
-msgstr "Share"
-
-msgid "Likes"
-msgstr "Likes"
-
-msgid "Dislikes"
-msgstr "Dislikes"
-
-msgid "Create Account"
-msgstr "Create Account"
-
-msgid "Get started with ShareHub in seconds"
-msgstr "Get started with ShareHub in seconds"
-
-msgid "Already have an account?"
-msgstr "Already have an account?"
-
-msgid "Sign in here"
-msgstr "Sign in here"
-
-msgid "Choose a username"
-msgstr "Choose a username"
-
+#: home/forms.py:15
 msgid "you@example.com"
 msgstr "you@example.com"
 
+#: home/forms.py:24
+msgid "Choose a username"
+msgstr "Choose a username"
+
+#: home/forms.py:29
 msgid "Create a strong password"
 msgstr "Create a strong password"
 
+#: home/forms.py:33
 msgid "Repeat your password"
 msgstr "Repeat your password"
 
-msgid "Use 8+ characters with a mix of letters, numbers & symbols"
-msgstr "Use 8+ characters with a mix of letters, numbers & symbols"
-
-msgid "Forgot Password?"
-msgstr "Forgot Password?"
-
-msgid "No worries, we'll send you reset instructions"
-msgstr "No worries, we'll send you reset instructions"
-
-msgid "Remember your password?"
-msgstr "Remember your password?"
-
-msgid "Sign in"
-msgstr "Sign in"
-
-msgid "Send Reset Link"
-msgstr "Send Reset Link"
-
+#: home/templates/home/activation_sent.html:149
+#: home/templates/home/password_reset_done.html:149
 msgid "Check Your Email"
 msgstr "Check Your Email"
 
-msgid "We've sent password reset instructions to your email address"
+#: home/templates/home/activation_sent.html:153
+#, fuzzy
+#| msgid "We've sent password reset instructions to your email address"
+msgid "We've sent a verification link to your email address."
 msgstr "We've sent password reset instructions to your email address"
 
-msgid "Follow the link in the email to reset your password"
+#: home/templates/home/activation_sent.html:153
+#, fuzzy
+#| msgid "Follow the link in the email to reset your password"
+msgid "Click the link in the email to activate your account."
 msgstr "Follow the link in the email to reset your password"
 
-msgid "Didn't receive the email? Check your spam folder"
+#: home/templates/home/activation_sent.html:157
+#: home/templates/home/password_reset_done.html:157
+#, fuzzy
+#| msgid "Didn't receive the email? Check your spam folder"
+msgid "Didn't receive the email? Check your spam folder."
 msgstr "Didn't receive the email? Check your spam folder"
 
+#: home/templates/home/activation_sent.html:162
+#: home/templates/home/password_reset_done.html:162
 msgid "Back to Login"
 msgstr "Back to Login"
 
-msgid "Verify Your Email Address"
-msgstr "Verify Your Email Address"
-
-msgid "Hi"
-msgstr "Hi"
-
-msgid "Thank you for signing up for ShareHub"
-msgstr "Thank you for signing up for ShareHub"
-
-msgid "Please verify your email address by clicking the button below"
-msgstr "Please verify your email address by clicking the button below"
-
-msgid "Verify Email Address"
-msgstr "Verify Email Address"
-
-msgid "Or copy and paste this link into your browser"
-msgstr "Or copy and paste this link into your browser"
-
-msgid "This link will expire in 3 days"
-msgstr "This link will expire in 3 days"
-
-msgid "If you didn't create an account, please ignore this email"
-msgstr "If you didn't create an account, please ignore this email"
-
-msgid "ShareHub Team"
-msgstr "ShareHub Team"
-
-msgid "Email Address"
-msgstr "Email Address"
-
-msgid "Enter your registered email"
-msgstr "Enter your registered email"
-
-msgid "Set New Password"
-msgstr "Set New Password"
-
-msgid "Make sure your new password is secure and easy to remember"
-msgstr "Make sure your new password is secure and easy to remember"
-
-msgid "New Password"
-msgstr "New Password"
-
-msgid "Confirm New Password"
-msgstr "Confirm New Password"
-
-msgid "Change Password"
-msgstr "Change Password"
-
-msgid "Password Changed!"
-msgstr "Password Changed!"
-
-msgid "Your password has been successfully reset"
-msgstr "Your password has been successfully reset"
-
-msgid "You can now log in with your new password"
-msgstr "You can now log in with your new password"
-
-msgid "Login Now"
-msgstr "Login Now"
-
-msgid "No account found with that username"
-msgstr "No account found with that username"
-
-msgid "Please verify your email before logging in"
-msgstr "Please verify your email before logging in"
-
-msgid "Incorrect password. Please try again"
-msgstr "Incorrect password. Please try again"
-
-msgid "Activate Your ShareHub Account"
-msgstr "Activate Your ShareHub Account"
-
-msgid "Join ShareHub"
-msgstr "Join ShareHub"
-
-msgid "Start sharing files securely with your team in minutes"
-msgstr "Start sharing files securely with your team in minutes"
-
-msgid "Unlimited Storage"
-msgstr "Unlimited Storage"
-
-msgid "Upload as many files as you need"
-msgstr "Upload as many files as you need"
-
-msgid "Bank-Level Security"
-msgstr "Bank-Level Security"
-
-msgid "Your files are encrypted and protected"
-msgstr "Your files are encrypted and protected"
-
-msgid "Team Collaboration"
-msgstr "Team Collaboration"
-
-msgid "Share and collaborate with anyone"
-msgstr "Share and collaborate with anyone"
-
-msgid "Welcome to ShareHub!"
-msgstr "Welcome to ShareHub!"
-
-msgid "Permanently delete this file?"
-msgstr "Permanently delete this file?"
-
-msgid "No files found"
-msgstr "No files found"
-
-msgid "Try adjusting your filters or search query."
-msgstr "Try adjusting your filters or search query."
-
-msgid "Drop your file here"
-msgstr "Drop your file here"
-
-msgid "or click to browse from your device"
-msgstr "or click to browse from your device"
-
-msgid "Browse Files"
-msgstr "Browse Files"
-
-msgid "Upload File"
-msgstr "Upload File"
-
+#: home/templates/home/all_files.html:316
 msgid "Community Files"
 msgstr "Community Files"
 
+#: home/templates/home/all_files.html:321
 msgid "Search files, descriptions, users..."
 msgstr "Search files, descriptions, users..."
 
+#: home/templates/home/all_files.html:325
 msgid "All Types"
 msgstr "All Types"
 
+#: home/templates/home/all_files.html:326 home/templates/home/upload.html:169
 msgid "Images"
 msgstr "Images"
 
+#: home/templates/home/all_files.html:327 home/templates/home/upload.html:170
 msgid "Videos"
 msgstr "Videos"
 
+#: home/templates/home/all_files.html:328 home/templates/home/upload.html:171
 msgid "Audio"
 msgstr "Audio"
 
+#: home/templates/home/all_files.html:329
 msgid "PDFs"
 msgstr "PDFs"
 
+#: home/templates/home/all_files.html:330 home/templates/home/upload.html:172
 msgid "Code"
 msgstr "Code"
 
+#: home/templates/home/all_files.html:334
 msgid "Newest First"
 msgstr "Newest First"
 
+#: home/templates/home/all_files.html:335
 msgid "Oldest First"
 msgstr "Oldest First"
 
+#: home/templates/home/all_files.html:336
 msgid "Most Liked"
 msgstr "Most Liked"
 
-msgid "Upload a New File"
-msgstr "Upload a New File"
+#: home/templates/home/all_files.html:339
+#: home/templates/home/dashboard.html:368
+msgid "Search"
+msgstr "Search"
 
-msgid "Share high-quality content with the ShareHub community"
-msgstr "Share high-quality content with the ShareHub community"
+#: home/templates/home/all_files.html:360
+#: home/templates/home/dashboard.html:420 home/templates/home/profile.html:281
+msgid "No description"
+msgstr "No description"
 
-msgid "Enter your new password"
-msgstr "Enter your new password"
+#: home/templates/home/all_files.html:383
+msgid "No files found"
+msgstr "No files found"
 
-msgid "Confirm new password"
-msgstr "Confirm new password"
+#: home/templates/home/all_files.html:384
+msgid "Try adjusting your filters or search query."
+msgstr "Try adjusting your filters or search query."
 
-msgid "Share File"
-msgstr "Share File"
+#: home/templates/home/base.html:290
+#, fuzzy
+#| msgid "Share"
+msgid "ShareHub"
+msgstr "Share"
 
-msgid "Share \"%s\" with others using the link below"
-msgstr "Share \"%s\" with others using the link below"
+#: home/templates/home/base.html:295
+msgid "Dashboard"
+msgstr "Dashboard"
 
-msgid "Copy"
-msgstr "Copy"
+#: home/templates/home/base.html:296
+msgid "Files"
+msgstr "Files"
 
-msgid "Copied!"
-msgstr "Copied!"
+#: home/templates/home/base.html:297
+msgid "Upload"
+msgstr "Upload"
 
-msgid "Back to File"
-msgstr "Back to File"
+#: home/templates/home/base.html:306
+msgid "Profile"
+msgstr "Profile"
 
-msgid "Recent Files"
-msgstr "Recent Files"
-
-msgid "No files yet"
-msgstr "No files yet"
-
-msgid "Upload your first file to see it here."
-msgstr "Upload your first file to see it here."
-
-msgid "Member since"
-msgstr "Member since"
-
-msgid "User Management"
-msgstr "User Management"
-
-msgid "Active"
+#: home/templates/home/base.html:308
+#, fuzzy
+#| msgid "Active"
+msgid "Activate User"
 msgstr "Active"
 
-msgid "Inactive"
-msgstr "Inactive"
+#: home/templates/home/base.html:310
+msgid "Logout"
+msgstr "Logout"
 
-msgid "Password Reset Request"
-msgstr "Password Reset Request"
+#: home/templates/home/base.html:314
+msgid "Login"
+msgstr "Login"
 
+#: home/templates/home/base.html:315
+msgid "Sign Up"
+msgstr "Sign Up"
+
+#: home/templates/home/dashboard.html:356
+msgid "Welcome back"
+msgstr "Welcome back"
+
+#: home/templates/home/dashboard.html:357
+msgid "Manage and explore your uploaded files"
+msgstr "Manage and explore your uploaded files"
+
+#: home/templates/home/dashboard.html:360
+msgid "Upload New File"
+msgstr "Upload New File"
+
+#: home/templates/home/dashboard.html:361
+msgid "Browse Community"
+msgstr "Browse Community"
+
+#: home/templates/home/dashboard.html:367
+msgid "Search your files..."
+msgstr "Search your files..."
+
+#: home/templates/home/dashboard.html:376
+msgid "Total Files"
+msgstr "Total Files"
+
+#: home/templates/home/dashboard.html:383 home/templates/home/profile.html:244
+msgid "Total Views"
+msgstr "Total Views"
+
+#: home/templates/home/dashboard.html:390 home/templates/home/profile.html:251
+msgid "Total Downloads"
+msgstr "Total Downloads"
+
+#: home/templates/home/dashboard.html:397 home/templates/home/profile.html:258
+msgid "Total Shares"
+msgstr "Total Shares"
+
+#: home/templates/home/dashboard.html:431
+msgid "View"
+msgstr "View"
+
+#: home/templates/home/dashboard.html:432
+#: home/templates/home/view_file.html:306
+msgid "Download"
+msgstr "Download"
+
+#: home/templates/home/dashboard.html:435
+msgid "Permanently delete this file?"
+msgstr "Permanently delete this file?"
+
+#: home/templates/home/dashboard.html:435
+msgid "Delete"
+msgstr "Delete"
+
+#: home/templates/home/dashboard.html:443
+msgid "No files uploaded yet"
+msgstr "No files uploaded yet"
+
+#: home/templates/home/dashboard.html:444
+msgid "Start sharing by"
+msgstr "Start sharing by"
+
+#: home/templates/home/dashboard.html:444
+#, fuzzy
+#| msgid "Start sharing by uploading your first file"
+msgid "uploading your first file"
+msgstr "Start sharing by uploading your first file"
+
+#: home/templates/home/email_verification.html:33
+msgid "Verify Your Email Address"
+msgstr "Verify Your Email Address"
+
+#: home/templates/home/email_verification.html:34
+#: home/templates/home/password_reset_email.html:34
+#: home/templates/home/password_reset_email.txt:3
+msgid "Hi"
+msgstr "Hi"
+
+#: home/templates/home/email_verification.html:35
+#, fuzzy
+#| msgid "Please verify your email address by clicking the button below"
 msgid ""
-"You're receiving this email because you requested a password reset for your "
-"ShareHub account."
-msgstr ""
-"You're receiving this email because you requested a password reset for your "
-"ShareHub account."
+"Thank you for signing up for ShareHub! Please verify your email address by "
+"clicking the button below:"
+msgstr "Please verify your email address by clicking the button below"
 
-msgid "Click the button below to set a new password:"
-msgstr "Click the button below to set a new password:"
+#: home/templates/home/email_verification.html:37
+msgid "Verify Email Address"
+msgstr "Verify Email Address"
 
-msgid "Reset Password"
-msgstr "Reset Password"
-
+#: home/templates/home/email_verification.html:39
+#: home/templates/home/password_reset_email.html:40
+#: home/templates/home/password_reset_email.txt:11
 msgid "Or copy and paste this link into your browser:"
 msgstr "Or copy and paste this link into your browser:"
 
+#: home/templates/home/email_verification.html:41
+#, fuzzy
+#| msgid ""
+#| "This link will expire in 3 days. If you didn't request a password reset, "
+#| "please ignore this email."
+msgid ""
+"This link will expire in 3 days. If you didn't create an account, please "
+"ignore this email."
+msgstr ""
+"This link will expire in 3 days. If you didn't request a password reset, "
+"please ignore this email."
+
+#: home/templates/home/email_verification.html:44
+#: home/templates/home/password_reset_email.html:45
+#: home/templates/home/password_reset_email.txt:17
+msgid "ShareHub Team"
+msgstr "ShareHub Team"
+
+#: home/templates/home/login.html:262
+#, fuzzy
+#| msgid "Welcome back"
+msgid "Welcome Back"
+msgstr "Welcome back"
+
+#: home/templates/home/login.html:263
+#, fuzzy
+#| msgid "Share high-quality content with the ShareHub community"
+msgid "Sign in to manage and share your files with the ShareHub community."
+msgstr "Share high-quality content with the ShareHub community"
+
+#: home/templates/home/login.html:269 home/templates/home/login.html:317
+#, fuzzy
+#| msgid "Sign in"
+msgid "Sign In"
+msgstr "Sign in"
+
+#: home/templates/home/login.html:270
+#, fuzzy
+#| msgid "Activate Your ShareHub Account"
+msgid "Use your ShareHub credentials"
+msgstr "Activate Your ShareHub Account"
+
+#: home/templates/home/login.html:289 home/templates/home/register.html:365
+#, fuzzy
+#| msgid "User Management"
+msgid "Username"
+msgstr "User Management"
+
+#: home/templates/home/login.html:291
+#, fuzzy
+#| msgid "Enter your registered email"
+msgid "Enter your username"
+msgstr "Enter your registered email"
+
+#: home/templates/home/login.html:297 home/templates/home/register.html:385
+#, fuzzy
+#| msgid "New Password"
+msgid "Password"
+msgstr "New Password"
+
+#: home/templates/home/login.html:300
+#, fuzzy
+#| msgid "Enter your new password"
+msgid "Enter your password"
+msgstr "Enter your new password"
+
+#: home/templates/home/login.html:311
+#, fuzzy
+#| msgid "Member since"
+msgid "Remember me"
+msgstr "Member since"
+
+#: home/templates/home/login.html:313
+#: home/templates/home/password_reset.html:310
+msgid "Forgot Password?"
+msgstr "Forgot Password?"
+
+#: home/templates/home/login.html:322
+#, fuzzy
+#| msgid "Already have an account?"
+msgid "Don't have an account?"
+msgstr "Already have an account?"
+
+#: home/templates/home/login.html:322
+#, fuzzy
+#| msgid "Create Account"
+msgid "Create one"
+msgstr "Create Account"
+
+#: home/templates/home/password_reset.html:279
+#: home/templates/home/password_reset_email.html:38
+msgid "Reset Password"
+msgstr "Reset Password"
+
+#: home/templates/home/password_reset.html:280
+msgid ""
+"Enter your email address and we'll send you a link to reset your password."
+msgstr ""
+"Enter your email address and we'll send you a link to reset your password."
+
+#: home/templates/home/password_reset.html:286
+msgid "Secure Reset"
+msgstr "Secure Reset"
+
+#: home/templates/home/password_reset.html:287
+msgid "Your account stays protected with encrypted links"
+msgstr "Your account stays protected with encrypted links"
+
+#: home/templates/home/password_reset.html:293
+msgid "Instant Delivery"
+msgstr "Instant Delivery"
+
+#: home/templates/home/password_reset.html:294
+msgid "Receive your reset link within seconds"
+msgstr "Receive your reset link within seconds"
+
+#: home/templates/home/password_reset.html:300
+msgid "Time-Limited"
+msgstr "Time-Limited"
+
+#: home/templates/home/password_reset.html:301
+msgid "Links expire after 3 days for your safety"
+msgstr "Links expire after 3 days for your safety"
+
+#: home/templates/home/password_reset.html:311
+#, fuzzy
+#| msgid "No worries, we'll send you reset instructions"
+msgid "No worries, we'll send you reset instructions."
+msgstr "No worries, we'll send you reset instructions"
+
+#: home/templates/home/password_reset.html:327
+#: home/templates/home/register.html:375
+msgid "Email Address"
+msgstr "Email Address"
+
+#: home/templates/home/password_reset.html:329
+msgid "Enter your registered email"
+msgstr "Enter your registered email"
+
+#: home/templates/home/password_reset.html:334
+msgid "Send Reset Link"
+msgstr "Send Reset Link"
+
+#: home/templates/home/password_reset.html:339
+msgid "Remember your password?"
+msgstr "Remember your password?"
+
+#: home/templates/home/password_reset.html:339
+msgid "Sign in"
+msgstr "Sign in"
+
+#: home/templates/home/password_reset_complete.html:83
+msgid "Password Changed!"
+msgstr "Password Changed!"
+
+#: home/templates/home/password_reset_complete.html:84
+#, fuzzy
+#| msgid "Your password has been successfully reset"
+msgid "Your password has been successfully reset."
+msgstr "Your password has been successfully reset"
+
+#: home/templates/home/password_reset_complete.html:84
+#, fuzzy
+#| msgid "You can now log in with your new password"
+msgid "You can now log in with your new password."
+msgstr "You can now log in with your new password"
+
+#: home/templates/home/password_reset_complete.html:87
+msgid "Login Now"
+msgstr "Login Now"
+
+#: home/templates/home/password_reset_confirm.html:3
+#: home/templates/home/password_reset_confirm.html:337
+msgid "Set New Password"
+msgstr "Set New Password"
+
+#: home/templates/home/password_reset_confirm.html:306
+#: home/templates/home/password_reset_confirm.html:354
+msgid "New Password"
+msgstr "New Password"
+
+#: home/templates/home/password_reset_confirm.html:307
+msgid "Enter a strong, unique password for your account."
+msgstr "Enter a strong, unique password for your account."
+
+#: home/templates/home/password_reset_confirm.html:313
+msgid "Minimum 8 Characters"
+msgstr "Minimum 8 Characters"
+
+#: home/templates/home/password_reset_confirm.html:314
+#, fuzzy
+#| msgid "Use 8+ characters with a mix of letters, numbers & symbols"
+msgid "Use a mix of letters, numbers, and symbols"
+msgstr "Use 8+ characters with a mix of letters, numbers & symbols"
+
+#: home/templates/home/password_reset_confirm.html:320
+msgid "Keep It Unique"
+msgstr "Keep It Unique"
+
+#: home/templates/home/password_reset_confirm.html:321
+msgid "Avoid reusing passwords from other sites"
+msgstr "Avoid reusing passwords from other sites"
+
+#: home/templates/home/password_reset_confirm.html:327
+msgid "Stay Safe"
+msgstr "Stay Safe"
+
+#: home/templates/home/password_reset_confirm.html:328
+msgid "Your new password will be encrypted securely"
+msgstr "Your new password will be encrypted securely"
+
+#: home/templates/home/password_reset_confirm.html:338
+#, fuzzy
+#| msgid "Make sure your new password is secure and easy to remember"
+msgid "Make sure your new password is secure and easy to remember."
+msgstr "Make sure your new password is secure and easy to remember"
+
+#: home/templates/home/password_reset_confirm.html:357
+#, fuzzy
+#| msgid "Enter your new password"
+msgid "Enter new password"
+msgstr "Enter your new password"
+
+#: home/templates/home/password_reset_confirm.html:366
+msgid "Confirm New Password"
+msgstr "Confirm New Password"
+
+#: home/templates/home/password_reset_confirm.html:369
+msgid "Confirm new password"
+msgstr "Confirm new password"
+
+#: home/templates/home/password_reset_confirm.html:378
+msgid "Change Password"
+msgstr "Change Password"
+
+#: home/templates/home/password_reset_done.html:153
+#, fuzzy
+#| msgid "We've sent password reset instructions to your email address"
+msgid "We've sent password reset instructions to your email address."
+msgstr "We've sent password reset instructions to your email address"
+
+#: home/templates/home/password_reset_done.html:153
+#, fuzzy
+#| msgid "Follow the link in the email to reset your password"
+msgid "Follow the link in the email to reset your password."
+msgstr "Follow the link in the email to reset your password"
+
+#: home/templates/home/password_reset_email.html:7
+#, fuzzy
+#| msgid "Reset Password"
+msgid "Reset Your Password"
+msgstr "Reset Password"
+
+#: home/templates/home/password_reset_email.html:33
+#: home/templates/home/password_reset_email.txt:1
+msgid "Password Reset Request"
+msgstr "Password Reset Request"
+
+#: home/templates/home/password_reset_email.html:35
+#: home/templates/home/password_reset_email.txt:5
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"ShareHub account."
+msgstr ""
+"You're receiving this email because you requested a password reset for your "
+"ShareHub account."
+
+#: home/templates/home/password_reset_email.html:36
+msgid "Click the button below to set a new password:"
+msgstr "Click the button below to set a new password:"
+
+#: home/templates/home/password_reset_email.html:42
+#: home/templates/home/password_reset_email.txt:15
 msgid ""
 "This link will expire in 3 days. If you didn't request a password reset, "
 "please ignore this email."
 msgstr ""
 "This link will expire in 3 days. If you didn't request a password reset, "
 "please ignore this email."
+
+#: home/templates/home/password_reset_email.txt:7
+#, fuzzy
+#| msgid "Click the button below to set a new password:"
+msgid "Click the link below to set a new password:"
+msgstr "Click the button below to set a new password:"
+
+#: home/templates/home/password_reset_subject.txt:1
+#, fuzzy
+#| msgid "Change Password"
+msgid "ShareHub Password Reset"
+msgstr "Change Password"
+
+#: home/templates/home/profile.html:227
+msgid "Member since"
+msgstr "Member since"
+
+#: home/templates/home/profile.html:237
+#, fuzzy
+#| msgid "No files uploaded yet"
+msgid "Files Uploaded"
+msgstr "No files uploaded yet"
+
+#: home/templates/home/profile.html:263
+msgid "Recent Files"
+msgstr "Recent Files"
+
+#: home/templates/home/profile.html:290
+msgid "No files yet"
+msgstr "No files yet"
+
+#: home/templates/home/profile.html:291
+msgid "Upload your first file to see it here."
+msgstr "Upload your first file to see it here."
+
+#: home/templates/home/register.html:320
+msgid "Join ShareHub"
+msgstr "Join ShareHub"
+
+#: home/templates/home/register.html:321
+msgid "Start sharing files securely with your team in minutes"
+msgstr "Start sharing files securely with your team in minutes"
+
+#: home/templates/home/register.html:329
+msgid "Unlimited Storage"
+msgstr "Unlimited Storage"
+
+#: home/templates/home/register.html:330
+msgid "Upload as many files as you need"
+msgstr "Upload as many files as you need"
+
+#: home/templates/home/register.html:338
+msgid "Bank-Level Security"
+msgstr "Bank-Level Security"
+
+#: home/templates/home/register.html:339
+msgid "Your files are encrypted and protected"
+msgstr "Your files are encrypted and protected"
+
+#: home/templates/home/register.html:347
+msgid "Team Collaboration"
+msgstr "Team Collaboration"
+
+#: home/templates/home/register.html:348
+msgid "Share and collaborate with anyone"
+msgstr "Share and collaborate with anyone"
+
+#: home/templates/home/register.html:357 home/templates/home/register.html:418
+msgid "Create Account"
+msgstr "Create Account"
+
+#: home/templates/home/register.html:358
+msgid "Get started with ShareHub in seconds"
+msgstr "Get started with ShareHub in seconds"
+
+#: home/templates/home/register.html:396
+msgid "Use 8+ characters with a mix of letters, numbers & symbols"
+msgstr "Use 8+ characters with a mix of letters, numbers & symbols"
+
+#: home/templates/home/register.html:404
+#, fuzzy
+#| msgid "Confirm New Password"
+msgid "Confirm Password"
+msgstr "Confirm New Password"
+
+#: home/templates/home/register.html:423
+msgid "Already have an account?"
+msgstr "Already have an account?"
+
+#: home/templates/home/register.html:423
+msgid "Sign in here"
+msgstr "Sign in here"
+
+#: home/templates/home/share.html:132
+msgid "Share File"
+msgstr "Share File"
+
+#: home/templates/home/share.html:133 home/templates/home/view_file.html:309
+#: home/templates/home/view_file.html:380
+msgid "Share"
+msgstr "Share"
+
+#: home/templates/home/share.html:133
+#, fuzzy
+#| msgid "Share \"%s\" with others using the link below"
+msgid "with others using the link below"
+msgstr "Share \"%s\" with others using the link below"
+
+#: home/templates/home/share.html:146
+msgid "Copy"
+msgstr "Copy"
+
+#: home/templates/home/share.html:148
+msgid "Copied!"
+msgstr "Copied!"
+
+#: home/templates/home/share.html:153
+#, fuzzy
+#| msgid "Share File"
+msgid "Share on Twitter"
+msgstr "Share File"
+
+#: home/templates/home/share.html:157
+msgid "Share on Facebook"
+msgstr "Share on Facebook"
+
+#: home/templates/home/share.html:161
+msgid "Share on LinkedIn"
+msgstr "Share on LinkedIn"
+
+#: home/templates/home/share.html:165
+#, fuzzy
+#| msgid "Share File"
+msgid "Share via Email"
+msgstr "Share File"
+
+#: home/templates/home/share.html:172
+msgid "Back to File"
+msgstr "Back to File"
+
+#: home/templates/home/upload.html:152
+msgid "Upload a New File"
+msgstr "Upload a New File"
+
+#: home/templates/home/upload.html:153
+msgid "Share high-quality content with the ShareHub community"
+msgstr "Share high-quality content with the ShareHub community"
+
+#: home/templates/home/upload.html:160
+msgid "Drop your file here"
+msgstr "Drop your file here"
+
+#: home/templates/home/upload.html:161
+msgid "or click to browse from your device"
+msgstr "or click to browse from your device"
+
+#: home/templates/home/upload.html:163
+msgid "Browse Files"
+msgstr "Browse Files"
+
+#: home/templates/home/upload.html:168
+msgid "Supported formats:"
+msgstr "Supported formats:"
+
+#: home/templates/home/upload.html:169
+msgid "Documents"
+msgstr "Documents"
+
+#: home/templates/home/upload.html:170
+msgid "supported but may not play in browser"
+msgstr "supported but may not play in browser"
+
+#: home/templates/home/upload.html:171
+msgid "Archives"
+msgstr "Archives"
+
+#: home/templates/home/upload.html:172
+msgid "and more"
+msgstr "and more"
+
+#: home/templates/home/upload.html:191
+msgid "File Name"
+msgstr "File Name"
+
+#: home/templates/home/upload.html:192
+msgid "Enter a clear, descriptive name"
+msgstr "Enter a clear, descriptive name"
+
+#: home/templates/home/upload.html:196
+msgid "Description (optional)"
+msgstr "Description (optional)"
+
+#: home/templates/home/upload.html:197
+msgid "Add context or details about this file..."
+msgstr "Add context or details about this file..."
+
+#: home/templates/home/upload.html:202
+msgid "Upload File"
+msgstr "Upload File"
+
+#: home/templates/home/upload.html:205
+msgid "Cancel"
+msgstr "Cancel"
+
+#: home/templates/home/upload.html:271
+msgid "Please upload only one file at a time."
+msgstr "Please upload only one file at a time."
+
+#: home/templates/home/upload.html:296
+#, fuzzy
+#| msgid "Your files are encrypted and protected"
+msgid " files are not supported."
+msgstr "Your files are encrypted and protected"
+
+#: home/templates/home/view_file.html:300
+msgid "views"
+msgstr "views"
+
+#: home/templates/home/view_file.html:301
+#, fuzzy
+#| msgid "Download"
+msgid "downloads"
+msgstr "Download"
+
+#: home/templates/home/view_file.html:325
+msgid "AVI Format Not Supported for Browser Playback"
+msgstr "AVI Format Not Supported for Browser Playback"
+
+#: home/templates/home/view_file.html:326
+msgid ""
+"Your browser cannot play AVI files directly. Please download the file to "
+"watch it."
+msgstr ""
+"Your browser cannot play AVI files directly. Please download the file to "
+"watch it."
+
+#: home/templates/home/view_file.html:328
+#, fuzzy
+#| msgid "Download"
+msgid "Download File"
+msgstr "Download"
+
+#: home/templates/home/view_file.html:334
+msgid "Your browser does not support the video tag."
+msgstr "Your browser does not support the video tag."
+
+#: home/templates/home/view_file.html:345
+msgid "Your browser does not support the audio element."
+msgstr "Your browser does not support the audio element."
+
+#: home/templates/home/view_file.html:356
+msgid "Unable to load file content"
+msgstr "Unable to load file content"
+
+#: home/templates/home/view_file.html:362
+msgid "Preview Not Available"
+msgstr "Preview Not Available"
+
+#: home/templates/home/view_file.html:363
+#, fuzzy
+#| msgid "No files yet"
+msgid "This file type"
+msgstr "No files yet"
+
+#: home/templates/home/view_file.html:363
+msgid "cannot be previewed in the browser."
+msgstr "cannot be previewed in the browser."
+
+#: home/templates/home/view_file.html:365
+#, fuzzy
+#| msgid "Download"
+msgid "Download to View"
+msgstr "Download"
+
+#: home/templates/home/view_file.html:373
+msgid "Likes"
+msgstr "Likes"
+
+#: home/templates/home/view_file.html:376
+msgid "Dislikes"
+msgstr "Dislikes"
+
+#: home/templates/home/view_pdf.html:7
+msgid "PDF Viewer"
+msgstr "PDF Viewer"
+
+#: home/templates/home/view_pdf.html:84
+msgid "Back"
+msgstr "Back"
+
+#: home/templates/users/user_list.html:118
+msgid "User Management"
+msgstr "User Management"
+
+#: home/templates/users/user_list.html:125
+msgid "User"
+msgstr "User"
+
+#: home/templates/users/user_list.html:126
+msgid "Email"
+msgstr "Email"
+
+#: home/templates/users/user_list.html:127
+msgid "Joined"
+msgstr "Joined"
+
+#: home/templates/users/user_list.html:128
+msgid "Status"
+msgstr "Status"
+
+#: home/templates/users/user_list.html:139
+msgid "Admin"
+msgstr "Admin"
+
+#: home/templates/users/user_list.html:147
+msgid "Active"
+msgstr "Active"
+
+#: home/templates/users/user_list.html:149
+msgid "Inactive"
+msgstr "Inactive"
+
+#: home/templates/users/user_list.html:158
+#, fuzzy
+#| msgid "No files found"
+msgid "No users found"
+msgstr "No files found"
+
+#: home/views.py:41
+msgid "Activate Your ShareHub Account"
+msgstr "Activate Your ShareHub Account"
+
+#: home/views.py:52
+#, python-brace-format
+msgid ""
+"Hi {username},\n"
+"\n"
+"Please verify your email by clicking the link below:\n"
+"{url}\n"
+"\n"
+"This link expires in 3 days.\n"
+"\n"
+"Thanks,\n"
+"ShareHub Team"
+msgstr ""
+"Hi {username},\n"
+"\n"
+"Please verify your email by clicking the link below:\n"
+"{url}\n"
+"\n"
+"This link expires in 3 days.\n"
+"\n"
+"Thanks,\n"
+"ShareHub Team"
+
+#: home/views.py:82
+#, fuzzy
+#| msgid "Welcome to ShareHub!"
+msgid "Email verified! Welcome to ShareHub!"
+msgstr "Welcome to ShareHub!"
+
+#: home/views.py:85
+msgid "Invalid or expired link."
+msgstr "Invalid or expired link."
+
+#: home/views.py:99 home/views.py:104
+#, fuzzy
+#| msgid "Please verify your email before logging in"
+msgid "Please verify your email before logging in."
+msgstr "Please verify your email before logging in"
+
+#: home/views.py:106
+#, fuzzy
+#| msgid "Incorrect password. Please try again"
+msgid "Incorrect password. Please try again."
+msgstr "Incorrect password. Please try again"
+
+#: home/views.py:108
+#, fuzzy
+#| msgid "No account found with that username"
+msgid "No account found with that username."
+msgstr "No account found with that username"
+
+#: home/views.py:114
+#, fuzzy
+#| msgid "Your password has been successfully reset"
+msgid "You have been logged out successfully."
+msgstr "Your password has been successfully reset"
+
+#: home/views.py:183
+msgid "Upload failed. Please check the file and form."
+msgstr "Upload failed. Please check the file and form."
+
+#: home/views.py:277
+#, fuzzy
+#| msgid "Permanently delete this file?"
+msgid "You are not allowed to delete this file."
+msgstr "Permanently delete this file?"
+
+#: home/views.py:280
+msgid "File deleted successfully."
+msgstr "File deleted successfully."
+
+#: home/views.py:416
+msgid "granted"
+msgstr "granted"
+
+#: home/views.py:416
+msgid "revoked"
+msgstr "revoked"
+
+#~ msgid "User Table"
+#~ msgstr "User Table"
+
+#~ msgid "Save"
+#~ msgstr "Save"
+
+#~ msgid "Edit"
+#~ msgstr "Edit"
+
+#~ msgid "Submit"
+#~ msgstr "Submit"
+
+#~ msgid "Thank you for signing up for ShareHub"
+#~ msgstr "Thank you for signing up for ShareHub"
+
+#~ msgid "Or copy and paste this link into your browser"
+#~ msgstr "Or copy and paste this link into your browser"
+
+#~ msgid "This link will expire in 3 days"
+#~ msgstr "This link will expire in 3 days"
+
+#~ msgid "If you didn't create an account, please ignore this email"
+#~ msgstr "If you didn't create an account, please ignore this email"

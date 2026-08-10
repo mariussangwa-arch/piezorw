@@ -277,8 +277,9 @@
                         <div class="file-type-badge">{{ file.file_type|title }}</div>
                     </a>
                     <div class="file-info">
-                        <h3>{{ file.name }}</h3>
-                        <p>{{ file.description|default:"No description"|truncatechars:80 }}</p>
+                    <h3>{{ file.name }}</h3>
+                    {% trans "No description" as no_desc %}
+                    <p>{{ file.description|default:no_desc|truncatechars:80 }}</p>
                     </div>
                 </div>
             {% endfor %}

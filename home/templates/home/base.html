@@ -287,7 +287,7 @@ body {
 <nav class="navbar">
     <div class="nav-container">
         <a href="{% if user.is_authenticated %}{% url 'dashboard' %}{% else %}{% url 'login' %}{% endif %}" class="logo">
-            <i class="fas fa-cloud-upload-alt"></i> ShareHub
+            <i class="fas fa-cloud-upload-alt"></i> {% trans "ShareHub" %}
         </a>
 
         <ul class="nav-menu" id="navMenu">

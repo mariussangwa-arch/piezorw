@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ShareHub 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-09 23:52+0000\n"
+"POT-Creation-Date: 2026-08-10 22:48+0000\n"
 "PO-Revision-Date: 2024-01-01 00:00+0000\n"
 "Last-Translator: ShareHub\n"
 "Language-Team: Kinyarwanda\n"
@@ -12,91 +12,110 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: home/templates/home/activation_sent.html:148
-#: home/templates/home/password_reset_done.html:148
+#: home/forms.py:15
+msgid "you@example.com"
+msgstr "wowe@urugero.com"
+
+#: home/forms.py:24
+msgid "Choose a username"
+msgstr "Hitamo izina ry'ukoresha"
+
+#: home/forms.py:29
+msgid "Create a strong password"
+msgstr "Hanga ijambo banga ry'imbaraga"
+
+#: home/forms.py:33
+msgid "Repeat your password"
+msgstr "Ongera usubiremo ijambo banga"
+
+#: home/templates/home/activation_sent.html:149
+#: home/templates/home/password_reset_done.html:149
 msgid "Check Your Email"
 msgstr "Reba Imeyili Yawe"
 
-#: home/templates/home/activation_sent.html:152
-#, fuzzy
-#| msgid "We've sent password reset instructions to your email address"
+#: home/templates/home/activation_sent.html:153
 msgid "We've sent a verification link to your email address."
 msgstr "Twohereje uburyo bwo kuvugurura ijambo banga kuri imeyili yawe"
 
-#: home/templates/home/activation_sent.html:152
-#, fuzzy
-#| msgid "Follow the link in the email to reset your password"
+#: home/templates/home/activation_sent.html:153
 msgid "Click the link in the email to activate your account."
 msgstr "Kurikira umurongo uri mu mese ujye kuvugurura ijambo banga"
 
-#: home/templates/home/activation_sent.html:156
-#: home/templates/home/password_reset_done.html:156
-#, fuzzy
-#| msgid "Didn't receive the email? Check your spam folder"
+#: home/templates/home/activation_sent.html:157
+#: home/templates/home/password_reset_done.html:157
 msgid "Didn't receive the email? Check your spam folder."
 msgstr "Nta mese wahawe? Raba ahafite imeyili zitumiwemo"
 
-#: home/templates/home/activation_sent.html:161
-#: home/templates/home/password_reset_done.html:161
+#: home/templates/home/activation_sent.html:162
+#: home/templates/home/password_reset_done.html:162
 msgid "Back to Login"
 msgstr "Gusubira ku Kwinjira"
 
-#: home/templates/home/all_files.html:315
+#: home/templates/home/all_files.html:316
 msgid "Community Files"
 msgstr "Amadosiye y'Umuryango"
 
-#: home/templates/home/all_files.html:320
+#: home/templates/home/all_files.html:321
 msgid "Search files, descriptions, users..."
 msgstr "Shakisha amadosiye, ibisobanuro, abakoresha..."
 
-#: home/templates/home/all_files.html:324
+#: home/templates/home/all_files.html:325
 msgid "All Types"
 msgstr "Ubwoko bwose"
 
-#: home/templates/home/all_files.html:325
+#: home/templates/home/all_files.html:326 home/templates/home/upload.html:169
 msgid "Images"
 msgstr "Ishusho"
 
-#: home/templates/home/all_files.html:326
+#: home/templates/home/all_files.html:327 home/templates/home/upload.html:170
 msgid "Videos"
 msgstr "Videwo"
 
-#: home/templates/home/all_files.html:327
+#: home/templates/home/all_files.html:328 home/templates/home/upload.html:171
 msgid "Audio"
 msgstr "Amajwi"
 
-#: home/templates/home/all_files.html:328
+#: home/templates/home/all_files.html:329
 msgid "PDFs"
 msgstr "PDF"
 
-#: home/templates/home/all_files.html:329
+#: home/templates/home/all_files.html:330 home/templates/home/upload.html:172
 msgid "Code"
 msgstr "Kode"
 
-#: home/templates/home/all_files.html:333
+#: home/templates/home/all_files.html:334
 msgid "Newest First"
 msgstr "Iya Vuba Kanza"
 
-#: home/templates/home/all_files.html:334
+#: home/templates/home/all_files.html:335
 msgid "Oldest First"
 msgstr "Iya Kera Kanza"
 
-#: home/templates/home/all_files.html:335
+#: home/templates/home/all_files.html:336
 msgid "Most Liked"
 msgstr "Ikunze Kurusha"
 
-#: home/templates/home/all_files.html:338
-#: home/templates/home/dashboard.html:367
+#: home/templates/home/all_files.html:339
+#: home/templates/home/dashboard.html:368
 msgid "Search"
 msgstr "Shakisha"
 
-#: home/templates/home/all_files.html:381
+#: home/templates/home/all_files.html:360
+#: home/templates/home/dashboard.html:420 home/templates/home/profile.html:281
+msgid "No description"
+msgstr "Nta bisobanuro"
+
+#: home/templates/home/all_files.html:383
 msgid "No files found"
 msgstr "Nta dosiye zabonetse"
 
-#: home/templates/home/all_files.html:382
+#: home/templates/home/all_files.html:384
 msgid "Try adjusting your filters or search query."
 msgstr "Keba uhindura akayunguza cyangwa ikibazo cyo gushaka."
+
+#: home/templates/home/base.html:290
+msgid "ShareHub"
+msgstr "ShareHub"
 
 #: home/templates/home/base.html:295
 msgid "Dashboard"
@@ -115,10 +134,8 @@ msgid "Profile"
 msgstr "Umwirondoro"
 
 #: home/templates/home/base.html:308
-#, fuzzy
-#| msgid "Active"
 msgid "Activate User"
-msgstr "Gikora"
+msgstr "Kora Umukoresha"
 
 #: home/templates/home/base.html:310
 msgid "Logout"
@@ -132,104 +149,98 @@ msgstr "Kwinjira"
 msgid "Sign Up"
 msgstr "Kwiyandikisha"
 
-#: home/templates/home/dashboard.html:355
+#: home/templates/home/dashboard.html:356
 msgid "Welcome back"
 msgstr "Murakaza neza"
 
-#: home/templates/home/dashboard.html:356
+#: home/templates/home/dashboard.html:357
 msgid "Manage and explore your uploaded files"
 msgstr "Gutegeka no gusesengura amadosiye yawe"
 
-#: home/templates/home/dashboard.html:359
+#: home/templates/home/dashboard.html:360
 msgid "Upload New File"
 msgstr "Kwinjiza Idosiye Nshya"
 
-#: home/templates/home/dashboard.html:360
+#: home/templates/home/dashboard.html:361
 msgid "Browse Community"
 msgstr "Gushaka mu Muryango"
 
-#: home/templates/home/dashboard.html:366
+#: home/templates/home/dashboard.html:367
 msgid "Search your files..."
 msgstr "Shakisha amadosiye yawe..."
 
-#: home/templates/home/dashboard.html:375
+#: home/templates/home/dashboard.html:376
 msgid "Total Files"
 msgstr "Idosiye Zose"
 
-#: home/templates/home/dashboard.html:382 home/templates/home/profile.html:243
+#: home/templates/home/dashboard.html:383 home/templates/home/profile.html:244
 msgid "Total Views"
 msgstr "Kureba Kwose"
 
-#: home/templates/home/dashboard.html:389 home/templates/home/profile.html:250
+#: home/templates/home/dashboard.html:390 home/templates/home/profile.html:251
 msgid "Total Downloads"
 msgstr "Kumanura Kwose"
 
-#: home/templates/home/dashboard.html:396 home/templates/home/profile.html:257
+#: home/templates/home/dashboard.html:397 home/templates/home/profile.html:258
 msgid "Total Shares"
 msgstr "Gusangira Kwose"
 
-#: home/templates/home/dashboard.html:429
+#: home/templates/home/dashboard.html:431
 msgid "View"
 msgstr "Kureba"
 
-#: home/templates/home/dashboard.html:430
-#: home/templates/home/view_file.html:261
+#: home/templates/home/dashboard.html:432
+#: home/templates/home/view_file.html:306
 msgid "Download"
 msgstr "Kumanura"
 
-#: home/templates/home/dashboard.html:433
+#: home/templates/home/dashboard.html:435
 msgid "Permanently delete this file?"
 msgstr "Gusiba idosiye uramuka burundu?"
 
-#: home/templates/home/dashboard.html:433
+#: home/templates/home/dashboard.html:435
 msgid "Delete"
 msgstr "Gusiba"
 
-#: home/templates/home/dashboard.html:441
+#: home/templates/home/dashboard.html:443
 msgid "No files uploaded yet"
 msgstr "Nta dosiye zinjijwe"
 
-#: home/templates/home/dashboard.html:442
+#: home/templates/home/dashboard.html:444
 msgid "Start sharing by"
-msgstr ""
+msgstr "Tangira gusangira"
 
-#: home/templates/home/dashboard.html:442
-#, fuzzy
-#| msgid "Start sharing by uploading your first file"
+#: home/templates/home/dashboard.html:444
 msgid "uploading your first file"
 msgstr "Tangira gusangira uwinjiza idosiye yawe ya mbere"
 
-#: home/templates/home/email_verification.html:32
+#: home/templates/home/email_verification.html:33
 msgid "Verify Your Email Address"
 msgstr "Hamya Imeyili Yawe"
 
-#: home/templates/home/email_verification.html:33
-#: home/templates/home/password_reset_email.html:33
+#: home/templates/home/email_verification.html:34
+#: home/templates/home/password_reset_email.html:34
+#: home/templates/home/password_reset_email.txt:3
 msgid "Hi"
 msgstr "Muraho"
 
-#: home/templates/home/email_verification.html:34
-#, fuzzy
-#| msgid "Please verify your email address by clicking the button below"
+#: home/templates/home/email_verification.html:35
 msgid ""
 "Thank you for signing up for ShareHub! Please verify your email address by "
 "clicking the button below:"
 msgstr "Nyamahoro hamya imeyili yawe ukanze buto iri hasi"
 
-#: home/templates/home/email_verification.html:36
+#: home/templates/home/email_verification.html:37
 msgid "Verify Email Address"
 msgstr "Hamya Imeyili"
 
-#: home/templates/home/email_verification.html:38
-#: home/templates/home/password_reset_email.html:39
+#: home/templates/home/email_verification.html:39
+#: home/templates/home/password_reset_email.html:40
+#: home/templates/home/password_reset_email.txt:11
 msgid "Or copy and paste this link into your browser:"
 msgstr "Cyangwa ugakopiya kandi ukagena uyu murongo kuri browser:"
 
-#: home/templates/home/email_verification.html:40
-#, fuzzy
-#| msgid ""
-#| "This link will expire in 3 days. If you didn't request a password reset, "
-#| "please ignore this email."
+#: home/templates/home/email_verification.html:41
 msgid ""
 "This link will expire in 3 days. If you didn't create an account, please "
 "ignore this email."
@@ -237,187 +248,227 @@ msgstr ""
 "Uyu murongo uzagira iherezo mu minsi 3. Niba utasabye kuvugurura ijamo "
 "banga, nyamahoro renga iki mese."
 
-#: home/templates/home/email_verification.html:43
-#: home/templates/home/password_reset_email.html:44
+#: home/templates/home/email_verification.html:44
+#: home/templates/home/password_reset_email.html:45
+#: home/templates/home/password_reset_email.txt:17
 msgid "ShareHub Team"
 msgstr "Itsinda rya ShareHub"
 
-#: home/templates/home/login.html:261
-#, fuzzy
-#| msgid "Welcome back"
+#: home/templates/home/login.html:262
 msgid "Welcome Back"
 msgstr "Murakaza neza"
 
-#: home/templates/home/login.html:262
-#, fuzzy
-#| msgid "Share high-quality content with the ShareHub community"
+#: home/templates/home/login.html:263
 msgid "Sign in to manage and share your files with the ShareHub community."
 msgstr "Sangira ibirimo byiza n'umuryango wa ShareHub"
 
-#: home/templates/home/login.html:268 home/templates/home/login.html:316
-#, fuzzy
-#| msgid "Sign in"
+#: home/templates/home/login.html:269 home/templates/home/login.html:317
 msgid "Sign In"
 msgstr "Injira"
 
-#: home/templates/home/login.html:269
-#, fuzzy
-#| msgid "Activate Your ShareHub Account"
+#: home/templates/home/login.html:270
 msgid "Use your ShareHub credentials"
 msgstr "Kanda Konti Yawe ya ShareHub"
 
-#: home/templates/home/login.html:288 home/templates/home/register.html:364
-#, fuzzy
-#| msgid "User Management"
+#: home/templates/home/login.html:289 home/templates/home/register.html:365
 msgid "Username"
-msgstr "Gucunga Abakoresha"
+msgstr "Izina ry'ukoresha"
 
-#: home/templates/home/login.html:290
-#, fuzzy
-#| msgid "Enter your registered email"
+#: home/templates/home/login.html:291
 msgid "Enter your username"
-msgstr "Injiza imeyili yawe yanditswe"
+msgstr "Injiza izina ry'ukoresha"
 
-#: home/templates/home/login.html:296 home/templates/home/register.html:384
-#, fuzzy
-#| msgid "New Password"
+#: home/templates/home/login.html:297 home/templates/home/register.html:385
 msgid "Password"
-msgstr "Ijambo Banga Rishya"
+msgstr "Ijambo banga"
 
-#: home/templates/home/login.html:299
-#, fuzzy
-#| msgid "Enter your new password"
+#: home/templates/home/login.html:300
 msgid "Enter your password"
-msgstr "Injiza ijambo banga rishya"
+msgstr "Injiza ijambo banga"
 
-#: home/templates/home/login.html:312
-#: home/templates/home/password_reset.html:217
+#: home/templates/home/login.html:311
+msgid "Remember me"
+msgstr "Ntanyibuke"
+
+#: home/templates/home/login.html:313
+#: home/templates/home/password_reset.html:310
 msgid "Forgot Password?"
 msgstr "Wibagiwe ijambo banga?"
 
-#: home/templates/home/login.html:321
-#, fuzzy
-#| msgid "Already have an account?"
+#: home/templates/home/login.html:322
 msgid "Don't have an account?"
 msgstr "Usanzwe ufite konti?"
 
-#: home/templates/home/login.html:321
-#, fuzzy
-#| msgid "Create Account"
+#: home/templates/home/login.html:322
 msgid "Create one"
 msgstr "Fungura Konti"
 
-#: home/templates/home/password_reset.html:218
-#, fuzzy
-#| msgid "No worries, we'll send you reset instructions"
+#: home/templates/home/password_reset.html:279
+#: home/templates/home/password_reset_email.html:38
+msgid "Reset Password"
+msgstr "Vugurura Ijambo Banga"
+
+#: home/templates/home/password_reset.html:280
+msgid ""
+"Enter your email address and we'll send you a link to reset your password."
+msgstr ""
+"Injiza imeyili yawe kandi tuzagutumiza umurongo wo kuvugurura ijamo banga."
+
+#: home/templates/home/password_reset.html:286
+msgid "Secure Reset"
+msgstr "Kuvugurura Umutekano"
+
+#: home/templates/home/password_reset.html:287
+msgid "Your account stays protected with encrypted links"
+msgstr "Konti yawe ikomeza kuba irindwa n'umurongo w'ibanga"
+
+#: home/templates/home/password_reset.html:293
+msgid "Instant Delivery"
+msgstr "Gutangira Ako Kanya"
+
+#: home/templates/home/password_reset.html:294
+msgid "Receive your reset link within seconds"
+msgstr "Akira umurongo wawe wo kuvugurura mu masegonda"
+
+#: home/templates/home/password_reset.html:300
+msgid "Time-Limited"
+msgstr "Igihe Cyarimo"
+
+#: home/templates/home/password_reset.html:301
+msgid "Links expire after 3 days for your safety"
+msgstr "Umurongo ugira iherezo mu minsi 3 kugira ngo utekane"
+
+#: home/templates/home/password_reset.html:311
 msgid "No worries, we'll send you reset instructions."
 msgstr "Nta kibazo, tuzagutumiza uburyo bwo kuvugurura"
 
-#: home/templates/home/password_reset.html:233
-#: home/templates/home/register.html:374
+#: home/templates/home/password_reset.html:327
+#: home/templates/home/register.html:375
 msgid "Email Address"
 msgstr "Imeyili"
 
-#: home/templates/home/password_reset.html:235
+#: home/templates/home/password_reset.html:329
 msgid "Enter your registered email"
 msgstr "Injiza imeyili yawe yanditswe"
 
-#: home/templates/home/password_reset.html:240
+#: home/templates/home/password_reset.html:334
 msgid "Send Reset Link"
 msgstr "Kohereza Umurongo wa Kuvugurura"
 
-#: home/templates/home/password_reset.html:245
+#: home/templates/home/password_reset.html:339
 msgid "Remember your password?"
 msgstr "Wibutse ijambo banga ryawe?"
 
-#: home/templates/home/password_reset.html:245
+#: home/templates/home/password_reset.html:339
 msgid "Sign in"
 msgstr "Injira"
 
-#: home/templates/home/password_reset_complete.html:82
+#: home/templates/home/password_reset_complete.html:83
 msgid "Password Changed!"
 msgstr "Ijamo Banga Ryahindutse!"
 
-#: home/templates/home/password_reset_complete.html:83
-#, fuzzy
-#| msgid "Your password has been successfully reset"
+#: home/templates/home/password_reset_complete.html:84
 msgid "Your password has been successfully reset."
 msgstr "Ijamo banga ryawe ryavuguruwe neza"
 
-#: home/templates/home/password_reset_complete.html:83
-#, fuzzy
-#| msgid "You can now log in with your new password"
+#: home/templates/home/password_reset_complete.html:84
 msgid "You can now log in with your new password."
 msgstr "Ubu ushobora kwinjira ufite ijamo banga ryawe rishya"
 
-#: home/templates/home/password_reset_complete.html:86
+#: home/templates/home/password_reset_complete.html:87
 msgid "Login Now"
 msgstr "Injira Ubu"
 
-#: home/templates/home/password_reset_confirm.html:218
+#: home/templates/home/password_reset_confirm.html:3
+#: home/templates/home/password_reset_confirm.html:337
 msgid "Set New Password"
 msgstr "ShyaIjambo Banga Rishya"
 
-#: home/templates/home/password_reset_confirm.html:219
-#, fuzzy
-#| msgid "Make sure your new password is secure and easy to remember"
-msgid "Make sure your new password is secure and easy to remember."
-msgstr "Hinzijambo banga ryawe rishya ari iry'umutekano kandi ryoroheje"
-
-#: home/templates/home/password_reset_confirm.html:234
+#: home/templates/home/password_reset_confirm.html:306
+#: home/templates/home/password_reset_confirm.html:354
 msgid "New Password"
 msgstr "Ijambo Banga Rishya"
 
-#: home/templates/home/password_reset_confirm.html:237
-#, fuzzy
-#| msgid "Enter your new password"
+#: home/templates/home/password_reset_confirm.html:307
+msgid "Enter a strong, unique password for your account."
+msgstr "Injiza ijamo banga ry'imbaraga kandi ryihariye rya konti yawe."
+
+#: home/templates/home/password_reset_confirm.html:313
+msgid "Minimum 8 Characters"
+msgstr "Inyuguti 8 Hato"
+
+#: home/templates/home/password_reset_confirm.html:314
+#| msgid "Use 8+ characters with a mix of letters, numbers & symbols"
+msgid "Use a mix of letters, numbers, and symbols"
+msgstr "Koresha amagambo, imibare, n'ibimenyetso"
+
+#: home/templates/home/password_reset_confirm.html:320
+msgid "Keep It Unique"
+msgstr "Wiharije"
+
+#: home/templates/home/password_reset_confirm.html:321
+msgid "Avoid reusing passwords from other sites"
+msgstr "Wirinde gukoresha ijamo banga ry'ahandi"
+
+#: home/templates/home/password_reset_confirm.html:327
+msgid "Stay Safe"
+msgstr "Urambe Neza"
+
+#: home/templates/home/password_reset_confirm.html:328
+msgid "Your new password will be encrypted securely"
+msgstr "Ijamo banga ryawe rishya rizafungwa mu mutekano"
+
+#: home/templates/home/password_reset_confirm.html:338
+msgid "Make sure your new password is secure and easy to remember."
+msgstr "Hinzijambo banga ryawe rishya ari iry'umutekano kandi ryoroheje"
+
+#: home/templates/home/password_reset_confirm.html:357
 msgid "Enter new password"
 msgstr "Injiza ijambo banga rishya"
 
-#: home/templates/home/password_reset_confirm.html:246
+#: home/templates/home/password_reset_confirm.html:366
 msgid "Confirm New Password"
 msgstr "Emeza Ijamo Banga Rishya"
 
-#: home/templates/home/password_reset_confirm.html:249
+#: home/templates/home/password_reset_confirm.html:369
 msgid "Confirm new password"
 msgstr "Emeza ijambo banga rishya"
 
-#: home/templates/home/password_reset_confirm.html:258
+#: home/templates/home/password_reset_confirm.html:378
 msgid "Change Password"
 msgstr "Hindura Ijambo Banga"
 
-#: home/templates/home/password_reset_done.html:152
-#, fuzzy
-#| msgid "We've sent password reset instructions to your email address"
+#: home/templates/home/password_reset_done.html:153
 msgid "We've sent password reset instructions to your email address."
 msgstr "Twohereje uburyo bwo kuvugurura ijambo banga kuri imeyili yawe"
 
-#: home/templates/home/password_reset_done.html:152
-#, fuzzy
-#| msgid "Follow the link in the email to reset your password"
+#: home/templates/home/password_reset_done.html:153
 msgid "Follow the link in the email to reset your password."
 msgstr "Kurikira umurongo uri mu mese ujye kuvugurura ijambo banga"
 
-#: home/templates/home/password_reset_email.html:32
+#: home/templates/home/password_reset_email.html:7
+msgid "Reset Your Password"
+msgstr "Vugurura Ijambo Banga"
+
+#: home/templates/home/password_reset_email.html:33
+#: home/templates/home/password_reset_email.txt:1
 msgid "Password Reset Request"
 msgstr "Isaba yo Kuvugurura Ijambo Banga"
 
-#: home/templates/home/password_reset_email.html:34
+#: home/templates/home/password_reset_email.html:35
+#: home/templates/home/password_reset_email.txt:5
 msgid ""
 "You're receiving this email because you requested a password reset for your "
 "ShareHub account."
 msgstr ""
 "Urahiye iki mese kuko wasabye kuvugurura ijamo banga rya konti ya ShareHub."
 
-#: home/templates/home/password_reset_email.html:35
+#: home/templates/home/password_reset_email.html:36
 msgid "Click the button below to set a new password:"
 msgstr "Kande buto iri hasi kugira ushyireho ijamo banga rishya:"
 
-#: home/templates/home/password_reset_email.html:37
-msgid "Reset Password"
-msgstr "Vugurura Ijambo Banga"
-
-#: home/templates/home/password_reset_email.html:41
+#: home/templates/home/password_reset_email.html:42
+#: home/templates/home/password_reset_email.txt:15
 msgid ""
 "This link will expire in 3 days. If you didn't request a password reset, "
 "please ignore this email."
@@ -425,172 +476,381 @@ msgstr ""
 "Uyu murongo uzagira iherezo mu minsi 3. Niba utasabye kuvugurura ijamo "
 "banga, nyamahoro renga iki mese."
 
-#: home/templates/home/profile.html:226
+#: home/templates/home/password_reset_email.txt:7
+msgid "Click the link below to set a new password:"
+msgstr "Kande buto iri hasi kugira ushyireho ijamo banga rishya:"
+
+#: home/templates/home/password_reset_subject.txt:1
+msgid "ShareHub Password Reset"
+msgstr "Kuvugurura Ijamo Banga kuri ShareHub"
+
+#: home/templates/home/profile.html:227
 msgid "Member since"
 msgstr "Umuyobozi kuva"
 
-#: home/templates/home/profile.html:236
-#, fuzzy
-#| msgid "No files uploaded yet"
+#: home/templates/home/profile.html:237
 msgid "Files Uploaded"
-msgstr "Nta dosiye zinjijwe"
+msgstr "Amadosiye Yinjijwe"
 
-#: home/templates/home/profile.html:262
+#: home/templates/home/profile.html:263
 msgid "Recent Files"
 msgstr "Amadosiye Ya Vuba"
 
-#: home/templates/home/profile.html:288
+#: home/templates/home/profile.html:290
 msgid "No files yet"
 msgstr "Nta dosiye ziriho"
 
-#: home/templates/home/profile.html:289
+#: home/templates/home/profile.html:291
 msgid "Upload your first file to see it here."
 msgstr "Winjiza idosiye yawe ya mbere kugira ubibone hano."
 
-#: home/templates/home/register.html:319
+#: home/templates/home/register.html:320
 msgid "Join ShareHub"
 msgstr "Jya kuri ShareHub"
 
-#: home/templates/home/register.html:320
+#: home/templates/home/register.html:321
 msgid "Start sharing files securely with your team in minutes"
 msgstr "Tangira gusangira amadosiye mu masegonda"
 
-#: home/templates/home/register.html:328
+#: home/templates/home/register.html:329
 msgid "Unlimited Storage"
 msgstr "Ububiko Budashira"
 
-#: home/templates/home/register.html:329
+#: home/templates/home/register.html:330
 msgid "Upload as many files as you need"
 msgstr "Winjiza amadosiye menshi ukeneye"
 
-#: home/templates/home/register.html:337
+#: home/templates/home/register.html:338
 msgid "Bank-Level Security"
 msgstr "Umutekano wo ku rwego"
 
-#: home/templates/home/register.html:338
+#: home/templates/home/register.html:339
 msgid "Your files are encrypted and protected"
 msgstr "Amadosiye yawe afunze kandi arindwa"
 
-#: home/templates/home/register.html:346
+#: home/templates/home/register.html:347
 msgid "Team Collaboration"
 msgstr "Gukorana n'Itsinda"
 
-#: home/templates/home/register.html:347
+#: home/templates/home/register.html:348
 msgid "Share and collaborate with anyone"
 msgstr "Sangira kandi ukore n'uwandi wese"
 
-#: home/templates/home/register.html:356 home/templates/home/register.html:417
+#: home/templates/home/register.html:357 home/templates/home/register.html:418
 msgid "Create Account"
 msgstr "Fungura Konti"
 
-#: home/templates/home/register.html:357
+#: home/templates/home/register.html:358
 msgid "Get started with ShareHub in seconds"
 msgstr "Tangira gukoresha ShareHub mu masegonda"
 
-#: home/templates/home/register.html:395
+#: home/templates/home/register.html:396
 msgid "Use 8+ characters with a mix of letters, numbers & symbols"
 msgstr "Koresha inyuguti 8+ z'amagambo, imibare & ibimenyetso"
 
-#: home/templates/home/register.html:403
-#, fuzzy
-#| msgid "Confirm New Password"
+#: home/templates/home/register.html:404
 msgid "Confirm Password"
 msgstr "Emeza Ijamo Banga Rishya"
 
-#: home/templates/home/register.html:422
+#: home/templates/home/register.html:423
 msgid "Already have an account?"
 msgstr "Usanzwe ufite konti?"
 
-#: home/templates/home/register.html:422
+#: home/templates/home/register.html:423
 msgid "Sign in here"
 msgstr "Injira hano"
 
-#: home/templates/home/share.html:131
+#: home/templates/home/share.html:132
 msgid "Share File"
 msgstr "Sangira Idosiye"
 
-#: home/templates/home/share.html:132 home/templates/home/view_file.html:264
-#: home/templates/home/view_file.html:335
+#: home/templates/home/share.html:133 home/templates/home/view_file.html:309
+#: home/templates/home/view_file.html:380
 msgid "Share"
 msgstr "Gusangira"
 
-#: home/templates/home/share.html:132
-#, fuzzy
-#| msgid "Share \"%s\" with others using the link below"
+#: home/templates/home/share.html:133
 msgid "with others using the link below"
-msgstr "Sangira \"%s\" n'abandi ukoreshe umurongo uri hasi"
+msgstr "n'abandi ukoreshe umurongo uri hasi"
 
-#: home/templates/home/share.html:145
+#: home/templates/home/share.html:146
 msgid "Copy"
 msgstr "Kopiya"
 
-#: home/templates/home/share.html:171
+#: home/templates/home/share.html:148
+msgid "Copied!"
+msgstr "Byakopiwe!"
+
+#: home/templates/home/share.html:153
+msgid "Share on Twitter"
+msgstr "Sangira kuri Twitter"
+
+#: home/templates/home/share.html:157
+msgid "Share on Facebook"
+msgstr "Sangira kuri Facebook"
+
+#: home/templates/home/share.html:161
+msgid "Share on LinkedIn"
+msgstr "Sangira kuri LinkedIn"
+
+#: home/templates/home/share.html:165
+msgid "Share via Email"
+msgstr "Sangira kuri Imeyili"
+
+#: home/templates/home/share.html:172
 msgid "Back to File"
 msgstr "Gusubira ku Idosiye"
 
-#: home/templates/home/upload.html:151
+#: home/templates/home/upload.html:152
 msgid "Upload a New File"
 msgstr "Kwinjiza Idosiye Nshya"
 
-#: home/templates/home/upload.html:152
+#: home/templates/home/upload.html:153
 msgid "Share high-quality content with the ShareHub community"
 msgstr "Sangira ibirimo byiza n'umuryango wa ShareHub"
 
-#: home/templates/home/upload.html:159
+#: home/templates/home/upload.html:160
 msgid "Drop your file here"
 msgstr "Tega idosiye yawe hano"
 
-#: home/templates/home/upload.html:160
+#: home/templates/home/upload.html:161
 msgid "or click to browse from your device"
 msgstr "cyangwa ukanze kuri device yawe"
 
-#: home/templates/home/upload.html:162
+#: home/templates/home/upload.html:163
 msgid "Browse Files"
 msgstr "Shaka Amadosiye"
 
-#: home/templates/home/upload.html:201
+#: home/templates/home/upload.html:168
+msgid "Supported formats:"
+msgstr "Uburyo bwemewe:"
+
+#: home/templates/home/upload.html:169
+msgid "Documents"
+msgstr "Inyandiko"
+
+#: home/templates/home/upload.html:170
+msgid "supported but may not play in browser"
+msgstr "byemewe ariko bushobora kutavugurura kuri browser"
+
+#: home/templates/home/upload.html:171
+msgid "Archives"
+msgstr "Ububiko"
+
+#: home/templates/home/upload.html:172
+msgid "and more"
+msgstr "n'ibindi"
+
+#: home/templates/home/upload.html:191
+msgid "File Name"
+msgstr "Nta dosiye zinjijwe"
+
+#: home/templates/home/upload.html:192
+msgid "Enter a clear, descriptive name"
+msgstr "Injiza izina ryumvikana kandi risobanura"
+
+#: home/templates/home/upload.html:196
+msgid "Description (optional)"
+msgstr "Ibisobanuro (bitagenewe)"
+
+#: home/templates/home/upload.html:197
+msgid "Add context or details about this file..."
+msgstr "Ongeramo icyerekezo cyangwa ibisobanuro kuri iyi dosiye..."
+
+#: home/templates/home/upload.html:202
 msgid "Upload File"
 msgstr "Injiza Idosiye"
 
-#: home/templates/home/upload.html:204
+#: home/templates/home/upload.html:205
 msgid "Cancel"
 msgstr "Kureka"
 
-#: home/templates/home/view_file.html:317
-msgid "Preview Not Available"
-msgstr ""
+#: home/templates/home/upload.html:271
+msgid "Please upload only one file at a time."
+msgstr "Nyamahoro winjize dosiye imwe gusa igihe kimwe."
 
-#: home/templates/home/view_file.html:318
-#, fuzzy
-#| msgid "No files yet"
+#: home/templates/home/upload.html:296
+msgid " files are not supported."
+msgstr " ntabwo byemewe."
+
+#: home/templates/home/view_file.html:300
+msgid "views"
+msgstr "kureba"
+
+#: home/templates/home/view_file.html:301
+#| msgid "Download"
+msgid "downloads"
+msgstr "kumanura"
+
+#: home/templates/home/view_file.html:325
+msgid "AVI Format Not Supported for Browser Playback"
+msgstr "Uburyo bwa AVI Ntabwo Bwemewe mu Kuvugurura kuri Browser"
+
+#: home/templates/home/view_file.html:326
+msgid ""
+"Your browser cannot play AVI files directly. Please download the file to "
+"watch it."
+msgstr ""
+"Browser yawe ntishobora kuvugurura amadosiye ya AVI mu buryo bworoshye. "
+"Nyamahoro umanure idosiye kugira uyirebe."
+
+#: home/templates/home/view_file.html:328
+msgid "Download File"
+msgstr "Kumanura"
+
+#: home/templates/home/view_file.html:334
+msgid "Your browser does not support the video tag."
+msgstr "Browser yawe ntabwo ifasha igice cya video."
+
+#: home/templates/home/view_file.html:345
+msgid "Your browser does not support the audio element."
+msgstr "Browser yawe ntabwo ifasha igice cy'amajwi."
+
+#: home/templates/home/view_file.html:356
+msgid "Unable to load file content"
+msgstr "Ntibishoboka kubona ibirimo by'idosiye"
+
+#: home/templates/home/view_file.html:362
+msgid "Preview Not Available"
+msgstr "Kureba Mu buryo bwa Mbere Ntabwo Bihari"
+
+#: home/templates/home/view_file.html:363
 msgid "This file type"
 msgstr "Nta dosiye ziriho"
 
-#: home/templates/home/view_file.html:318
+#: home/templates/home/view_file.html:363
 msgid "cannot be previewed in the browser."
-msgstr ""
+msgstr "ntishobora kurebwa kuri browser."
 
-#: home/templates/home/view_file.html:320
-#, fuzzy
-#| msgid "Download"
+#: home/templates/home/view_file.html:365
 msgid "Download to View"
 msgstr "Kumanura"
 
-#: home/templates/home/view_file.html:328
+#: home/templates/home/view_file.html:373
 msgid "Likes"
 msgstr "Bikunze"
 
-#: home/templates/home/view_file.html:331
+#: home/templates/home/view_file.html:376
 msgid "Dislikes"
 msgstr "Ntibikunze"
 
-#: home/templates/home/view_pdf.html:83
+#: home/templates/home/view_pdf.html:7
+msgid "PDF Viewer"
+msgstr "Ureba PDF"
+
+#: home/templates/home/view_pdf.html:84
 msgid "Back"
 msgstr "Gusubira inyuma"
 
-#: home/templates/users/user_list.html:117
+#: home/templates/users/user_list.html:118
 msgid "User Management"
 msgstr "Gucunga Abakoresha"
+
+#: home/templates/users/user_list.html:125
+msgid "User"
+msgstr "Umukoresha"
+
+#: home/templates/users/user_list.html:126
+msgid "Email"
+msgstr "Imeyili"
+
+#: home/templates/users/user_list.html:127
+msgid "Joined"
+msgstr "Yinjiye"
+
+#: home/templates/users/user_list.html:128
+msgid "Status"
+msgstr "Uko ihagaze"
+
+#: home/templates/users/user_list.html:139
+msgid "Admin"
+msgstr "Umutware"
+
+#: home/templates/users/user_list.html:147
+msgid "Active"
+msgstr "Gikora"
+
+#: home/templates/users/user_list.html:149
+msgid "Inactive"
+msgstr "Ntigikora"
+
+#: home/templates/users/user_list.html:158
+msgid "No users found"
+msgstr "Nta bakoresha babonetse"
+
+#: home/views.py:41
+msgid "Activate Your ShareHub Account"
+msgstr "Kanda Konti Yawe ya ShareHub"
+
+#: home/views.py:52
+#, python-brace-format
+msgid ""
+"Hi {username},\n"
+"\n"
+"Please verify your email by clicking the link below:\n"
+"{url}\n"
+"\n"
+"This link expires in 3 days.\n"
+"\n"
+"Thanks,\n"
+"ShareHub Team"
+msgstr ""
+"Muraho {username},\n"
+"\n"
+"Nyamahoro hamya imeyili yawe ukanze umurongo uri hasi:\n"
+"{url}\n"
+"\n"
+"Uyu murongo uzagira iherezo mu minsi 3.\n"
+"\n"
+"Murakoze,\n"
+"Itsinda rya ShareHub"
+
+#: home/views.py:82
+msgid "Email verified! Welcome to ShareHub!"
+msgstr "Murakaza kuri ShareHub!"
+
+#: home/views.py:85
+msgid "Invalid or expired link."
+msgstr "Umurongo utemewe cyangwa waraheze."
+
+#: home/views.py:99 home/views.py:104
+msgid "Please verify your email before logging in."
+msgstr "Nyamahoro hamya imeyili yawe mbere yo kwinjira"
+
+#: home/views.py:106
+msgid "Incorrect password. Please try again."
+msgstr "Ijamo banga si ryemewe. Nyamahoro ongera ugerageze"
+
+#: home/views.py:108
+msgid "No account found with that username."
+msgstr "Nta konti yabonetse ifite izina ry'ukoresha"
+
+#: home/views.py:114
+msgid "You have been logged out successfully."
+msgstr "Ijamo banga ryawe ryavuguruwe neza"
+
+#: home/views.py:183
+msgid "Upload failed. Please check the file and form."
+msgstr "Kwinjiza byanze. Nyamahoro reba idosiye n'ifomu."
+
+#: home/views.py:277
+msgid "You are not allowed to delete this file."
+msgstr "Gusiba idosiye uramuka burundu?"
+
+#: home/views.py:280
+msgid "File deleted successfully."
+msgstr "Idosiye yasibwe neza."
+
+#: home/views.py:416
+msgid "granted"
+msgstr "ahawe"
+
+#: home/views.py:416
+msgid "revoked"
+msgstr "yakuweho"
+
+#~ msgid "User Table"
+#~ msgstr "Gucunga Abakoresha"
 
 #~ msgid "Save"
 #~ msgstr "Kubika"
@@ -600,18 +860,6 @@ msgstr "Gucunga Abakoresha"
 
 #~ msgid "Submit"
 #~ msgstr "Kohereza"
-
-#~ msgid "Choose a username"
-#~ msgstr "Hitamo izina ry'ukoresha"
-
-#~ msgid "you@example.com"
-#~ msgstr "wowe@urugero.com"
-
-#~ msgid "Create a strong password"
-#~ msgstr "Hanga ijambo banga ry'imbaraga"
-
-#~ msgid "Repeat your password"
-#~ msgstr "Ongera usubiremo ijambo banga"
 
 #~ msgid "Thank you for signing up for ShareHub"
 #~ msgstr "Murakoze kwiyandikisha kuri ShareHub"
@@ -624,21 +872,3 @@ msgstr "Gucunga Abakoresha"
 
 #~ msgid "If you didn't create an account, please ignore this email"
 #~ msgstr "Niba utiyandikishije, nyamahoro renga iki mese"
-
-#~ msgid "No account found with that username"
-#~ msgstr "Nta konti yabonetse ifite izina ry'ukoresha"
-
-#~ msgid "Please verify your email before logging in"
-#~ msgstr "Nyamahoro hamya imeyili yawe mbere yo kwinjira"
-
-#~ msgid "Incorrect password. Please try again"
-#~ msgstr "Ijamo banga si ryemewe. Nyamahoro ongera ugerageze"
-
-#~ msgid "Welcome to ShareHub!"
-#~ msgstr "Murakaza kuri ShareHub!"
-
-#~ msgid "Copied!"
-#~ msgstr "Byakopiwe!"
-
-#~ msgid "Inactive"
-#~ msgstr "Ntigikora"
